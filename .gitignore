@@ -1,0 +1,19 @@
+# Quelldaten der SV-Box: nicht im Repo (79 MB; Use-Case-Dokument enthält Zugangsdaten)
+/Rechtstexte/
+/Anträge und Formulare/
+/Medikamenten Erstattungskodex/
+/Befunde/
+/Leistungskataloge/
+/*.pdf
+/*.docx
+/Analyse/Dokumenteninventar.csv
+
+# Geheimnisse und lokale Konfiguration
+.env
+.env.*
+!.env.example
+
+# Lokale Umgebung
+.directory
+.venv/
+__pycache__/
