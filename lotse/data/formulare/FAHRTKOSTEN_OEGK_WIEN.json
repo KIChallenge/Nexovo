@@ -1,0 +1,80 @@
+{
+  "id": "FAHRTKOSTEN_OEGK_WIEN",
+  "titel": {
+    "de": "Antrag auf Zuschuss zu Fahrtkosten für Versicherte mit Rezeptgebührenbefreiung (ÖGK)",
+    "en": "Application for a travel cost subsidy for insured persons exempt from prescription charges (ÖGK)"
+  },
+  "quelle": {
+    "titel": "ÖGK – Antrag auf Zuschuss zu Fahrtkosten (ÖGK-VM2/0023-11/V01)",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Antrag auf Zuschuss zu Fahrtkosten für Versicherte mit Rezeptgebührenbefreiung"
+  },
+  "stelle": {
+    "de": "Österreichische Gesundheitskasse (ÖGK), 1100 Wien, Wienerbergstraße 15-19, Tel. +43 5 0766-0, www.oegk.at",
+    "en": "Austrian Health Insurance Fund (ÖGK), 1100 Vienna, Wienerbergstraße 15-19, phone +43 5 0766-0, www.oegk.at",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "1100 Wien, Wienerbergstraße 15-19 Tel. +43 5 0766-0 www.oegk.at"
+  },
+  "gesperrte_seiten": [],
+  "felder": [
+    {"feld": "Patient/in", "teile": ["{person.nachname} {person.vorname}"]},
+    {"feld": "Versicherungsnummer1", "slot": "person.svnr"},
+    {"feld": "Adresse", "teile": ["{person.strasse} {person.hausnummer}", "{person.plz} {person.ort}"]},
+    {"feld": "IBAN", "slot": "bank.iban"}
+  ],
+  "pflicht": [
+    "person.nachname",
+    "person.vorname",
+    "person.svnr",
+    "person.strasse",
+    "person.hausnummer",
+    "person.plz",
+    "person.ort",
+    "bank.iban"
+  ],
+  "unterlagen": [
+    {
+      "de": "Vorhandene Unterlagen zur Behandlung bzw. Reha-Maßnahme in Kopie",
+      "en": "Copies of available documents on the treatment or rehabilitation measure",
+      "fundstelle": "PDF-S. 1",
+      "zitat": "Art der Behandlung bzw. Reha-Maßnahme (Bitte legen Sie vorhandene Unterlagen in Kopie bei.)"
+    },
+    {
+      "de": "Belege über die tatsächlichen Fahrtkosten in Kopie",
+      "en": "Copies of receipts for the actual travel costs",
+      "fundstelle": "PDF-S. 1",
+      "zitat": "Tatsächliche Kosten (Bitte legen Sie vorhandene Belege in Kopie bei.)"
+    },
+    {
+      "de": "Bestätigung der Behandlung durch die Einrichtung bzw. den Behandler auf dem Formular – pro Fahrt ein Stempel mit Datum und Unterschrift",
+      "en": "Confirmation of the treatment by the facility or practitioner on the form – one stamp with date and signature per trip",
+      "fundstelle": "PDF-S. 1",
+      "zitat": "Ich bestätige die Behandlung(en) für den Patienten/die Patientin (pro Fahrt ein Stempel)"
+    },
+    {
+      "de": "Nur mit Begleitperson (außer bei Kindern unter 15 Jahren): ärztliche Bestätigung, dass eine Begleitperson nötig ist",
+      "en": "Only with an accompanying person (except for children under 15): medical confirmation that an accompanying person is needed",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Wenn die versicherte Person aufgrund ihres körperlichen oder geistigen Zustandes eine Begleitperson benötigt und dies ärztlich bestätigt wird"
+    }
+  ],
+  "hinweise": {
+    "de": "Der Zuschuss ist laut Formular für rezeptgebührenbefreite Personen; ausgenommen davon sind Fahrten zu Dialyse, Chemo- oder Strahlentherapie und ausgewählte Fahrten im Rahmen der medizinischen Rehabilitation – dort werden die Kosten ohne Rezeptgebührenbefreiung ersetzt (PDF-S. 2). Für mehrere Sitzungen reicht ein Antrag, wenn nach jeder Sitzung ein Feld abgestempelt wird. Transportmittel, Kosten und Begleitperson tragen Sie selbst ein; Ort/Datum und Unterschrift setzen Sie selbst, der Lotse versendet nichts. Das Formular trägt die Wiener Adresse der ÖGK.",
+    "en": "According to the form, the subsidy is for persons exempt from prescription charges; exempt from this condition are trips to dialysis, chemotherapy or radiotherapy and selected trips for medical rehabilitation – these costs are reimbursed without the exemption (PDF page 2). For several sessions one application is enough if a box is stamped after each session. You fill in the means of transport, costs and accompanying person yourself; you add place/date and signature yourself, the navigator sends nothing. The form carries the Vienna address of the ÖGK."
+  },
+  "hinweis_quellen": [
+    {
+      "art": "formular",
+      "titel": "ÖGK – Antrag auf Zuschuss zu Fahrtkosten (ÖGK-VM2/0023-11/V01)",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Ausnahme: Für Fahrten zur Durchführung einer Dialyse, Chemo- oder Strahlentherapie und ausgewählte Fahrten im Zusammenhang mit Maßnahmen der medizinischen Rehabilitation werden die Kosten ohne Bedachtnahme auf die Rezeptgebührenbefreiung ersetzt."
+    },
+    {
+      "art": "formular",
+      "titel": "ÖGK – Antrag auf Zuschuss zu Fahrtkosten (ÖGK-VM2/0023-11/V01)",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Sollten mehrere Sitzungen notwendig sein, reicht es aus, wenn nach jeder Sitzung eines der dafür vorgesehenen Felder auf dem Antragsformular abgestempelt wurde"
+    }
+  ],
+  "vorauswahl": {}
+}

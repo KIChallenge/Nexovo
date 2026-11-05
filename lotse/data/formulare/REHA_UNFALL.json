@@ -1,0 +1,54 @@
+{
+  "id": "REHA_UNFALL",
+  "titel": {
+    "de": "Antrag auf Anschlussheilverfahren oder Rehabilitation nach Unfall (AHV)",
+    "en": "Application for follow-up rehabilitation or rehabilitation after an accident (AHV)"
+  },
+  "quelle": {
+    "titel": "Antrag auf Anschlussheilverfahren oder Rehabilitation nach Unfall (AHV – 8.10)",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "auf Anschlussheilverfahren oder Rehabilitation nach Unfall"
+  },
+  "stelle": {
+    "de": "Zuständiger Kranken- bzw. Pensionsversicherungsträger – den Antrag stellt das Krankenhaus",
+    "en": "Competent health or pension insurance body – the application is submitted by the hospital",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Vom antragstellenden Krankenhaus auszufüllen!"
+  },
+  "gesperrte_seiten": [2],
+  "felder": [
+    {"feld": "Familienname", "slot": "person.nachname"},
+    {"feld": "Vorname", "slot": "person.vorname"},
+    {"feld": "VSNR_1", "slot": "person.svnr"},
+    {"feld": "Geschlecht", "slot": "person.geschlecht", "werte": {"weiblich": "/w", "männlich": "/m"}},
+    {"feld": "Telefonnummer", "slot": "person.telefon"},
+    {"feld": "Anschrift", "teile": ["{person.plz} {person.ort}", "{person.strasse} {person.hausnummer}"]},
+    {"feld": "e-mail", "slot": "person.email"}
+  ],
+  "pflicht": [
+    "person.nachname",
+    "person.vorname",
+    "person.svnr"
+  ],
+  "unterlagen": [
+    {
+      "de": "Ärztlicher Befundbericht (Seite 2 des Formulars) – füllt das Krankenhaus aus",
+      "en": "Medical report (page 2 of the form) – completed by the hospital",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Ärztlicher Befundbericht:"
+    }
+  ],
+  "hinweise": {
+    "de": "Dieses Formular füllt laut Aufdruck das antragstellende Krankenhaus aus. Der Lotse trägt nur Ihre Personalien auf Seite 1 vor; Angaben des Krankenhauses und den ärztlichen Befundbericht (Seite 2) ergänzt das Krankenhaus. Das Patienteneinverständnis auf Seite 2 unterschreiben Sie selbst, der Lotse versendet nichts.",
+    "en": "According to the form, it is completed by the applying hospital. The navigator only pre-fills your personal details on page 1; the hospital adds its details and the medical report (page 2). You sign the patient consent on page 2 yourself, the navigator sends nothing."
+  },
+  "hinweis_quellen": [
+    {
+      "art": "formular",
+      "titel": "Antrag auf Anschlussheilverfahren oder Rehabilitation nach Unfall (AHV – 8.10)",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Patienteneinverständnis zum Antrag"
+    }
+  ],
+  "vorauswahl": {}
+}

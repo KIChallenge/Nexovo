@@ -1,0 +1,52 @@
+{
+  "id": "FSW_WG",
+  "titel": {
+    "de": "Bedarfsmeldung Senior:innen-Wohngemeinschaften – Basispaket (Fonds Soziales Wien)",
+    "en": "Needs notification for senior shared housing – basic package (Fonds Soziales Wien)"
+  },
+  "quelle": {
+    "titel": "FSW – Bedarfsmeldung Senior:innen-Wohngemeinschaften – Basispaket (V2.0 12/2024)",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Bedarfsmeldung Senior:innen-Wohngemeinschaften – Basispaket"
+  },
+  "stelle": {
+    "de": "Fonds Soziales Wien – Beratungszentrum Pflege und Betreuung, Guglgasse 7–9, 1030 Wien, Tel. 01 24 5 24",
+    "en": "Fonds Soziales Wien – care and support advice centre, Guglgasse 7–9, 1030 Vienna, phone 01 24 5 24",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Fonds Soziales Wien Beratungszentrum Pflege- und Betreuung Guglgasse 7–9, 1030 Wien Tel.: 01 24 5 24"
+  },
+  "gesperrte_seiten": [],
+  "felder": [
+    {"feld": "Familienname Kundin", "slot": "person.nachname"},
+    {"feld": "Vorname Kundin", "slot": "person.vorname"},
+    {"feld": "Geburtsdatum Kundin", "slot": "person.geburtsdatum"},
+    {"feld": "Geschlecht Kundin", "slot": "person.geschlecht", "werte": {"männlich": "/maennlich", "weiblich": "/weiblich", "divers": "/divers/inter/offen"}},
+    {"feld": "FSW Plegegeldstufe", "slot": "pflege.stufe"}
+  ],
+  "pflicht": [
+    "person.nachname",
+    "person.vorname",
+    "person.geburtsdatum"
+  ],
+  "unterlagen": [
+    {
+      "de": "Bei neuen Kund:innen: Antrag auf Förderung von Leistungen (FSW) beilegen",
+      "en": "For new customers: enclose the application for funding of services (FSW)",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Bei neuen Kund:innen ist ein Antrag auf Förderung beizulegen."
+    }
+  ],
+  "hinweise": {
+    "de": "Formular des Fonds Soziales Wien – gilt für Wien. Der Lotse trägt nur die persönlichen Kund:innendaten ein; Angaben zur Wohngemeinschaft (Punkt 1), den Pflege- und Betreuungsbedarf (Punkt 3) und die Begründung für den Einzug ergänzen Sie selbst. Datum und Unterschrift (PDF-S. 2) setzen Sie selbst, der Lotse versendet nichts.",
+    "en": "Form of the Fonds Soziales Wien – applies to Vienna. The navigator only enters the personal customer data; details of the shared flat (point 1), the care and support needs (point 3) and the reason for moving in are added by you. You add the date and signature yourself (PDF page 2), the navigator sends nothing."
+  },
+  "hinweis_quellen": [
+    {
+      "art": "formular",
+      "titel": "FSW – Bedarfsmeldung Senior:innen-Wohngemeinschaften – Basispaket (V2.0 12/2024)",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Mit meiner Unterschrift bestätige ich die Richtigkeit der angeführten Daten."
+    }
+  ],
+  "vorauswahl": {}
+}

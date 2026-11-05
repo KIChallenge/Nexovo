@@ -1,0 +1,72 @@
+{
+  "id": "KUR1",
+  "titel": {
+    "de": "Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt (KUR1)",
+    "en": "Application for a rehabilitation, spa or convalescence stay (KUR1)"
+  },
+  "quelle": {
+    "titel": "DVSV – KUR1 – V/8.10",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt"
+  },
+  "stelle": {
+    "de": "Ihr zuständiger Sozialversicherungsträger – tragen Sie ihn oben auf Seite 1 ein",
+    "en": "Your competent social insurance body – enter it at the top of page 1",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Zuständiger Sozialversicherungsträger:"
+  },
+  "gesperrte_seiten": [2],
+  "felder": [
+    {"feld": "VSNR_1", "slot": "person.svnr"},
+    {"feld": "Patient(in)", "teile": ["{person.nachname} {person.vorname}"]},
+    {"feld": "Anschrift Patient(in)", "teile": ["{person.strasse} {person.hausnummer}", "{person.plz} {person.ort}"]},
+    {"feld": "Anschrift", "teile": ["{person.strasse} {person.hausnummer}", "{person.plz} {person.ort}"]},
+    {"feld": "Telefonnummer", "slot": "person.telefon"},
+    {"feld": "Pensionsversicherung", "slot": "versicherung.pension", "werte": {"PVA": "/j", "SVS": "/j", "BVAEB": "/j", "keine": "/n"}},
+    {"feld": "Pensionsversicherungsträger", "slot": "versicherung.pension", "werte": {"PVA": "PVA", "SVS": "SVS", "BVAEB": "BVAEB"}},
+    {"feld": "Pflegegeld", "slot": "pflege.antragsart", "werte": {"zuerkennung": "/n", "erhoehung": "/j"}},
+    {"feld": "Stufe1", "slot": "pflege.stufe"}
+  ],
+  "pflicht": [
+    "person.nachname",
+    "person.vorname",
+    "person.svnr",
+    "person.strasse",
+    "person.hausnummer",
+    "person.plz",
+    "person.ort"
+  ],
+  "unterlagen": [
+    {
+      "de": "Ärztliche Stellungnahme (Seite 2 des Formulars), ausgefüllt von der Ärztin/dem Arzt bzw. der Krankenanstalt mit Datum, Unterschrift und Stempel",
+      "en": "Medical statement (page 2 of the form), completed by the doctor or hospital with date, signature and stamp",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Datum, Unterschrift und Stempel des/der Arztes/Ärztin bzw. der Krankenanstalt"
+    },
+    {
+      "de": "Befunde, falls vorhanden, als Beilage zur ärztlichen Stellungnahme",
+      "en": "Medical reports, if available, attached to the medical statement",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Befunde (allenfalls als Beilage angeschlossen)"
+    }
+  ],
+  "hinweise": {
+    "de": "Seite 1 füllen Sie als Versicherte/r aus; Datum und Unterschrift auf Seite 1 setzen Sie selbst, der Lotse versendet nichts. Seite 2 (Ärztliche Stellungnahme) füllt die Ärztin/der Arzt aus – dort wird auch die Art des Aufenthalts (z. B. stationäre oder ambulante Rehabilitation) vorgeschlagen; der Lotse trägt dort nichts ein. Den zuständigen Sozialversicherungsträger trägt der Lotse nicht automatisch ein. Der Entwurf geht davon aus, dass die Patientin/der Patient selbst versichert ist; bei Mitversicherung als Angehörige/r ergänzen Sie die Felder „Versicherte(r)“ und die Zusatzangaben selbst.",
+    "en": "You complete page 1 as the insured person; you add the date and signature on page 1 yourself, the navigator sends nothing. Page 2 (medical statement) is completed by the doctor – the type of stay (e.g. inpatient or outpatient rehabilitation) is proposed there; the navigator enters nothing on page 2. The navigator does not fill in the competent social insurance body automatically. The draft assumes the patient is insured in their own right; if the patient is co-insured as a family member, please complete the “Versicherte(r)” fields and the additional details yourself."
+  },
+  "hinweis_quellen": [
+    {
+      "art": "formular",
+      "titel": "DVSV – KUR1 – V/8.10",
+      "fundstelle": "PDF-S. 1",
+      "zitat": "Von dem/der Versicherten (Antragsteller/in) in allen Teilen auszufüllen"
+    },
+    {
+      "art": "formular",
+      "titel": "DVSV – KUR1 – V/8.10",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Ärztliche Stellungnahme"
+    }
+  ],
+  "vorauswahl": {}
+}

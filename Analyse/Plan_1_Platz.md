@@ -67,7 +67,7 @@ Wodurch wir uns abheben (Innovation und Transparenz):
 
 ## 5. Lösungsarchitektur (Entscheidung)
 
-- **Wissensschicht:** XML-Parser → Normindex (Metadaten aus Dateiname und `metadaten`); PDF-Text aus Serviceratgeber und Formularen mit Seitenbezug; Lookup im Erstattungskodex über PZN. Abruf hybrid (Schlagwort + Embedding). Rechtsstand-Regel: Anpassungsverordnung schlägt Grundbetrag.
+- **Wissensschicht:** XML-Parser → Normindex (Metadaten aus Dateiname und `metadaten`); PDF-Text aus Serviceratgeber und Formularen mit Seitenbezug; Lookup im Erstattungskodex über PZN. Abruf lexikalisch mit BM25. Embeddings sind entfallen: Es gab keinen API-Schlüssel, und das Fragenset erreicht auch so 20/20 (Begründung in `docs/ARCHITEKTUR.md`). Rechtsstand-Regel: Anpassungsverordnung schlägt Grundbetrag.
 - **Lotse:** Modell `gpt-5-4-mini` über die Azure-Endpoint-Konfiguration in `.env`. Zustandsautomat: Situation → Bündel → Rückfragen → Antrag → Checkliste → Status. Antworten nur aus abgerufenen Belegen (Zitierpflicht im Ausgabeschema).
 - **Guardrail:** Vorgeschaltete Klassifikation „medizinische Beurteilung?“ plus Prüfung der Ausgabe auf Diagnose- und Medikamentensprache.
 - **Formular-Service:** Feldmapping je Formular (JSON) → `pypdf` füllt AcroForm → Vorschau und Download.

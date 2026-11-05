@@ -17,3 +17,5 @@
 .directory
 .venv/
 __pycache__/
+.cache/
+.pytest_cache/

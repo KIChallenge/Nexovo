@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SV KI-Lotse</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#eingabe" data-t="skip_link">Zur Eingabe springen</a>
+
+  <header class="kopf">
+    <div class="marke">
+      <span class="marke-zeichen" aria-hidden="true"></span>
+      <div>
+        <h1 data-t="titel">SV KI-Lotse</h1>
+        <p class="untertitel" data-t="untertitel">Ihr Weg durch die Leistungen der Sozialversicherung</p>
+      </div>
+    </div>
+    <div class="steuerung">
+      <div class="schalter" role="group" aria-labelledby="lbl-sprache">
+        <span id="lbl-sprache" class="schalter-label" data-t="sprache">Sprache</span>
+        <button type="button" data-sprache="de" aria-pressed="true" lang="de">DE</button>
+        <button type="button" data-sprache="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+      <div class="schalter" role="group" aria-labelledby="lbl-stil">
+        <span id="lbl-stil" class="schalter-label" data-t="stil">Darstellung</span>
+        <button type="button" data-stil="einfach" aria-pressed="true" data-t="einfach">Einfach</button>
+        <button type="button" data-stil="ausfuehrlich" aria-pressed="false" data-t="ausfuehrlich">Ausführlich</button>
+      </div>
+      <span id="modus" class="badge badge-modus" role="status">regelbasiert</span>
+      <label class="knopf knopf-sekundaer" for="datei" id="datei-label">
+        <span data-t="hochladen">Dokument hochladen</span>
+      </label>
+      <input type="file" id="datei" class="sr-only" accept=".pdf,.txt,application/pdf,text/plain"
+             aria-describedby="datei-hilfe">
+      <span id="datei-hilfe" class="sr-only" data-t="hochladen_hilfe"></span>
+      <button type="button" id="neu" class="knopf knopf-sekundaer" data-t="neuer_fall">Neuer Fall</button>
+    </div>
+  </header>
+
+  <nav class="leiste" aria-label="Beispiele">
+    <div class="leiste-gruppe" role="group" aria-labelledby="lbl-beispiele">
+      <span id="lbl-beispiele" class="leiste-label" data-t="beispiele">Beispiele</span>
+      <button type="button" class="chip" data-szenario="pflege" data-t="szenario_pflege">Pflege</button>
+      <button type="button" class="chip" data-szenario="gesundheit" data-t="szenario_gesundheit">Gesundheit</button>
+      <button type="button" class="chip" data-szenario="entlassung" data-t="szenario_entlassung">Nach dem Spital</button>
+      <button type="button" class="chip" data-szenario="kind" data-t="szenario_kind">Kind</button>
+    </div>
+    <div class="leiste-gruppe" role="group" aria-labelledby="lbl-demo" id="demo-gruppe" hidden>
+      <span id="lbl-demo" class="leiste-label" data-t="demo_dokumente">Demo-Dokumente</span>
+    </div>
+  </nav>
+
+  <aside class="grenze" role="note" aria-labelledby="grenze-titel">
+    <strong id="grenze-titel" data-t="grenze_titel">Medizinische Grenze</strong>
+    <span data-t="grenze_hinweis">Der Lotse stellt keine Diagnosen, deutet keine Befunde, bewertet keine gesundheitlichen
+      Risiken und empfiehlt keine Therapien, Medikamente oder Dosierungen. Gesundheitliche Fragen klären Sie mit Ihrer
+      Ärztin oder Ihrem Arzt; telefonische Gesundheitsberatung: 1450.</span>
+    <span class="grenze-quelle" id="grenze-quelle">(Quelle: ÖGK – Leistungen und Services 2026, PDF-S. 42)</span>
+  </aside>
+
+  <main class="haupt">
+    <section class="chat" aria-labelledby="chat-titel">
+      <h2 id="chat-titel" data-t="chat_titel">Gespräch</h2>
+      <ol id="verlauf" class="verlauf" aria-live="polite" aria-relevant="additions"></ol>
+      <div id="optionen" class="optionen" role="group" aria-labelledby="optionen-label" hidden>
+        <span id="optionen-label" class="sr-only" data-t="antwortmoeglichkeiten"></span>
+      </div>
+      <form id="eingabe-form" class="eingabe">
+        <label for="eingabe" data-t="chat_label">Ihre Nachricht</label>
+        <div class="eingabe-zeile">
+          <textarea id="eingabe" rows="2" maxlength="2000" required></textarea>
+          <button type="submit" class="knopf" data-t="senden">Senden</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="akte" aria-labelledby="akte-titel">
+      <h2 id="akte-titel" data-t="fallakte_titel">Ihre Fallakte</h2>
+      <div id="naechster" class="naechster" hidden></div>
+      <div id="angaben" class="angaben" hidden></div>
+      <p id="akte-leer" class="akte-leer" data-t="fallakte_leer">Noch keine Leistungen. Beschreiben Sie Ihre Situation
+        oder laden Sie ein Dokument hoch.</p>
+      <div id="karten" class="karten"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

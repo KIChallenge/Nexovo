@@ -1,0 +1,171 @@
+{
+  "id": "FSW_FOERDERUNG",
+  "titel": {
+    "de": "Antrag auf Förderung von Leistungen (Fonds Soziales Wien)",
+    "en": "Application for funding of services (Fonds Soziales Wien)"
+  },
+  "quelle": {
+    "titel": "FSW – Antrag auf Förderung von Leistungen (V8 03/2026)",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Antrag auf Förderung von Leistungen, V8 03/2026"
+  },
+  "stelle": {
+    "de": "Fonds Soziales Wien – Kund:innenservice, Guglgasse 7–9, 1030 Wien, Tel. 01 24 5 24, E-Mail kundinnenservice@fsw.at",
+    "en": "Fonds Soziales Wien – customer service, Guglgasse 7–9, 1030 Vienna, phone 01 24 5 24, email kundinnenservice@fsw.at",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Fonds Soziales Wien – Kund:innenservice Guglgasse 7–9, 1030 Wien Tel.: 01 24 5 24 Fax: 01 24 5 24-89 10 100 E-Mail: kundinnenservice@fsw.at"
+  },
+  "gesperrte_seiten": [],
+  "felder": [
+    {"feld": "Familienname Titel KundIn", "slot": "person.nachname"},
+    {"feld": "Vorname KundIn", "slot": "person.vorname"},
+    {"feld": "Geschlecht KundIn", "slot": "person.geschlecht", "werte": {"männlich": "/maennlich", "weiblich": "/weiblich", "divers": "/divers/inter/offen"}},
+    {"feld": "Geburtsdatum KundIn", "slot": "person.geburtsdatum"},
+    {"feld": "Telefonnummer KundIn", "slot": "person.telefon"},
+    {"feld": "E-Mail Adresse KundIn", "slot": "person.email"},
+    {"feld": "Strassennamen Lebensmittelpunkt", "slot": "person.strasse"},
+    {"feld": "Hausnr Lebensmittelpunkt", "slot": "person.hausnummer", "teil": "hausnummer"},
+    {"feld": "Stiege Lebensmittelpunkt", "slot": "person.hausnummer", "teil": "stiege"},
+    {"feld": "Tuernr Lebensmittelpunkt", "slot": "person.hausnummer", "teil": "tuer"},
+    {"feld": "PLZ Lebensmittelpunkt", "slot": "person.plz"},
+    {"feld": "Ort Lebensmittelpunkt", "slot": "person.ort"},
+    {"feld": "Einkommen", "slot": "versicherung.pension", "werte": {"PVA": "/Ich habe ein Einkommen, zum Beispiel Pension, Gehalt, Geld vom AMS ", "SVS": "/Ich habe ein Einkommen, zum Beispiel Pension, Gehalt, Geld vom AMS ", "BVAEB": "/Ich habe ein Einkommen, zum Beispiel Pension, Gehalt, Geld vom AMS "}}
+  ],
+  "pflicht": [
+    "person.nachname",
+    "person.vorname",
+    "person.geburtsdatum",
+    "person.strasse",
+    "person.hausnummer",
+    "person.plz",
+    "person.ort"
+  ],
+  "vorauswahl": {
+    "pflege_zu_hause": {
+      "titel": {"de": "Pflege und Betreuung zu Hause", "en": "Care and support at home"},
+      "felder": [
+        {"feld": "Leistungen Pflege und Betreuung", "wenn": [], "wert": "/Ja"},
+        {"feld": "Pflege und Betreuung zu Hause", "wenn": [], "wert": "/Ja"},
+        {"feld": "KontoinhaberIn 3", "slot": "bank.kontoinhaber"},
+        {"feld": "IBAN 3", "slot": "bank.iban"}
+      ],
+      "pflicht": []
+    },
+    "mobile_fruehfoerderung": {
+      "titel": {"de": "Mobile Frühförderung", "en": "Mobile early intervention"},
+      "felder": [
+        {"feld": "Leistungen Behinderung und Inklusion", "wenn": [], "wert": "/Ja"},
+        {"feld": "Mobile Fruehfoerderung", "wenn": [], "wert": "/Ja"},
+        {"feld": "Vertretungsbefugte Person", "wenn": ["vertretung.nachname", "vertretung.vorname"], "wert": "/Ja"},
+        {"feld": "Familienname Titel vertretungsbefugte Person 3", "slot": "vertretung.nachname"},
+        {"feld": "Vorname vertretungsbefugte Person 3", "slot": "vertretung.vorname"},
+        {"feld": "Telefonnummer vertretungsbefugte Person 3", "slot": "vertretung.telefon"}
+      ],
+      "pflicht": []
+    }
+  },
+  "unterlagen": [
+    {
+      "de": "Amtlicher Lichtbildausweis in Kopie (z. B. Führerschein, Reisepass, Personalausweis)",
+      "en": "Copy of an official photo ID (e.g. driving licence, passport, identity card)",
+      "fundstelle": "PDF-S. 12",
+      "zitat": "Amtlicher Lichtbildausweis. Zum Beispiel: Führerschein, Reisepass, Personalausweis",
+      "leistungen": []
+    },
+    {
+      "de": "Nachweis der Staatsbürgerschaft in Kopie (z. B. Staatsbürgerschaftsnachweis, Reisepass, Personalausweis)",
+      "en": "Copy of proof of citizenship (e.g. citizenship certificate, passport, identity card)",
+      "fundstelle": "PDF-S. 12",
+      "zitat": "Nachweis der Staatsbürgerschaft. Zum Beispiel: Staatsbürgerschaftsnachweis, Reisepass, Personalausweis",
+      "leistungen": []
+    },
+    {
+      "de": "Nur ohne österreichische Staatsbürgerschaft: Nachweis über den Aufenthaltsstatus",
+      "en": "Only without Austrian citizenship: proof of residence status",
+      "fundstelle": "PDF-S. 12",
+      "zitat": "Wenn Sie keine österreichische Staatsbürgerschaft haben: Nachweis über Ihren Aufenthaltsstatus",
+      "leistungen": []
+    },
+    {
+      "de": "Nur bei Vertretung durch eine andere Person: Nachweis der Vertretungsbefugnis (z. B. Vollmacht, Vorsorgevollmacht, Gerichtsbeschluss)",
+      "en": "Only if represented by another person: proof of authority to represent (e.g. power of attorney, lasting power of attorney, court decision)",
+      "fundstelle": "PDF-S. 12",
+      "zitat": "Wenn Sie von einer anderen Person vertreten werden: Nachweis der Vertretungsbefugnis.",
+      "leistungen": []
+    },
+    {
+      "de": "Je nach Familienstand: Heirats- bzw. Partnerschaftsurkunde, Scheidungsunterlagen oder Sterbeurkunde der Partnerin/des Partners",
+      "en": "Depending on marital status: marriage or partnership certificate, divorce documents or death certificate of the partner",
+      "fundstelle": "PDF-S. 12",
+      "zitat": "Wenn Sie verheiratet oder verpartnert sind: Heiratsurkunde oder Urkunde über die eingetragene Partnerschaft",
+      "leistungen": []
+    },
+    {
+      "de": "Aktuelle Einkommensnachweise in Kopie (z. B. Pensions- oder Rentennachweis, Lohnzettel)",
+      "en": "Copies of current proof of income (e.g. pension statement, payslip)",
+      "fundstelle": "PDF-S. 12",
+      "zitat": "Aktuelle Nachweise über Ihr Einkommen. Zum Beispiel:",
+      "leistungen": ["pflege_zu_hause"]
+    },
+    {
+      "de": "Nur mit unterhaltsverpflichteten oder unterhaltsberechtigten Angehörigen: ausgefüllte „Beilage Angehörige“ und die nötigen Nachweise",
+      "en": "Only with relatives who owe or are owed maintenance: completed “Beilage Angehörige” (relatives annex) and the required proofs",
+      "fundstelle": "PDF-S. 12",
+      "zitat": "Wenn Sie unterhaltsverpflichtete oder unterhaltsberechtigte Angehörige haben: ausgefülltes Formular Beilage Angehörige und die nötigen Nachweise",
+      "leistungen": ["pflege_zu_hause"]
+    },
+    {
+      "de": "Nachweise über pflegebezogene Ausgaben (z. B. Pflegebett, Notrufsystem)",
+      "en": "Proof of care-related expenses (e.g. care bed, emergency call system)",
+      "fundstelle": "PDF-S. 13",
+      "zitat": "Nachweise über pflegebezogene Ausgaben, zum Beispiel Pflegebett, Notrufsystem.",
+      "leistungen": ["pflege_zu_hause"]
+    },
+    {
+      "de": "Aufgeschlüsselter Nachweis über Hauptmietzins und Betriebskosten der Wohnung bzw. des Hauses",
+      "en": "Itemised proof of basic rent and operating costs of the flat or house",
+      "fundstelle": "PDF-S. 13",
+      "zitat": "aufgeschlüsselten Nachweis über Hauptmietzins und Betriebskosten von Ihrer Wohnung oder Ihrem Haus.",
+      "leistungen": ["pflege_zu_hause"]
+    },
+    {
+      "de": "Bei Minderjährigen: Geburtsurkunde, Nachweise über die Geburtsdaten beider Eltern und – falls vorhanden – Nachweis der Obsorge",
+      "en": "For minors: birth certificate, proof of both parents' dates of birth and – if available – proof of custody",
+      "fundstelle": "PDF-S. 13",
+      "zitat": "Nachweise über die Geburtsdaten von beiden Eltern",
+      "leistungen": ["mobile_fruehfoerderung"]
+    },
+    {
+      "de": "Stellungnahme einer Frühförderstelle (Wiener Sozialdienste, ÖHTB, Contrast oder Therapieinstitut Keil)",
+      "en": "Statement from an early intervention centre (Wiener Sozialdienste, ÖHTB, Contrast or Therapieinstitut Keil)",
+      "fundstelle": "PDF-S. 13",
+      "zitat": "Stellungnahme von einer dieser Frühförderstellen: Wiener Sozialdienste, ÖHTB, Contrast, Therapieinstitut Keil",
+      "leistungen": ["mobile_fruehfoerderung"]
+    },
+    {
+      "de": "Aktuelle Befunde und – falls vorhanden – Behindertenpass",
+      "en": "Current medical reports and – if available – disability pass",
+      "fundstelle": "PDF-S. 13",
+      "zitat": "Behindertenpass, wenn vorhanden",
+      "leistungen": ["mobile_fruehfoerderung"]
+    }
+  ],
+  "hinweise": {
+    "de": "Formular des Fonds Soziales Wien – gilt für Wien. Je nach gewählter Leistung kreuzt der Lotse in Punkt 1 den Bereich und in Punkt 10 die Leistung an (Pflege und Betreuung zu Hause: PDF-S. 5; Mobile Frühförderung: PDF-S. 7). Datum und Unterschrift (PDF-S. 4) setzen Sie selbst, der Lotse versendet nichts. Vertrauenspersonen, Zustellbevollmächtigte, Unterhaltsangaben und Unfallfrage trägt der Lotse nicht ein; für Minderjährige wird die helfende Person bei Mobiler Frühförderung als obsorgeberechtigte Person in Punkt 3 vorgeschlagen – bitte prüfen.",
+    "en": "Form of the Fonds Soziales Wien – applies to Vienna. Depending on the chosen service, the navigator ticks the area in point 1 and the service in point 10 (care and support at home: PDF page 5; mobile early intervention: PDF page 7). You add the date and signature yourself (PDF page 4), the navigator sends nothing. The navigator does not fill in persons of trust, authorised recipients, maintenance details or the accident question; for minors, the helping person is proposed as the person with custody in point 3 for mobile early intervention – please check."
+  },
+  "hinweis_quellen": [
+    {
+      "art": "formular",
+      "titel": "FSW – Antrag auf Förderung von Leistungen (V8 03/2026)",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Für Minderjährige geben Sie hier eine obsorgeberechtigte Person an."
+    },
+    {
+      "art": "formular",
+      "titel": "FSW – Antrag auf Förderung von Leistungen (V8 03/2026)",
+      "fundstelle": "PDF-S. 5",
+      "zitat": "Pflege und Betreuung zu Hause / Tagesbetreuung"
+    }
+  ]
+}

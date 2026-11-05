@@ -54,7 +54,7 @@ Status: **bestätigt** · **korrigiert** (die Aussage war falsch oder ungenau) �
 |---|---|---|
 | 0 Parsefehler, 812 Familien, ASVG 1.218 | Neu gezählt; Root-Element immer `sozdok` | bestätigt |
 | Kernquellen vorhanden | BPGG 80, BPGGEinstV_1999 9, B-KUVG 383, GSVG 543, BSVG 576, KBGG 70, FLAG 143. Die ASVG-Paragraphen 135, 137, 141, 143a–d, 154, 154a, 155, 156, 160, 302–307, 307h liegen jeweils als eigene Datei vor | bestätigt |
-| „Versionslogik nötig“ | Jede Norm liegt in **genau einer** Datei vor (0 Normen mit mehreren Dateien). Der Korpus ist eine Momentaufnahme ohne Versionshistorie. Dateiname: `Kürzel=Typ=Nr=BGBl-Nr=Kundmachung=Inkrafttreten` | **korrigiert** |
+| „Versionslogik nötig“ | Innerhalb einer Dokumentfamilie liegt jede Norm in **genau einer** Datei vor (0 Dubletten je `Kürzel=Typ=Nr`). Es gibt also keine Versionshistorie, der Korpus ist eine Momentaufnahme. Derselbe Rechtstext kann aber unter mehreren Familiennamen abgelegt sein; Art. 3 der VO BGBl. II Nr. 263/2025 liegt zum Beispiel in 4 Dateien. Der Suchindex führt solche Fassungen nur einmal. Dateiname: `Kürzel=Typ=Nr=BGBl-Nr=Kundmachung=Inkrafttreten` | **korrigiert** (nachträglich präzisiert) |
 | § 154a als Datumsanomalie | 3.277 Dateien wurden nach ihrem Inkrafttreten kundgemacht. Das ist rückwirkendes Inkrafttreten und kein Datenfehler. Echte Auffälligkeiten: 215 Dateien mit dem Platzhalterdatum `1111-…` und 6 Dateien mit abweichendem Namensschema | **korrigiert** |
 | Jüngster Rechtsstand | Inkrafttreten spätestens 2026-10-01, Kundmachung spätestens 2026-09-17; nichts tritt erst nach dem 5.11.2026 in Kraft | neu |
 | § 141 ASVG: Anm. 1 mit 660,52 € (2025) und 708,74 € (2026), BGBl. II Nr. 263/2025 | Im Text vorhanden | bestätigt |

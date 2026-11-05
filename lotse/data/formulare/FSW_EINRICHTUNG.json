@@ -1,0 +1,47 @@
+{
+  "id": "FSW_EINRICHTUNG",
+  "titel": {
+    "de": "Einrichtungswunsch für Wohn- und Pflegehäuser (Beilage zum FSW-Antrag)",
+    "en": "Preferred facility for residential and nursing homes (annex to the FSW application)"
+  },
+  "quelle": {
+    "titel": "FSW – Einrichtungswunsch für Wohn- und Pflegehäuser (V5 05/2026)",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Einrichtungswunsch für Wohn- und Pflegehäuser, V5 05/2026"
+  },
+  "stelle": {
+    "de": "Fonds Soziales Wien – Kund:innenservice, Guglgasse 7–9, 1030 Wien, Tel. 01 24 5 24, E-Mail kundinnenservice@fsw.at",
+    "en": "Fonds Soziales Wien – customer service, Guglgasse 7–9, 1030 Vienna, phone 01 24 5 24, email kundinnenservice@fsw.at",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Fonds Soziales Wien – Kund:innenservice Guglgasse 7–9, 1030 Wien Tel.: 01 24 5 24 Fax: 01 24 5 24-89 10 100 E-Mail: kundinnenservice@fsw.at"
+  },
+  "gesperrte_seiten": [],
+  "felder": [
+    {"feld": "Familienname KundIn", "slot": "person.nachname"},
+    {"feld": "Vorname KundIn", "slot": "person.vorname"},
+    {"feld": "Geburtsdatum KundIn 3", "slot": "person.geburtsdatum"}
+  ],
+  "pflicht": [
+    "person.nachname",
+    "person.vorname",
+    "person.geburtsdatum"
+  ],
+  "unterlagen": [],
+  "ohne_unterlagen": {
+    "de": "Dieses Blatt nennt keine eigenen Unterlagen. Es ergänzt den Abschnitt „Einrichtungswunsch für Wohnen und Pflege“ des FSW-Antrags auf Förderung von Leistungen (dort PDF-S. 5); die Unterlagen stehen im Antrag (PDF-S. 12–13).",
+    "en": "This sheet lists no documents of its own. It supplements the section “Einrichtungswunsch für Wohnen und Pflege” of the FSW application for funding of services (PDF page 5 there); the documents are listed in that application (PDF pages 12–13)."
+  },
+  "hinweise": {
+    "de": "Formular des Fonds Soziales Wien – gilt für Wien. Der Lotse trägt nur Name und Geburtsdatum ein. Ob der Einzug dringend ist, welche Bezirke oder Einrichtungen Sie wünschen und wer kontaktiert werden soll, entscheiden Sie selbst. Das aktuelle Datum (PDF-S. 2) setzen Sie selbst, der Lotse versendet nichts.",
+    "en": "Form of the Fonds Soziales Wien – applies to Vienna. The navigator only enters name and date of birth. Whether moving in is urgent, which districts or facilities you prefer and whom to contact is your decision. You add the current date yourself (PDF page 2), the navigator sends nothing."
+  },
+  "hinweis_quellen": [
+    {
+      "art": "formular",
+      "titel": "FSW – Einrichtungswunsch für Wohn- und Pflegehäuser (V5 05/2026)",
+      "fundstelle": "PDF-S. 1",
+      "zitat": "Geben Sie an, in welche Bezirke oder Einrichtungen Sie befristet oder unbefristet ziehen wollen."
+    }
+  ],
+  "vorauswahl": {}
+}

@@ -1,0 +1,150 @@
+{
+  "id": "PAL080",
+  "titel": {
+    "de": "Antrag auf Pflegegeld nach dem Bundespflegegeldgesetz (PVA, PAL 080)",
+    "en": "Application for care allowance under the Federal Care Allowance Act (PVA, PAL 080)"
+  },
+  "quelle": {
+    "titel": "PVA – PAL 080 (01. 2025)",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "ANTRAG auf PFLEGEGELD nach dem Bundespflegegeldgesetz (BPGG)"
+  },
+  "stelle": {
+    "de": "Pensionsversicherungsanstalt (PVA), Hauptstelle: Friedrich-Hillegeist-Straße 1, 1020 Wien; Landesstellen siehe PDF-S. 8 des Formulars",
+    "en": "Pension Insurance Institution (PVA), head office: Friedrich-Hillegeist-Straße 1, 1020 Vienna; regional offices see PDF page 8 of the form",
+    "fundstelle": "PDF-S. 1",
+    "zitat": "Pensionsversicherungsanstalt Hauptstelle Friedrich-Hillegeist-Straße 1, 1020 Wien, Österreich"
+  },
+  "adressen": {
+    "Wien": {
+      "text": "PVA Landesstelle Wien, Friedrich-Hillegeist-Straße 1, 1020 Wien, E-Mail: pva-lsw@pv.at, Terminvereinbarung: +43 (0)5 03 03-27 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Wien Friedrich-Hillegeist-Straße 1, 1020 Wien E-Mail: pva-lsw@pv.at Fax: +43 (0)5 03 03-28 850 Terminvereinbarung: +43 (0)5 03 03-27 170"
+    },
+    "Kärnten": {
+      "text": "PVA Landesstelle Kärnten, Südbahngürtel 10, 9020 Klagenfurt am Wörthersee, E-Mail: pva-lsk@pv.at, Terminvereinbarung: +43 (0)5 03 03-35 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Kärnten Südbahngürtel 10, 9020 Klagenfurt am Wörthersee E-Mail: pva-lsk@pv.at Fax: +43 (0)5 03 03-35 850 Terminvereinbarung: +43 (0)5 03 03-35 170"
+    },
+    "Niederösterreich": {
+      "text": "PVA Landesstelle Niederösterreich, Kremser Landstraße 5, 3100 St. Pölten, E-Mail: pva-lsn@pv.at, Terminvereinbarung: +43 (0)5 03 03-32 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Niederösterreich Kremser Landstraße 5, 3100 St. Pölten E-Mail: pva-lsn@pv.at Fax: +43 (0)5 03 03-32 850 Terminvereinbarung: +43 (0)5 03 03-32 170"
+    },
+    "Salzburg": {
+      "text": "PVA Landesstelle Salzburg, Schallmooser Hauptstraße 11, 5020 Salzburg, E-Mail: pva-lss@pv.at, Terminvereinbarung: +43 (0)5 03 03-37 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Salzburg Schallmooser Hauptstraße 11, 5020 Salzburg E-Mail: pva-lss@pv.at Fax: +43 (0)5 03 03-37 850 Terminvereinbarung: +43 (0)5 03 03-37 170"
+    },
+    "Burgenland": {
+      "text": "PVA Landesstelle Burgenland, Ödenburger Straße 8, 7000 Eisenstadt, E-Mail: pva-lsb@pv.at, Terminvereinbarung: +43 (0)5 03 03-33 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Burgenland Ödenburger Straße 8, 7000 Eisenstadt E-Mail: pva-lsb@pv.at Fax: +43 (0)5 03 03-33 850 Terminvereinbarung: +43 (0)5 03 03-33 170"
+    },
+    "Tirol": {
+      "text": "PVA Landesstelle Tirol, Ing.-Etzel-Straße 13, 6020 Innsbruck, E-Mail: pva-lst@pv.at, Terminvereinbarung: +43 (0)5 03 03-38 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Tirol Ing.-Etzel-Straße 13, 6020 Innsbruck E-Mail: pva-lst@pv.at Fax: +43 (0)5 03 03-38 850 Terminvereinbarung: +43 (0)5 03 03-38 170"
+    },
+    "Oberösterreich": {
+      "text": "PVA Landesstelle Oberösterreich, Terminal Tower, Bahnhofplatz 8, 4020 Linz, E-Mail: pva-lso@pv.at, Terminvereinbarung: +43 (0)5 03 03-36 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Oberösterreich Terminal Tower, Bahnhofplatz 8, 4020 Linz E-Mail: pva-lso@pv.at Fax: +43 (0)5 03 03-36 850 Terminvereinbarung: +43 (0)5 03 03-36 170"
+    },
+    "Vorarlberg": {
+      "text": "PVA Landesstelle Vorarlberg, Zollgasse 6, 6850 Dornbirn, E-Mail: pva-lsv@pv.at, Terminvereinbarung: +43 (0)5 03 03-39 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Vorarlberg Zollgasse 6, 6850 Dornbirn E-Mail: pva-lsv@pv.at Fax: +43 (0)5 03 03-39 850 Terminvereinbarung: +43 (0)5 03 03-39 170"
+    },
+    "Steiermark": {
+      "text": "PVA Landesstelle Steiermark, Eggenberger Straße 3, 8020 Graz, E-Mail: pva-lsg@pv.at, Terminvereinbarung: +43 (0)5 03 03-34 170",
+      "fundstelle": "PDF-S. 8",
+      "zitat": "Landesstelle Steiermark Eggenberger Straße 3, 8020 Graz E-Mail: pva-lsg@pv.at Fax: +43 (0)5 03 03-34 850 Terminvereinbarung: +43 (0)5 03 03-34 170"
+    }
+  },
+  "gesperrte_seiten": [],
+  "felder": [
+    {"feld": "Antrag Pflg", "slot": "pflege.antragsart", "werte": {"zuerkennung": "/01", "erhoehung": "/02", "weitergewaehrung": "/03"}},
+    {"feld": "VSNR_1", "slot": "person.svnr"},
+    {"feld": "Fam.Name", "slot": "person.nachname"},
+    {"feld": "Vorname", "slot": "person.vorname"},
+    {"feld": "Geburtsdatum", "slot": "person.geburtsdatum"},
+    {"feld": "Geschlecht", "slot": "person.geschlecht"},
+    {"feld": "Adresse Straße", "slot": "person.strasse"},
+    {"feld": "Hausnummer, Stiege, Tür", "slot": "person.hausnummer"},
+    {"feld": "PLZ", "slot": "person.plz"},
+    {"feld": "Ort", "slot": "person.ort"},
+    {"feld": "Land", "wenn": ["person.bundesland"], "wert": "Österreich"},
+    {"feld": "Telefon", "slot": "person.telefon"},
+    {"feld": "Email", "slot": "person.email"},
+    {"feld": "Name weitere Person", "teile": ["{vertretung.nachname} {vertretung.vorname}", "Tel. {vertretung.telefon}"]},
+    {"feld": "Hausbesuch", "wenn": ["vertretung.nachname", "vertretung.vorname"], "wert": "/02"},
+    {"feld": "Krankenhaus", "wenn": ["aufenthalt.krankenhaus"], "wert": "/02"},
+    {"feld": "Spital", "slot": "aufenthalt.krankenhaus"},
+    {"feld": "KH bis", "slot": "aufenthalt.entlassungsdatum"}
+  ],
+  "pflicht": [
+    "pflege.antragsart",
+    "person.svnr",
+    "person.nachname",
+    "person.vorname",
+    "person.geburtsdatum",
+    "person.strasse",
+    "person.hausnummer",
+    "person.plz",
+    "person.ort"
+  ],
+  "unterlagen": [
+    {
+      "de": "Vorhandene Befunde der Ärztin/des Arztes oder des Krankenhauses in Kopie",
+      "en": "Copies of existing medical reports from your doctor or hospital",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Bitte legen Sie vorhandene Befunde von Ihrem Arzt / Ihrer Ärztin oder Krankenhaus in Kopie bei."
+    },
+    {
+      "de": "Nur bei neuerlichem Antrag innerhalb eines Jahres nach der letzten Entscheidung: aktuelle medizinische Unterlagen (z. B. ärztliches Attest, Krankenhausbefunde)",
+      "en": "Only for a new application within one year of the last decision: current medical documents (e.g. medical certificate, hospital reports)",
+      "fundstelle": "PDF-S. 2",
+      "zitat": "Neuerlicher Antrag innerhalb eines Jahres nach der letzten Entscheidung: Aktuelle medizinische Unterlagen (z.B. ärztliches Attest, Krankenhausbefunde) sind vorzulegen."
+    },
+    {
+      "de": "Nur bei anderer Staatsbürgerschaft als Österreich: Nachweis über die Aufenthaltsberechtigung",
+      "en": "Only if not an Austrian citizen: proof of residence permit",
+      "fundstelle": "PDF-S. 1",
+      "zitat": "(Bitte geben Sie den Staat an und legen Sie einen Nachweis über die Aufenthaltsberechtigung bei.)"
+    },
+    {
+      "de": "Nur bei Antragstellung durch eine andere Person (Abschnitt 2): Nachweis der Vertretung, z. B. Obsorge, Vorsorgevollmacht oder Erwachsenenvertretung (liegt bei oder wird nachgereicht)",
+      "en": "Only if another person applies (section 2): proof of representation, e.g. custody, lasting power of attorney or adult representation (enclosed or sent later)",
+      "fundstelle": "PDF-S. 1",
+      "zitat": "(Obsorge, Vorsorgebevollmächtigung, gewählte, gesetzliche oder gerichtliche Erwachsenenvertretung, Kuratorium)"
+    },
+    {
+      "de": "Nur wenn Sie noch keine Leistung beziehen und eine Überweisung aufs Konto wünschen: „Antrag auf bargeldlose Pensionszahlung“ vom Geldinstitut ausstellen lassen und an die PVA senden",
+      "en": "Only if you receive no benefit yet and want payment to a bank account: have your bank issue the “Antrag auf bargeldlose Pensionszahlung” (cashless payment form) and send it to the PVA",
+      "fundstelle": "PDF-S. 4",
+      "zitat": "Lassen Sie bitte den „Antrag auf bargeldlose Pensionszahlung“ beim Geldinstitut ausstellen und senden diesen an uns."
+    }
+  ],
+  "hinweise": {
+    "de": "PAL 080 ist das Formular der Pensionsversicherungsanstalt. Über das Pflegegeld entscheidet der Träger, der die Pension auszahlt (BPGG § 22 Abs. 1 Z 1) – wer eine Pension von SVS oder BVAEB bezieht, wendet sich an diesen Träger. Datum und Unterschrift (PDF-S. 4, Abschnitt 11) setzen Sie selbst; der Lotse versendet nichts. Angaben zum Gesundheitszustand (Abschnitt 3) und zur Betreuung (Abschnitt 4) trägt der Lotse nicht ein. Ist eine helfende Person angegeben, steht sie in Abschnitt 3 als Person, die vom Termin des Hausbesuchs informiert werden soll – bitte prüfen. Die beiliegenden Meldepflichten (PDF-S. 5–7) sind Bestandteil des Antrags.",
+    "en": "PAL 080 is the form of the Pension Insurance Institution (PVA). Care allowance is decided by the body that pays the pension (BPGG § 22 (1) no. 1) – if the pension is paid by SVS or BVAEB, contact that body. You add the date and signature yourself (PDF page 4, section 11); the navigator sends nothing. The navigator does not fill in the health section (section 3) or the care section (section 4). If a helping person is given, they are entered in section 3 as the person to be informed about the home visit – please check. The enclosed reporting obligations (PDF pages 5–7) are part of the application."
+  },
+  "hinweis_quellen": [
+    {
+      "art": "recht",
+      "titel": "BPGG § 22",
+      "fundstelle": "BGBl. I Nr. 32/2026",
+      "datei": "Rechtstexte/BPGG=PARA=22=32=2026-05-19=2026-05-20.xml",
+      "zitat": "der für die Gewährung der Vollrente, Pension oder des Sonderruhegeldes zuständige Sozialversicherungsträger",
+      "stand": "2026-05-20"
+    },
+    {
+      "art": "formular",
+      "titel": "PVA – PAL 080 (01. 2025)",
+      "fundstelle": "PDF-S. 4",
+      "zitat": "Ich habe die beiliegenden Meldepflichten als Bestandteil dieses Fragebogens gelesen und verstanden."
+    }
+  ],
+  "vorauswahl": {}
+}
