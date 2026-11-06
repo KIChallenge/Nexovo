@@ -330,14 +330,20 @@ def _uebersetz_system(sprache: str, leicht: bool = False) -> str:
         "schreiben. Keine Zahlen hinzufügen (z. B. „around the clock“ nicht als „24 Stunden“).\n"
         "- Namen von Einrichtungen, Gesetzen, Formularen und Abkürzungen (z. B. ÖGK, PVA, SVS, BVAEB, FSW, ASVG, "
         "e-card, PAL 080) nicht übersetzen.\n"
+        "- „pension“ heißt hier immer Alters- oder Invaliditätspension (Rente), nie Unterkunft oder Pension im Sinn "
+        "von Gästehaus.\n"
         f"{stil}"
         "- Nichts hinzufügen, nichts weglassen, keine medizinische Bewertung.\n"
         "- Leere Texte bleiben leer. Nur Text, kein Markdown."
     )
 
 
+# Bei Änderungen an den Übersetzungsregeln erhöhen: alte Übersetzungen werden dann neu erzeugt.
+_UEBERSETZ_VERSION = 2
+
+
 def _cache_datei(sprache: str) -> Path:
-    return config.CACHE_DIR / "uebersetzungen" / f"{sprache}.json"
+    return config.CACHE_DIR / "uebersetzungen" / f"{sprache}.v{_UEBERSETZ_VERSION}.json"
 
 
 def _cache_fuer(sprache: str) -> dict[str, str]:

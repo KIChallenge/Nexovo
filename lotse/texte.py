@@ -28,10 +28,12 @@ _ENGINE: dict[str, dict[str, str]] = {
     "begruessung": {
         "de": "Willkommen beim SV KI-Lotsen. Beschreiben Sie Ihre Situation in eigenen Worten "
               "oder laden Sie ein Dokument hoch, zum Beispiel einen Entlassungsbrief. "
-              "Ich zeige Ihnen passende Leistungen, die zuständige Stelle und die nächsten Schritte – jeweils mit Quelle.",
+              "Ich zeige Ihnen passende Leistungen, die zuständige Stelle und die nächsten Schritte. "
+              "Zu jeder Aussage gibt es eine Quelle.",
         "en": "Welcome to the SV AI Navigator. Describe your situation in your own words "
               "or upload a document, for example a discharge letter. "
-              "I will show you matching services, the responsible body and the next steps – each with a source.",
+              "I will show you matching services, the responsible body and the next steps. "
+              "Every statement has a source.",
     },
     "begruessung_details": {
         "de": "Ich frage nur nach, wenn eine Angabe den nächsten Schritt verändert. "
@@ -638,7 +640,7 @@ _LEICHT: dict[str, dict[str, str]] = {
         "de": "Willkommen! Ich bin der Lotse für die Sozialversicherung. Schreiben Sie in eigenen Worten: "
               "Worum geht es? Sie können auch ein Dokument hochladen. Zum Beispiel einen Brief vom Spital. "
               "Ich zeige Ihnen passende Hilfen. Ich zeige Ihnen auch die nächsten Schritte. "
-              "Bei jeder Aussage steht die Quelle.",
+              "Zu jeder Aussage gibt es eine Quelle.",
         "en": "Welcome! I am the guide for social insurance. Tell me in your own words: "
               "What is it about? You can also upload a document. For example a letter from the hospital. "
               "I show you help that fits. I also show you the next steps. "

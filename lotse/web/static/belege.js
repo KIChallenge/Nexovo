@@ -44,23 +44,31 @@ export function belegeBereich(quellen, id) {
 /** Text mit [n]-Verweisen auf die Belege der Nachricht (Verweise nur sichtbar bei „Belege anzeigen“). */
 export function textMitZitaten(text, praefix) {
   const frag = document.createDocumentFragment();
-  for (const teil of text.split(/(\[\d+\])/)) {
-    const m = /^\[(\d+)\]$/.exec(teil);
-    if (m && praefix) {
+  // Folgen wie „[3], [4]“ bilden eine Gruppe, damit ohne Belege auch das Komma dazwischen verschwindet.
+  for (const teil of text.split(/(\[\d+\](?:\s*,\s*\[\d+\])*)/)) {
+    if (!/^\[\d+\]/.test(teil)) {
+      if (teil) frag.append(document.createTextNode(teil));
+      continue;
+    }
+    if (!praefix) continue;  // Marker ohne Belegliste nicht anzeigen
+    const gruppe = el("span", { class: "zitat-gruppe" });
+    for (const stueck of teil.split(/(\[\d+\])/)) {
+      const m = /^\[(\d+)\]$/.exec(stueck);
+      if (!m) {
+        if (stueck) gruppe.append(document.createTextNode(stueck));
+        continue;
+      }
       const ziel = `${praefix}-${m[1]}`;
-      frag.append(el("sup", { class: "zitat-marke" }, el("a", {
+      gruppe.append(el("sup", { class: "zitat-marke" }, el("a", {
         href: `#${ziel}`, "aria-label": `${t("quelle")} ${m[1]}`,
         onclick: (ev) => {
           ev.preventDefault();
           const e = document.getElementById(ziel);
           if (e && fokussieren(e, { scroll: false })) e.scrollIntoView({ block: "nearest" });
         },
-      }, teil)));
-    } else if (m) {
-      continue;  // Marker ohne Belegliste nicht anzeigen
-    } else if (teil) {
-      frag.append(document.createTextNode(teil));
+      }, stueck)));
     }
+    frag.append(gruppe);
   }
   return frag;
 }

@@ -282,7 +282,7 @@ textarea, input[type="text"], input[type="email"], input[type="tel"], input[type
 .naechster-titel { margin: .2rem 0 0; font-weight: 700; font-size: 1.1rem; }
 .naechster-text { margin: .2rem 0 .4rem; }
 .naechster-text.ist-erledigt { color: var(--text-leise); }
-.aufgaben-kurz { margin: .3rem 0 .4rem; padding-inline-start: 1.3rem; }
+.aufgaben-kurz { margin: .3rem 0 .4rem; padding: 0; list-style: none; }
 .aufgaben { margin: 1rem 0 0; padding: 0; list-style: none; border: 1px solid var(--rand); border-radius: var(--radius); background: var(--flaeche); }
 .aufgabe { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .3rem 1rem; padding: .6rem .9rem; }
 .aufgabe + .aufgabe { border-top: 1px solid var(--rand); }
@@ -344,7 +344,7 @@ textarea, input[type="text"], input[type="email"], input[type="tel"], input[type
 .seiten-titel { display: block; padding-block: .55rem; font-weight: 700; }
 
 /* ---- Belege (globaler Schalter) --------------------------------------------------------- */
-html[data-belege="aus"] .belege, html[data-belege="aus"] .zitat-marke, html[data-belege="aus"] .nur-mit-belegen {
+html[data-belege="aus"] .belege, html[data-belege="aus"] .zitat-gruppe, html[data-belege="aus"] .nur-mit-belegen {
   display: none;
 }
 .belege-liste { display: grid; gap: .4rem; width: 100%; margin: .5rem 0 0; padding: 0; list-style: none; }

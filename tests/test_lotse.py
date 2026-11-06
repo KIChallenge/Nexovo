@@ -872,7 +872,7 @@ def test_weitere_sprache_uebersetzt_text_und_buendel_zitate_bleiben(monkeypatch,
     # wörtliche Zitate aus dem Dokument bleiben im Original
     assert f"“{reha['dokument'][0]['zitat']}”" in reha["dokument"][0]["text"]
     assert all(x["text"].startswith("[tr] ") for e in a.fallakte["eintraege"] for x in e["schritte"])
-    assert (tmp_path / "uebersetzungen" / "tr.json").is_file()
+    assert llm._cache_datei("tr").is_relative_to(tmp_path) and llm._cache_datei("tr").is_file()
     # zweites Rendern kommt ohne Modell aus (Cache)
     monkeypatch.setattr(llm, "_chat", lambda *a, **k: "")
     assert lotse.aktuell(s).buendel[0]["titel"].startswith("[tr] ")
@@ -1090,7 +1090,7 @@ def test_weitere_sprache_uebersetzt_leichte_sprache_mit_eigenem_cache(monkeypatc
     assert a.buendel[0]["kurz"] == f"[tr] {erste.leicht['en']}"
     uebersetzungen = [x for x in systeme if x.startswith("Du übersetzt")]
     assert uebersetzungen and all("Leichte Sprache" in x for x in uebersetzungen)
-    cache = json.loads((tmp_path / "uebersetzungen" / "tr.json").read_text(encoding="utf-8"))
+    cache = json.loads(llm._cache_datei("tr").read_text(encoding="utf-8"))
     assert cache and all(k.startswith(llm._LEICHT_SCHLUESSEL) for k in cache)
     systeme.clear()
     einfach = lotse.einstellungen(s, stil="einfach")
