@@ -4,7 +4,7 @@
 
 Der Lotse beantwortet nichts ohne Beleg. Jede fachliche Aussage stammt aus einer lokalen Quelle der SV-Box, also aus einem Rechtstext, einer Seite im ÖGK-Serviceratgeber 2026, einem Formular oder einem hochgeladenen Dokument. Sie wird mit Fundstelle und Rechtsstand angezeigt. Aussagen ohne lokalen Beleg sind als „extern – nicht lokal geprüft“ markiert.
 
-Der Kern arbeitet deterministisch. Ein Sprachmodell (Azure, `gpt-5-4-mini`) ist optional: Es versteht Freitext besser und formuliert Antworten aus. Es bekommt aber nur die bereits belegten Fakten, und jede Modellausgabe läuft durch dieselbe Grenzprüfung. Fällt das Modell aus, läuft die Demo unverändert weiter.
+Der Kern arbeitet deterministisch. Ein Sprachmodell (Azure Foundry, `gpt-5.4-mini`) ist optional. Es ordnet Freitext zu (auch Dialekt und andere Sprachen) und unterscheidet dabei Lebenslagen von Sachfragen. Als zweite Stufe der Grenzprüfung erkennt es medizinische Beurteilungsfragen, die die Regeln nicht kennen. Außerdem formuliert es Wissensantworten, bekommt dafür aber nur die bereits belegten Fakten, und jede Ausgabe läuft durch dieselbe Prüfung. Fällt das Modell aus, läuft die Demo regelbasiert unverändert weiter.
 
 ## Datenfluss
 
@@ -38,9 +38,9 @@ Antwort (Text, eine Rückfrage, Bündel, Quellen, Grenze, Fallakte, Modus) → W
 | `lotse/katalog.py`, `lotse/data/leistungen.json` | Kuratierte Leistungen für die vier Szenarien mit Stelle, Voraussetzungen, Unterlagen, Schritten und Belegen |
 | `lotse/dokument.py` | Erkennt ausdrücklich dokumentierte Empfehlungen (wörtlich, mit Seite) und administrative Stammdaten |
 | `lotse/formulare.py`, `lotse/data/formulare/` | Ordnet Slots den AcroForm-Feldern der Originalformulare zu, füllt nur den Teil für Versicherte aus, prüft Pflichtangaben |
-| `lotse/grenzen.py` | Medizinische Grenze für Anfragen (vor der Verarbeitung) und für Modellausgaben (danach) |
+| `lotse/grenzen.py` | Medizinische Grenze: Regeln vor der Verarbeitung, im KI-Modus ergänzt um eine Modellprüfung (Stufe 2); Nachkontrolle von Modellausgaben |
 | `lotse/lotse.py`, `lotse/fallakte.py` | Dialogsteuerung mit minimalen Rückfragen, Fallakte mit Status |
-| `lotse/llm.py` | Optionale Azure-Anbindung; ohne Schlüssel inaktiv |
+| `lotse/llm.py` | Optionale Azure-Anbindung: `verstehe` (Szenario/Slots, Lebenslage vs. Sachfrage), `grenzkategorie` (Grenzprüfung Stufe 2), `formuliere` (belegte Wissensantwort); ohne Schlüssel inaktiv |
 | `lotse/web/` | FastAPI und eine statische Oberfläche ohne Build-Schritt |
 
 ## Methodische Entscheidungen

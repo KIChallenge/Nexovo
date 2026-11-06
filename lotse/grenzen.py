@@ -219,8 +219,15 @@ def pruefe_anfrage(text: str) -> Grenzentscheidung:
     verwaltung = _VERWALTUNG.search(t) is not None
     for kategorie, muster in _KOMPILIERT:
         if any(m.search(t) for m, schwach in muster if not (schwach and verwaltung)):
-            return Grenzentscheidung(erlaubt=False, kategorie=kategorie, antwort=dict(ANTWORTEN[kategorie]))
+            return ablehnung(kategorie)
     return Grenzentscheidung(erlaubt=True)
+
+
+def ablehnung(kategorie: str | None) -> Grenzentscheidung:
+    """Ablehnung mit der Standardantwort der Kategorie; unbekannte oder leere Kategorie → erlaubt."""
+    if kategorie not in ANTWORTEN:
+        return Grenzentscheidung(erlaubt=True)
+    return Grenzentscheidung(erlaubt=False, kategorie=kategorie, antwort=dict(ANTWORTEN[kategorie]))
 
 
 # --- Nachkontrolle generierter Antworten ------------------------------------------------------

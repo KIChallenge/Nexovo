@@ -376,8 +376,15 @@ class Lotse:
         s.verlauf.append({"rolle": "nutzer", "text": text})
 
         entscheidung = grenzen.pruefe_anfrage(text)
+        durch_ki = False
+        if entscheidung.erlaubt and llm.aktiv():
+            # Zweite Stufe für Formulierungen, die die Regeln nicht kennen (Dialekt, andere Sprachen)
+            entscheidung = grenzen.ablehnung(llm.grenzkategorie(text))
+            durch_ki = not entscheidung.erlaubt
         if not entscheidung.erlaubt:
-            return self._antwort(s, self._grenze(entscheidung))
+            inhalt = self._grenze(entscheidung)
+            inhalt.ki_verstanden = durch_ki
+            return self._antwort(s, inhalt)
 
         if schritt_id := self._statusbefehl(s, text):
             return self.setze_status(s, schritt_id, "erledigt")

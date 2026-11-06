@@ -54,7 +54,13 @@ Fehlen die Daten ganz, laufen Katalog, Grenzprüfung, Dialog und der synthetisch
 | `LOTSE_PORT` | Port der Oberfläche (Standard: 8000) |
 | `AZURE_OPENAI_ENDPOINT`, `AZURE_API_KEY`, `AZURE_OPENAI_MODEL` | Optionaler KI-Modus (Standard-Modell `gpt-5-4-mini`) |
 
-Vorlage: `.env.example` nach `.env` kopieren. `.env` wird nicht eingecheckt. Ohne Schlüssel läuft der Lotse im **regelbasierten Modus**, das Badge oben rechts zeigt den Modus an. Mit Schlüssel formuliert das Modell Antworten auf Wissensfragen und hilft beim Verstehen von Freitext. Es arbeitet dabei nur mit den belegten Fakten, und jede Ausgabe wird auf Grenzverstöße, gültige Zitate und unbelegte Zahlen geprüft. Bei einem Verstoß, Fehler oder Timeout kommt die regelbasierte Antwort.
+Vorlage: `.env.example` nach `.env` kopieren. `.env` wird nicht eingecheckt. Ohne Schlüssel läuft der Lotse im **regelbasierten Modus**. Das Badge oben rechts zeigt „KI“ nur, wenn eine Antwort tatsächlich mit dem Modell entstanden ist. Mit Schlüssel (live getestet mit `gpt-5.4-mini` auf Azure Foundry) übernimmt das Modell drei Aufgaben:
+
+1. **Verstehen:** Umgangssprache, Dialekt und andere Sprachen werden einem Szenario zugeordnet, etwa „Mama schafft's daheim nimma allein“ oder „Annem bakıma muhtaç“ → Pflege. Angaben wie „Graz“ werden zum Bundesland Steiermark. Konkrete Sachfragen („Was regelt das ASVG zur Rezeptgebühr?“) gehen an die Wissensschicht statt in ein Szenario.
+2. **Grenzprüfung, zweite Stufe:** Was die Regeln durchlassen, prüft das Modell noch einmal auf medizinische Beurteilung, z. B. „Is des wos Schlimmes?“ oder „Mei Blutdruck is 160 zu 100, muass i wos nehma?“. Den Antworttext liefert weiterhin `grenzen.py`.
+3. **Formulieren:** Wissensantworten entstehen ausschließlich aus den abgerufenen, nummerierten Belegen. Jede Ausgabe wird auf Grenzverstöße, gültige Zitate und unbelegte Zahlen geprüft.
+
+Bei einem Verstoß, Fehler oder Timeout greift die regelbasierte Antwort. Pro Nachricht kostet der KI-Modus etwa 0,5–3 s.
 
 ## Tests
 
@@ -98,7 +104,7 @@ Mehr zu Methodik und Entscheidungen in [`docs/ARCHITEKTUR.md`](docs/ARCHITEKTUR.
 
 ## Bekannte Einschränkungen und offene Punkte
 
-- **KI-Modus nicht live getestet:** Bei der Entwicklung stand kein API-Schlüssel zur Verfügung. Die Anbindung ist nach dem SDK geschrieben, die Ausgabeprüfung ist getestet.
+- **KI-Modus:** Er ist live getestet, die automatischen Tests laufen aber bewusst ohne Modell und damit deterministisch. Die Modellausgaben schwanken; Schutz bieten die Prüfungen nach der Ausgabe und die regelbasierte Rückfallebene.
 - **Kein Foto-Upload und keine Spracheingabe:** Eingelesen werden PDF und Text, Bilder werden nicht per OCR erkannt.
 - **Termine:** Der Lotse nennt Kontakt und Terminvereinbarung laut Quelle (z. B. PVA-Landesstelle), bucht aber nicht selbst.
 - **Regionale Abdeckung:** Die regionalen Angebote stammen aus den lokalen Quellen und betreffen Wien (FSW). Das Fahrtkostenformular ist das der ÖGK Wien. Bei SVS und BVAEB ist die Zuständigkeit für Kassenleistungen als „lokal nicht geprüft“ markiert.

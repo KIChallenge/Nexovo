@@ -73,7 +73,13 @@ def _verstehe_system() -> str:
         slots.append(f'- "{sid}" ({s.label["de"]}): {werte}')
     return (
         "Du ordnest Anliegen von Versicherten der österreichischen Sozialversicherung zu. "
-        "Antworte nur mit einem JSON-Objekt {\"szenarien\": [...], \"slots\": {...}}.\n"
+        "Antworte nur mit einem JSON-Objekt {\"art\": \"situation\"|\"frage\", \"szenarien\": [...], \"slots\": {...}}.\n"
+        "art: \"situation\", wenn die Person ihre Lage schildert oder fragt, welche Angebote, Leistungen oder "
+        "Schritte für ihre Lage in Frage kommen (z. B. \"Meine Mutter kommt allein nicht mehr zurecht\", "
+        "\"Bin aus dem Spital entlassen worden\", \"Ich habe ein Kind, welche Angebote gibt es?\"); "
+        "\"frage\", wenn sie eine konkrete Sachfrage zu einer bestimmten Leistung, einem Gesetz, einem Betrag, "
+        "einer Frist oder einem Ablauf stellt (z. B. \"Was regelt das ASVG zur Rezeptgebühr?\", "
+        "\"Wie lange gibt es Krankengeld?\"). Bei \"frage\" bleibt \"szenarien\" leer.\n"
         "Szenarien (nur diese IDs, sortiert nach Relevanz, leer wenn keines passt):\n"
         "- \"pflege\": Pflege oder Betreuung einer Person, Pflegegeld, Pflege zu Hause\n"
         "- \"gesundheit\": Gesundheitsförderung, Vorsorge, Bewegung, Ernährung\n"
@@ -98,7 +104,8 @@ def verstehe(text: str, sprache: str) -> dict:
     if not isinstance(daten, dict):
         return ergebnis
     szenarien = daten.get("szenarien")
-    if isinstance(szenarien, list):
+    # Sachfragen beantwortet die Wissensschicht; nur geschilderte Lebenslagen eröffnen ein Szenario
+    if isinstance(szenarien, list) and daten.get("art") != "frage":
         for sz in szenarien:
             if isinstance(sz, str) and sz in SZENARIEN and sz not in ergebnis["szenarien"]:
                 ergebnis["szenarien"].append(sz)
@@ -108,6 +115,39 @@ def verstehe(text: str, sprache: str) -> dict:
             if sid in _VERSTEHE_SLOTS and isinstance(wert, str) and SLOTS[sid].gueltig(wert):
                 ergebnis["slots"][sid] = wert.strip()
     return ergebnis
+
+
+_GRENZ_KATEGORIEN = ("diagnose", "befund", "risiko", "therapie", "medikament", "dosis")
+
+_GRENZ_SYSTEM = (
+    "Du prüfst Anfragen an einen Wegweiser für Leistungen der österreichischen Sozialversicherung. "
+    "Er darf keine medizinische Beurteilung abgeben. Antworte nur mit einem JSON-Objekt "
+    "{\"kategorie\": null | \"diagnose\" | \"befund\" | \"risiko\" | \"therapie\" | \"medikament\" | \"dosis\"}.\n"
+    "- diagnose: was jemand hat oder ob Beschwerden/Symptome etwas Ernstes sind\n"
+    "- befund: was Befunde, Mess- oder Laborwerte bedeuten oder ob ein Wert normal ist\n"
+    "- risiko: persönliches Erkrankungsrisiko\n"
+    "- therapie: ob eine Behandlung, Operation, Reha oder Kur für die Person medizinisch nötig oder sinnvoll ist, "
+    "oder welche Behandlung die richtige ist\n"
+    "- medikament: ob oder welches Medikament jemand nehmen soll\n"
+    "- dosis: Medikamente absetzen, weglassen, ändern oder dosieren\n"
+    "null bei allen administrativen Anliegen, auch wenn sie medizinische Wörter enthalten: Anträge, Zuständigkeit, "
+    "Kosten, Bewilligung, Erstattung, Transport, Unterlagen, Fristen, Angebote, Leistungen, Termine. Beispiele für null: "
+    "\"Wer zahlt den Transport zur Bestrahlung?\", \"Muss mein Medikament bewilligt werden?\", "
+    "\"Im Brief steht, Reha wird empfohlen – was muss ich tun?\", \"Meine Mutter ist chronisch krank, was kann ich tun?\", "
+    "\"Ich habe Diabetes – gibt es ein Programm der ÖGK?\", \"Wie beantrage ich eine Reha?\", "
+    "\"Mein Vater hatte Darmkrebs. Welche Vorsorgeuntersuchungen gibt es?\" (Frage nach Angeboten; "
+    "risiko nur, wenn eine persönliche Einschätzung des Risikos verlangt wird)."
+)
+
+
+def grenzkategorie(text: str) -> str | None:
+    """Zweite Stufe der Grenzprüfung; None bei administrativen Anliegen und bei jedem Fehler (dann gelten die Regeln)."""
+    roh = _chat(_GRENZ_SYSTEM, text, 300, json_modus=True)
+    try:
+        kategorie = json.loads(roh).get("kategorie") if roh else None
+    except (ValueError, AttributeError):
+        return None
+    return kategorie if kategorie in _GRENZ_KATEGORIEN else None
 
 
 def _formuliere_system(sprache: str, stil: str) -> str:
@@ -125,8 +165,12 @@ def _formuliere_system(sprache: str, stil: str) -> str:
         "- Nenne keine Zahlen, Beträge, Fristen, Adressen oder Telefonnummern, die nicht in den Fakten stehen.\n"
         "- Keine Diagnose, keine Befundinterpretation, keine Risikobewertung, keine Therapie-, "
         "Medikamenten- oder Dosierungsempfehlung.\n"
-        "- Beantworten die Fakten die Frage nicht, sage das in einem Satz und verweise an den "
+        "- Ordne keine persönlichen Mess- oder Befundwerte ein. Bei gesundheitlichen Fragen verweise an "
+        "Ärztin oder Arzt.\n"
+        "- Beantworten die Fakten eine Verwaltungsfrage nicht, sage das in einem Satz und verweise an den "
         "zuständigen Sozialversicherungsträger.\n"
+        "- Sprich die Person mit „Sie“ an. Formuliere natürlich (Deutsch: „Laut den Quellen …“, Englisch: "
+        "„According to the sources …“), nie „Die Fakten sagen“ bzw. „The facts say“.\n"
         f"- Antworte auf {sprache_txt}. {stil_txt}\n"
         "- Nur Fließtext, kein Markdown."
     )
