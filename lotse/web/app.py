@@ -18,7 +18,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from lotse import config, llm, speicher, texte, wissen
-from lotse.lotse import Antwort, Lotse, Sitzung
+from lotse.lotse import Antwort, Lotse, Sitzung, UngueltigeAngabe, angabe_slots
 from lotse.models import WEITERE_SPRACHEN
 
 log = logging.getLogger(__name__)
@@ -41,6 +41,7 @@ _lotse = Lotse()
 _sitzungen: OrderedDict[str, Sitzung] = OrderedDict()
 _sitzungen_sperre = threading.Lock()
 _ui_cache: dict[str, dict] = {}  # übersetzte UI-Texte je weiterer Sprache
+_slots_cache: dict[str, list[dict]] = {}  # übersetzte Slot-Beschreibungen je weiterer Sprache
 
 
 def _vorwaermen() -> None:
@@ -103,6 +104,11 @@ class TerminAenderung(BaseModel):
     datum: str | None = None
     uhrzeit: str | None = None
     status: str | None = None
+
+
+class AngabeAenderung(BaseModel):
+    slot: str
+    wert: str | None = None  # None oder "" = Angabe löschen
 
 
 def _merke(s: Sitzung) -> None:
@@ -172,6 +178,43 @@ def ui_texte(sprache: str = "de") -> dict:
     return {"texte": werte, "sprachen": texte.sprachen(ki), "ki": ki}
 
 
+def _slots_uebersetzt(sprache: str) -> list[dict]:
+    """Slot-Beschreibungen einer weiteren Sprache: einmal übersetzen, dann aus dem Cache; Fehlendes bleibt Englisch."""
+    if sprache in _slots_cache:
+        return _slots_cache[sprache]
+    basis = angabe_slots("en")
+    felder: list[tuple[dict, str]] = []
+    for x in basis:
+        felder += [(x, k) for k in ("label", "frage", "muster_hinweis") if x[k]]
+        felder += [(o, "label") for o in x["optionen"]]
+    uebersetzt = llm.uebersetze([c[k] for c, k in felder], sprache)
+    for (c, k), u in zip(felder, uebersetzt):
+        if u is not None:
+            c[k] = u
+    if all(u is not None for u in uebersetzt):
+        _slots_cache[sprache] = basis
+    return basis
+
+
+@app.get("/api/slots")
+def slots(sprache: str = "de") -> list[dict]:
+    """Angaben, die die Oberfläche in „Mein Plan“ als Formularfelder anbietet (Typ, Auswahl, Format, sensibel)."""
+    if sprache in texte.SPRACHEN:
+        return angabe_slots(sprache)
+    if sprache in WEITERE_SPRACHEN:
+        if not llm.aktiv():
+            raise HTTPException(400, f"Sprache {sprache} gibt es nur im KI-Modus")
+        return _slots_uebersetzt(sprache)
+    raise HTTPException(400, f"Unbekannte Sprache: {sprache}")
+
+
+def _meldung(meldung: dict[str, str], sprache: str) -> str:
+    """Meldung für die Person in der Sprache der Sitzung (weitere Sprachen übersetzt, sonst Englisch)."""
+    if sprache in texte.SPRACHEN:
+        return meldung[sprache]
+    return llm.uebersetze([meldung["en"]], sprache)[0] or meldung["en"]
+
+
 @app.post("/api/sitzung")
 def sitzung_anlegen(daten: NeueSitzung | None = None) -> dict:
     daten = daten or NeueSitzung()
@@ -229,6 +272,18 @@ def schritt_status(sitzung_id: str, schritt_id: str, daten: Status) -> dict:
             raise HTTPException(404, "Schritt nicht gefunden") from e
         except ValueError as e:
             raise HTTPException(400, str(e)) from e
+
+
+@app.post("/api/sitzung/{sitzung_id}/angabe")
+def angabe_aendern(sitzung_id: str, daten: AngabeAenderung) -> dict:
+    """Angabe setzen, ersetzen oder löschen (`wert` null/""); Stellen, Regionen, Formulare und Rückfragen werden
+    neu aufgelöst. 400 mit einer Erklärung in der Sprache der Sitzung, wenn Angabe oder Wert nicht passen."""
+    s = _sitzung(sitzung_id)
+    with s.sperre:
+        try:
+            return _json(s, _lotse.angabe(s, daten.slot, daten.wert))
+        except UngueltigeAngabe as e:
+            raise HTTPException(400, _meldung(e.meldung, s.sprache)) from e
 
 
 @app.post("/api/sitzung/{sitzung_id}/termin")

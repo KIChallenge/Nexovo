@@ -2,7 +2,8 @@
 erkennt Szenarien und passende Leistungen im Freitext.
 
 Jede Leistung trägt ihre Quellen. `beleg="extern"` heißt: Kernaussagen nicht lokal geprüft (z. B. „Bewegt im Park“).
-Einrichtungen, regionale Stellen, Nutzen und Trägerzuständigkeit tragen jeweils einen eigenen Beleg.
+Einrichtungen, regionale Stellen, Nutzen und Trägerzuständigkeit tragen jeweils einen eigenen Beleg. `leicht` umschreibt
+kurz/details/voraussetzungen/schritte in Leichter Sprache ohne neue Inhalte und wird beim Laden geprüft (`pruefe_leichte_sprache`).
 """
 
 from __future__ import annotations
@@ -29,7 +30,7 @@ TERMIN_ANLAESSE: tuple[str, ...] = SLOTS["termin.anlass"].optionen
 _SPRACHEN = ("de", "en")
 _QUELLEN_ARTEN = set(get_args(QuellenArt))
 _PFLICHTFELDER = ("stichworte", "nutzen", "nutzen_quelle", "einrichtungen", "regional", "formular_regionen", "termin_anlass",
-                  "unterlagen_formular")
+                  "unterlagen_formular", "leicht")
 
 
 class KatalogFehler(ValueError):
@@ -41,6 +42,7 @@ class Leistung:
     id: str
     titel: dict[str, str]
     kurz: dict[str, str]  # einfache Sprache, höchstens zwei Sätze
+    leicht: dict[str, str]  # Leichte Sprache, 2–4 kurze Sätze; nur Inhalte (und Zahlen) aus kurz/details/voraussetzungen/schritte
     details: dict[str, str]
     bereiche: list[str]
     szenarien: list[str]
@@ -240,6 +242,60 @@ def _stichworte(liste, wo: str) -> list[str]:
     return list(liste)
 
 
+# --- Leichte Sprache --------------------------------------------------------------------------
+
+LEICHT_SAETZE: tuple[int, int] = (2, 4)
+LEICHT_WOERTER = 12  # höchstens je Satz
+_LEICHT_ABKUERZUNG = re.compile(
+    r"(?<![\w.])(?:z\.\s?b|u\.\s?a|d\.\s?h|o\.\s?ä|e\.\s?g|i\.\s?e)\."
+    r"|\b(?:bzw|ggf|inkl|usw|etc)\b\.?"
+    r"|\b(?:ca|evtl|vgl|bspw|sog|tel|nr|approx)\.", re.IGNORECASE)
+_LEICHT_SATZENDE = re.compile(r"(?<=[.!?])\s+")
+_ZAHL = re.compile(r"\d+(?:[.,]\d+)*")
+_ZAHLWORT = {wort: str(n)
+             for woerter in (("zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf"),
+                             ("two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"))
+             for n, wort in enumerate(woerter, start=2)}
+
+
+def _zahlen(text: str) -> set[str]:
+    """Ziffernfolgen („1.308,39“, „0800“) und Zahlwörter zwei bis zwölf (als Ziffer) eines Texts."""
+    return set(_ZAHL.findall(text)) | {_ZAHLWORT[w] for w in re.findall(r"[^\W\d_]+", text.lower()) if w in _ZAHLWORT}
+
+
+def pruefe_leichte_sprache(text: str, belegt: str, saetze: tuple[int, int] = LEICHT_SAETZE) -> list[str]:
+    """Regelverstöße eines Texts in Leichter Sprache; leere Liste = in Ordnung.
+
+    Geprüft: Satzzahl im Bereich `saetze`, Satzzeichen am Ende, höchstens LEICHT_WOERTER Wörter je Satz, keine Abkürzungen
+    wie „z. B.“ oder „bzw.“ und keine Zahl, die nicht schon im belegten Ausgangstext `belegt` steht – Leichte Sprache fügt
+    keine Beträge, Fristen oder Nummern hinzu („6 Monate“ ist erlaubt, wenn dort „sechs Monate“ steht).
+    """
+    verstoesse = [f"Abkürzung „{m.group(0)}“" for m in _LEICHT_ABKUERZUNG.finditer(text)]
+    text = text.strip()
+    if not text.endswith((".", "!", "?")):
+        verstoesse.append("Text endet ohne Satzzeichen")
+    liste = _LEICHT_SATZENDE.split(text) if text else []
+    if not saetze[0] <= len(liste) <= saetze[1]:
+        verstoesse.append(f"{len(liste)} Sätze statt {saetze[0]} bis {saetze[1]}")
+    for satz in liste:
+        woerter = sum(1 for wort in satz.split() if re.search(r"\w", wort))
+        if woerter > LEICHT_WOERTER:
+            verstoesse.append(f"{woerter} Wörter (höchstens {LEICHT_WOERTER}): „{satz}“")
+    neu = sorted(_zahlen(text) - _zahlen(belegt))
+    if neu:
+        verstoesse.append(f"Zahl nicht im belegten Text: {', '.join(neu)}")
+    return verstoesse
+
+
+def _leicht(roh, belegt: dict[str, str], wo: str) -> dict[str, str]:
+    leicht = _text(roh, wo)
+    for sprache in _SPRACHEN:
+        verstoesse = pruefe_leichte_sprache(leicht[sprache], belegt[sprache])
+        if verstoesse:
+            raise KatalogFehler(f"{wo}.{sprache}: {'; '.join(verstoesse)}")
+    return leicht
+
+
 def _leistung(roh: dict, szenarien: list[str]) -> Leistung:
     lid = roh.get("id")
     if not isinstance(lid, str) or not re.fullmatch(r"[a-z0-9_]+", lid):
@@ -336,11 +392,17 @@ def _leistung(roh: dict, szenarien: list[str]) -> Leistung:
     if termin_anlass is not None and termin_anlass not in TERMIN_ANLAESSE:
         raise KatalogFehler(f"{wo}: termin_anlass muss aus {TERMIN_ANLAESSE} stammen")
 
+    kurz = _text(roh.get("kurz"), f"{wo}: kurz")
+    details = _text(roh.get("details"), f"{wo}: details")
+    voraussetzungen = _texte(roh.get("voraussetzungen") or [], f"{wo}: voraussetzungen")
+    belegt = {sp: " ".join([kurz[sp], details[sp], *(t[sp] for t in voraussetzungen + schritte)]) for sp in _SPRACHEN}
+
     return Leistung(
         id=lid,
         titel=_text(roh.get("titel"), f"{wo}: titel"),
-        kurz=_text(roh.get("kurz"), f"{wo}: kurz"),
-        details=_text(roh.get("details"), f"{wo}: details"),
+        kurz=kurz,
+        leicht=_leicht(roh["leicht"], belegt, f"{wo}: leicht"),
+        details=details,
         bereiche=list(bereiche),
         szenarien=szenarien,
         stelle=stelle,
@@ -349,7 +411,7 @@ def _leistung(roh: dict, szenarien: list[str]) -> Leistung:
         formular=formular,
         rueckfragen=rueckfragen,
         unterlagen=_texte(roh.get("unterlagen") or [], f"{wo}: unterlagen"),
-        voraussetzungen=_texte(roh.get("voraussetzungen") or [], f"{wo}: voraussetzungen"),
+        voraussetzungen=voraussetzungen,
         schritte=schritte,
         quellen=quellen,
         beleg=beleg,

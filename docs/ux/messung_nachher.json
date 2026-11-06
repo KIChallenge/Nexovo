@@ -1,0 +1,5231 @@
+{
+ "messungen": {
+  "S1_start": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 10,
+      "20.7": 1,
+      "28.8": 1,
+      "23.4": 1,
+      "18.9": 7,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 17,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 54,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 900,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 46,
+     "details": 1,
+     "ziele": 11
+    },
+    "tab": {
+     "gesamt": 17,
+     "vor_nachrichtenfeld": 12,
+     "im_bereich": 11,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Pflege",
+      "Nach dem Spital",
+      "Gesundheit",
+      "Kind"
+     ]
+    },
+    "sekunden": 0.4
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 10,
+      "18.9": 8,
+      "28.8": 1,
+      "23.4": 1,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 17,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 54,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 1167,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 46,
+     "details": 1,
+     "ziele": 11
+    },
+    "tab": {
+     "gesamt": 17,
+     "vor_nachrichtenfeld": 12,
+     "im_bereich": 11,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Pflege",
+      "Nach dem Spital",
+      "Gesundheit",
+      "Kind"
+     ]
+    },
+    "sekunden": 0.4
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      },
+      {
+       "regel": "color-contrast",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 10,
+      "18.9": 8,
+      "28.8": 1,
+      "23.4": 1,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 17,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 54,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 1453,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 46,
+     "details": 1,
+     "ziele": 11
+    },
+    "tab": {
+     "gesamt": 17,
+     "vor_nachrichtenfeld": 12,
+     "im_bereich": 11,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Pflege",
+      "Nach dem Spital",
+      "Gesundheit",
+      "Kind"
+     ]
+    },
+    "sekunden": 0.4
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 10,
+      "18.9": 8,
+      "28.8": 1,
+      "23.4": 1,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 17,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 54,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 1477,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 46,
+     "details": 1,
+     "ziele": 11
+    },
+    "tab": {
+     "gesamt": 17,
+     "vor_nachrichtenfeld": 12,
+     "im_bereich": 11,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Pflege",
+      "Nach dem Spital",
+      "Gesundheit",
+      "Kind"
+     ]
+    },
+    "sekunden": 0.4
+   }
+  },
+  "S2_pflegefall": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      },
+      {
+       "regel": "color-contrast",
+       "knoten": 7
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 36,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 25,
+      "20.7": 2,
+      "28.8": 1,
+      "19.8": 1,
+      "16.2": 6,
+      "18.9": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 167,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 1230,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 159,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.4
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 50,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 33,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 12
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 308,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 3805,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 300,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.4
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 50,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 33,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 12
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 308,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 4434,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 300,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.4
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 50,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 33,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 12
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 308,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 4458,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 300,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.4
+   }
+  },
+  "S2_plan": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 15,
+      "20.7": 2,
+      "28.8": 1,
+      "19.8": 1,
+      "18.9": 2
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 12,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 80,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 900,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 72,
+     "details": 2,
+     "ziele": 7
+    },
+    "tab": {
+     "gesamt": 12,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 7,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Antrag vorbereiten",
+      "Erledigt",
+      "Ansehen Kostenlose Pflegeberatung zu Hause",
+      "Ansehen Pflege und Betreuung zu Hause (mobile Dienste)",
+      "Weitere Möglichkeiten (12)"
+     ]
+    },
+    "sekunden": 1.8
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 15,
+      "18.9": 3,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 12,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 80,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 1260,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 72,
+     "details": 2,
+     "ziele": 7
+    },
+    "tab": {
+     "gesamt": 12,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 7,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Antrag vorbereiten",
+      "Erledigt",
+      "Ansehen Kostenlose Pflegeberatung zu Hause",
+      "Ansehen Pflege und Betreuung zu Hause (mobile Dienste)",
+      "Weitere Möglichkeiten (12)"
+     ]
+    },
+    "sekunden": 1.8
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 15,
+      "18.9": 3,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 12,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 80,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 1418,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 72,
+     "details": 2,
+     "ziele": 7
+    },
+    "tab": {
+     "gesamt": 12,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 7,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Antrag vorbereiten",
+      "Erledigt",
+      "Ansehen Kostenlose Pflegeberatung zu Hause",
+      "Ansehen Pflege und Betreuung zu Hause (mobile Dienste)",
+      "Weitere Möglichkeiten (12)"
+     ]
+    },
+    "sekunden": 1.8
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 21,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 15,
+      "18.9": 3,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 12,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 80,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 1442,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 72,
+     "details": 2,
+     "ziele": 7
+    },
+    "tab": {
+     "gesamt": 12,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 7,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Antrag vorbereiten",
+      "Erledigt",
+      "Ansehen Kostenlose Pflegeberatung zu Hause",
+      "Ansehen Pflege und Betreuung zu Hause (mobile Dienste)",
+      "Weitere Möglichkeiten (12)"
+     ]
+    },
+    "sekunden": 1.8
+   }
+  },
+  "S2_akte": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 66,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 35,
+      "20.7": 1,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 24,
+      "18.9": 2
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 24,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 263,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 1804,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 255,
+     "details": 2,
+     "ziele": 19
+    },
+    "tab": {
+     "gesamt": 24,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 19,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Für wen",
+      "Ändern Bundesland",
+      "Ändern Pension von",
+      "Ändern Krankenversicherung",
+      "Ändern Antragsart Pflegegeld"
+     ]
+    },
+    "sekunden": 1.9
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 66,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 35,
+      "18.9": 3,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 24
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 24,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 263,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 3322,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 255,
+     "details": 2,
+     "ziele": 19
+    },
+    "tab": {
+     "gesamt": 24,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 19,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Für wen",
+      "Ändern Bundesland",
+      "Ändern Pension von",
+      "Ändern Krankenversicherung",
+      "Ändern Antragsart Pflegegeld"
+     ]
+    },
+    "sekunden": 1.9
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 66,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 35,
+      "18.9": 3,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 24
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 24,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 263,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 3917,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 255,
+     "details": 2,
+     "ziele": 19
+    },
+    "tab": {
+     "gesamt": 24,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 19,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Für wen",
+      "Ändern Bundesland",
+      "Ändern Pension von",
+      "Ändern Krankenversicherung",
+      "Ändern Antragsart Pflegegeld"
+     ]
+    },
+    "sekunden": 1.9
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 66,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 35,
+      "18.9": 3,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 24
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 24,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 263,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 3941,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 255,
+     "details": 2,
+     "ziele": 19
+    },
+    "tab": {
+     "gesamt": 24,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 19,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Für wen",
+      "Ändern Bundesland",
+      "Ändern Pension von",
+      "Ändern Krankenversicherung",
+      "Ändern Antragsart Pflegegeld"
+     ]
+    },
+    "sekunden": 1.9
+   }
+  },
+  "S3_leistung": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 25,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 16,
+      "20.7": 1,
+      "28.8": 1,
+      "19.8": 1,
+      "21.6": 2,
+      "18.9": 3,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 9,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 645.1,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 45,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 693.7,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 45,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne österreichische Staatsbürgerschaft: Nachweis über die A",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 742.3,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 45,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne laufende Leistung und für Kontoüberweisung: „Antrag auf",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 790.9,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 45,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde der Ärztin/des Arztes oder des Krankenhau",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 839.5,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 45,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei neuerlichem Antrag innerhalb eines Jahres nach der l",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 888,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 72,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei anderer Staatsbürgerschaft als Österreich: Nachweis ",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 963.6,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 45,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei Antragstellung durch eine andere Person (Abschnitt 2",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 1012.2,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 72,
+       "label_b": 1285
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur wenn Sie noch keine Leistung beziehen und eine Überweisu",
+       "b": 27,
+       "h": 27,
+       "x": 82.9,
+       "y": 1087.8,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 72,
+       "label_b": 1285
+      }
+     ],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 200,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 1366,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Pflegegeld"
+    ],
+    "titel": "Pflegegeld – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 192,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 18,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 13,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Antrag herunterladen (PDF)",
+      "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+      "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+      "Ohne österreichische Staatsbürgerschaft: Nachweis über die A"
+     ]
+    },
+    "sekunden": 1.9
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 25,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 16,
+      "18.9": 4,
+      "28.8": 1,
+      "19.8": 1,
+      "21.6": 2,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 9,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 733.4,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 99.9,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 836.8,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 127.8,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne österreichische Staatsbürgerschaft: Nachweis über die A",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 968.2,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 127.8,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne laufende Leistung und für Kontoüberweisung: „Antrag auf",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1099.5,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 127.8,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde der Ärztin/des Arztes oder des Krankenhau",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1230.9,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 99.9,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei neuerlichem Antrag innerhalb eines Jahres nach der l",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1334.3,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 183.5,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei anderer Staatsbürgerschaft als Österreich: Nachweis ",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1521.4,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 127.8,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei Antragstellung durch eine andere Person (Abschnitt 2",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1652.8,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 211.4,
+       "label_b": 325
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur wenn Sie noch keine Leistung beziehen und eine Überweisu",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1867.8,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 211.4,
+       "label_b": 325
+      }
+     ],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 200,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 2362,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Pflegegeld"
+    ],
+    "titel": "Pflegegeld – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 192,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 18,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 13,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Antrag herunterladen (PDF)",
+      "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+      "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+      "Ohne österreichische Staatsbürgerschaft: Nachweis über die A"
+     ]
+    },
+    "sekunden": 1.9
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      },
+      {
+       "regel": "color-contrast",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 25,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 16,
+      "18.9": 4,
+      "28.8": 1,
+      "19.8": 1,
+      "21.6": 2,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 9,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 898.5,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 99.9,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1001.9,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 155.6,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne österreichische Staatsbürgerschaft: Nachweis über die A",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1161.2,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 155.6,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne laufende Leistung und für Kontoüberweisung: „Antrag auf",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1320.4,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 183.5,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde der Ärztin/des Arztes oder des Krankenhau",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1507.5,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 127.8,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei neuerlichem Antrag innerhalb eines Jahres nach der l",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1638.9,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 239.3,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei anderer Staatsbürgerschaft als Österreich: Nachweis ",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1881.8,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 183.5,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei Antragstellung durch eine andere Person (Abschnitt 2",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 2068.9,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 295.1,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur wenn Sie noch keine Leistung beziehen und eine Überweisu",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 2367.6,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 267.2,
+       "label_b": 255
+      }
+     ],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 200,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 2918,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Pflegegeld"
+    ],
+    "titel": "Pflegegeld – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 192,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 18,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 13,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Antrag herunterladen (PDF)",
+      "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+      "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+      "Ohne österreichische Staatsbürgerschaft: Nachweis über die A"
+     ]
+    },
+    "sekunden": 1.9
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 25,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 16,
+      "18.9": 4,
+      "28.8": 1,
+      "19.8": 1,
+      "21.6": 2,
+      "16.2": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 9,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 998.9,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 99.9,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1102.4,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 155.6,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne österreichische Staatsbürgerschaft: Nachweis über die A",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1261.6,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 155.6,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Ohne laufende Leistung und für Kontoüberweisung: „Antrag auf",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1420.8,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 183.5,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Vorhandene Befunde der Ärztin/des Arztes oder des Krankenhau",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1608,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 127.8,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei neuerlichem Antrag innerhalb eines Jahres nach der l",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1739.3,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 239.3,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei anderer Staatsbürgerschaft als Österreich: Nachweis ",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 1982.2,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 183.5,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur bei Antragstellung durch eine andere Person (Abschnitt 2",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 2169.3,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 295.1,
+       "label_b": 255
+      },
+      {
+       "tag": "input",
+       "typ": "checkbox",
+       "name": "Nur wenn Sie noch keine Leistung beziehen und eine Überweisu",
+       "b": 27,
+       "h": 27,
+       "x": 37.9,
+       "y": 2468,
+       "ersatz": null,
+       "deaktiviert": false,
+       "label_h": 267.2,
+       "label_b": 255
+      }
+     ],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 200,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 2942,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Pflegegeld"
+    ],
+    "titel": "Pflegegeld – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 192,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 18,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 13,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Antrag herunterladen (PDF)",
+      "Vorhandene Befunde von Ärztin/Arzt oder Krankenhaus in Kopie",
+      "Bei Antrag durch eine vertretende Person: Nachweis der Vertr",
+      "Ohne österreichische Staatsbürgerschaft: Nachweis über die A"
+     ]
+    },
+    "sekunden": 1.9
+   }
+  },
+  "S4_brief": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      },
+      {
+       "regel": "color-contrast",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 38,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 26,
+      "20.7": 2,
+      "28.8": 1,
+      "19.8": 1,
+      "16.2": 4,
+      "18.9": 4
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 22,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 298,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 1395,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 290,
+     "details": 1,
+     "ziele": 16
+    },
+    "tab": {
+     "gesamt": 21,
+     "vor_nachrichtenfeld": 13,
+     "im_bereich": 15,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "ÖGK"
+     ]
+    },
+    "sekunden": 0.6
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 38,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 26,
+      "18.9": 5,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 4
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 22,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 298,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 3276,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 290,
+     "details": 1,
+     "ziele": 16
+    },
+    "tab": {
+     "gesamt": 21,
+     "vor_nachrichtenfeld": 13,
+     "im_bereich": 15,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "ÖGK"
+     ]
+    },
+    "sekunden": 0.6
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 38,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 26,
+      "18.9": 5,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 4
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 22,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 298,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 4144,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 290,
+     "details": 1,
+     "ziele": 16
+    },
+    "tab": {
+     "gesamt": 21,
+     "vor_nachrichtenfeld": 13,
+     "im_bereich": 15,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "ÖGK"
+     ]
+    },
+    "sekunden": 0.6
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 38,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 26,
+      "18.9": 5,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 4
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 22,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 298,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 4168,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 290,
+     "details": 1,
+     "ziele": 16
+    },
+    "tab": {
+     "gesamt": 21,
+     "vor_nachrichtenfeld": 13,
+     "im_bereich": 15,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "ÖGK"
+     ]
+    },
+    "sekunden": 0.6
+   }
+  },
+  "S4_akte": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 81,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 44,
+      "20.7": 1,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 30,
+      "18.9": 2
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 28,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 250,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 2134,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 242,
+     "details": 2,
+     "ziele": 23
+    },
+    "tab": {
+     "gesamt": 28,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 23,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Krankenhaus",
+      "Ändern Vorname",
+      "Ändern Familienname",
+      "Ändern Geburtsdatum",
+      "Ändern Straße"
+     ]
+    },
+    "sekunden": 1.1
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 81,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 44,
+      "18.9": 3,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 30
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 28,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 250,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 4097,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 242,
+     "details": 2,
+     "ziele": 23
+    },
+    "tab": {
+     "gesamt": 28,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 23,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Krankenhaus",
+      "Ändern Vorname",
+      "Ändern Familienname",
+      "Ändern Geburtsdatum",
+      "Ändern Straße"
+     ]
+    },
+    "sekunden": 1.1
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      },
+      {
+       "regel": "color-contrast",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 81,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 44,
+      "18.9": 3,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 30
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 28,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 250,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 4778,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 242,
+     "details": 2,
+     "ziele": 23
+    },
+    "tab": {
+     "gesamt": 28,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 23,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Krankenhaus",
+      "Ändern Vorname",
+      "Ändern Familienname",
+      "Ändern Geburtsdatum",
+      "Ändern Straße"
+     ]
+    },
+    "sekunden": 1.1
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 81,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 44,
+      "18.9": 3,
+      "28.8": 1,
+      "23.4": 3,
+      "16.2": 30
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 28,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 250,
+    "details_gesamt": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 4802,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Meine Akte"
+    ],
+    "titel": "Meine Akte – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 242,
+     "details": 2,
+     "ziele": 23
+    },
+    "tab": {
+     "gesamt": 28,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 23,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Ändern Krankenhaus",
+      "Ändern Vorname",
+      "Ändern Familienname",
+      "Ändern Geburtsdatum",
+      "Ändern Straße"
+     ]
+    },
+    "sekunden": 1.1
+   }
+  },
+  "S5_termin": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      },
+      {
+       "regel": "color-contrast",
+       "knoten": 6
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 31,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 21,
+      "20.7": 2,
+      "28.8": 1,
+      "19.8": 1,
+      "16.2": 5,
+      "18.9": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 183,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 1230,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 175,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.2
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 42,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 27,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 10
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 273,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 3322,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 265,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.2
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 42,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 27,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 10
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 273,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 3897,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 265,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.2
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 42,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 27,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1,
+      "16.2": 10
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 14,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 273,
+    "details_gesamt": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 3921,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Gespräch"
+    ],
+    "titel": "Gespräch – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 265,
+     "details": 1,
+     "ziele": 8
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": 9,
+     "im_bereich": 8,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Zur Eingabe springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zu meinem Plan",
+      "Gesprächsverlauf",
+      "Vorlesen",
+      "Ihre Nachricht"
+     ]
+    },
+    "sekunden": 1.2
+   }
+  },
+  "S5_plan": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 14,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 9,
+      "20.7": 2,
+      "28.8": 1,
+      "19.8": 1,
+      "18.9": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 9,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 37,
+    "details_gesamt": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 900,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 29,
+     "details": 1,
+     "ziele": 4
+    },
+    "tab": {
+     "gesamt": 9,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 4,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Termin öffnen",
+      "Erledigt",
+      "Plan drucken",
+      "Plan vorlesen"
+     ]
+    },
+    "sekunden": 1.6
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 14,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 9,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 9,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 37,
+    "details_gesamt": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 844,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 29,
+     "details": 1,
+     "ziele": 4
+    },
+    "tab": {
+     "gesamt": 9,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 4,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Termin öffnen",
+      "Erledigt",
+      "Plan drucken",
+      "Plan vorlesen"
+     ]
+    },
+    "sekunden": 1.6
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      },
+      {
+       "regel": "color-contrast",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 14,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 9,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 9,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 37,
+    "details_gesamt": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 836,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 29,
+     "details": 1,
+     "ziele": 4
+    },
+    "tab": {
+     "gesamt": 9,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 4,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Termin öffnen",
+      "Erledigt",
+      "Plan drucken",
+      "Plan vorlesen"
+     ]
+    },
+    "sekunden": 1.6
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 14,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 18,
+     "verteilung_px": {
+      "18": 9,
+      "18.9": 2,
+      "28.8": 1,
+      "20.7": 1,
+      "19.8": 1
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 9,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 37,
+    "details_gesamt": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 860,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Mein Plan"
+    ],
+    "titel": "Mein Plan – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 29,
+     "details": 1,
+     "ziele": 4
+    },
+    "tab": {
+     "gesamt": 9,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 4,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Termin öffnen",
+      "Erledigt",
+      "Plan drucken",
+      "Plan vorlesen"
+     ]
+    },
+    "sekunden": 1.6
+   }
+  },
+  "S5_termin_ansicht": {
+   "desktop": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 33,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 22,
+      "20.7": 1,
+      "28.8": 1,
+      "16.2": 3,
+      "18.9": 3,
+      "21.6": 3
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 185,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 1440,
+     "sichtbare_breite": 1440,
+     "scroll_hoehe": 1581,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Termin: Vorsorgeuntersuchung"
+    ],
+    "titel": "Termin: Vorsorgeuntersuchung – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 177,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 9,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Text für Ihre Terminanfrage",
+      "Text kopieren",
+      "ÖGK-Gesundheitszentren (Wien, Linz, Klagenfurt, Graz)",
+      "Arztsuche: Ärztekammer Steiermark"
+     ]
+    },
+    "sekunden": 1.7
+   },
+   "mobil_390": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 33,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 22,
+      "18.9": 4,
+      "28.8": 1,
+      "16.2": 3,
+      "21.6": 3
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 185,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 390,
+     "sichtbare_breite": 390,
+     "scroll_hoehe": 2526,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Termin: Vorsorgeuntersuchung"
+    ],
+    "titel": "Termin: Vorsorgeuntersuchung – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 177,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 9,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Text für Ihre Terminanfrage",
+      "Text kopieren",
+      "ÖGK-Gesundheitszentren (Wien, Linz, Klagenfurt, Graz)",
+      "Arztsuche: Ärztekammer Steiermark"
+     ]
+    },
+    "sekunden": 1.7
+   },
+   "schmal_320": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 33,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 22,
+      "18.9": 4,
+      "28.8": 1,
+      "16.2": 3,
+      "21.6": 3
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 185,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 3051,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Termin: Vorsorgeuntersuchung"
+    ],
+    "titel": "Termin: Vorsorgeuntersuchung – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 177,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 9,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Text für Ihre Terminanfrage",
+      "Text kopieren",
+      "ÖGK-Gesundheitszentren (Wien, Linz, Klagenfurt, Graz)",
+      "Arztsuche: Ärztekammer Steiermark"
+     ]
+    },
+    "sekunden": 1.7
+   },
+   "zoom_400": {
+    "axe": {
+     "version": "4.12.1",
+     "verstoesse_regeln": 0,
+     "verstoesse_knoten": 0,
+     "nach_impact_knoten": {},
+     "verstoesse": [],
+     "best_practice": [],
+     "unvollstaendig": [
+      {
+       "regel": "aria-valid-attr-value",
+       "knoten": 1
+      }
+     ]
+    },
+    "texte": {
+     "gesamt": 33,
+     "unter_16px": 0,
+     "unter_14px": 0,
+     "kleinste_px": 16.2,
+     "verteilung_px": {
+      "18": 22,
+      "18.9": 4,
+      "28.8": 1,
+      "16.2": 3,
+      "21.6": 3
+     },
+     "beispiele_unter_16px": []
+    },
+    "ziele": {
+     "gesamt": 18,
+     "unter_24px": 0,
+     "unter_44px": 0,
+     "unter_24px_ohne_abstand": 0,
+     "liste_unter_24px": [],
+     "liste_unter_44px": [],
+     "inline_links": 0,
+     "inline_links_beispiele": []
+    },
+    "woerter_seite": 185,
+    "details_gesamt": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "badges_sichtbar": 0,
+    "layout": {
+     "horizontal_px": 0,
+     "scroll_breite": 320,
+     "sichtbare_breite": 320,
+     "scroll_hoehe": 3075,
+     "elemente_rechts_ausserhalb": 0,
+     "beispiele": []
+    },
+    "h1": [
+     "Termin: Vorsorgeuntersuchung"
+    ],
+    "titel": "Termin: Vorsorgeuntersuchung – SV KI-Lotse",
+    "bereich": {
+     "selektor": "main",
+     "woerter": 177,
+     "details": 3,
+     "ziele": 13
+    },
+    "tab": {
+     "gesamt": 14,
+     "vor_nachrichtenfeld": null,
+     "im_bereich": 9,
+     "ohne_fokusanzeige_2px": 0,
+     "ohne_fokusanzeige_beispiele": [],
+     "fokus_px_min": 3,
+     "erste_10": [
+      "Zum Inhalt springen",
+      "Einstellungen",
+      "Gespräch",
+      "Mein Plan",
+      "Meine Akte",
+      "Zurück zu Mein Plan",
+      "Text für Ihre Terminanfrage",
+      "Text kopieren",
+      "ÖGK-Gesundheitszentren (Wien, Linz, Klagenfurt, Graz)",
+      "Arztsuche: Ärztekammer Steiermark"
+     ]
+    },
+    "sekunden": 1.7
+   }
+  }
+ },
+ "zusammenfassung": {
+  "S1_start": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 17,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 54,
+    "woerter_bereich": 46,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 17,
+    "tabstopps_vor_nachrichtenfeld": 12,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 900,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 17,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 54,
+    "woerter_bereich": 46,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 17,
+    "tabstopps_vor_nachrichtenfeld": 12,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1167,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 17,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 54,
+    "woerter_bereich": 46,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 17,
+    "tabstopps_vor_nachrichtenfeld": 12,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1453,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 17,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 54,
+    "woerter_bereich": 46,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 9,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 17,
+    "tabstopps_vor_nachrichtenfeld": 12,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1477,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S2_pflegefall": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 36,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 167,
+    "woerter_bereich": 159,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1230,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 50,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 308,
+    "woerter_bereich": 300,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3805,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 50,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 308,
+    "woerter_bereich": 300,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 4434,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 50,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 308,
+    "woerter_bereich": 300,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 4458,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S2_plan": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 12,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 80,
+    "woerter_bereich": 72,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 12,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 900,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 12,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 80,
+    "woerter_bereich": 72,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 12,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1260,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 12,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 80,
+    "woerter_bereich": 72,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 12,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1418,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 21,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 12,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 80,
+    "woerter_bereich": 72,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 12,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1442,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S2_akte": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 66,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 24,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 263,
+    "woerter_bereich": 255,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 24,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1804,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 66,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 24,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 263,
+    "woerter_bereich": 255,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 24,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3322,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 66,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 24,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 263,
+    "woerter_bereich": 255,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 24,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3917,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 66,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 24,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 263,
+    "woerter_bereich": 255,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 24,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3941,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S3_leistung": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 25,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 9,
+    "inline_links": 0,
+    "woerter_seite": 200,
+    "woerter_bereich": 192,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 18,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1366,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 25,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 9,
+    "inline_links": 0,
+    "woerter_seite": 200,
+    "woerter_bereich": 192,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 18,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 2362,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 25,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 9,
+    "inline_links": 0,
+    "woerter_seite": 200,
+    "woerter_bereich": 192,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 18,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 2918,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 25,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 9,
+    "inline_links": 0,
+    "woerter_seite": 200,
+    "woerter_bereich": 192,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 1,
+    "links_sichtbar": 5,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 18,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 2942,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S4_brief": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 38,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 22,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 298,
+    "woerter_bereich": 290,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 21,
+    "tabstopps_vor_nachrichtenfeld": 13,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1395,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 38,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 22,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 298,
+    "woerter_bereich": 290,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 21,
+    "tabstopps_vor_nachrichtenfeld": 13,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3276,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 38,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 22,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 298,
+    "woerter_bereich": 290,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 21,
+    "tabstopps_vor_nachrichtenfeld": 13,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 4144,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 38,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 22,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 298,
+    "woerter_bereich": 290,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 12,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 21,
+    "tabstopps_vor_nachrichtenfeld": 13,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 4168,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S4_akte": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 81,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 28,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 250,
+    "woerter_bereich": 242,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 28,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 2134,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 81,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 28,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 250,
+    "woerter_bereich": 242,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 28,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 4097,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 81,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 28,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 250,
+    "woerter_bereich": 242,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 28,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 4778,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 81,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 28,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 250,
+    "woerter_bereich": 242,
+    "details": 2,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 16,
+    "links_sichtbar": 8,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 28,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 4802,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S5_termin": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 31,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 183,
+    "woerter_bereich": 175,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1230,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 42,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 273,
+    "woerter_bereich": 265,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3322,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 42,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 273,
+    "woerter_bereich": 265,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3897,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 42,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 14,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 273,
+    "woerter_bereich": 265,
+    "details": 1,
+    "details_sichtbar": 1,
+    "buttons_sichtbar": 4,
+    "links_sichtbar": 4,
+    "aufklapper_sichtbar": 1,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": 9,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3921,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S5_plan": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 14,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 9,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 37,
+    "woerter_bereich": 29,
+    "details": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 9,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 900,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 14,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 9,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 37,
+    "woerter_bereich": 29,
+    "details": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 9,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 844,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 14,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 9,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 37,
+    "woerter_bereich": 29,
+    "details": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 9,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 836,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 14,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 18,
+    "ziele": 9,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 37,
+    "woerter_bereich": 29,
+    "details": 1,
+    "details_sichtbar": 0,
+    "buttons_sichtbar": 5,
+    "links_sichtbar": 3,
+    "aufklapper_sichtbar": 0,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 9,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 860,
+    "horizontal_ueberlauf_px": 0
+   }
+  },
+  "S5_termin_ansicht": {
+   "desktop": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 33,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 185,
+    "woerter_bereich": 177,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 1581,
+    "horizontal_ueberlauf_px": 0
+   },
+   "mobil_390": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 33,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 185,
+    "woerter_bereich": 177,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 2526,
+    "horizontal_ueberlauf_px": 0
+   },
+   "schmal_320": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 33,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 185,
+    "woerter_bereich": 177,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3051,
+    "horizontal_ueberlauf_px": 0
+   },
+   "zoom_400": {
+    "axe_wcag_regeln": 0,
+    "axe_wcag_knoten": 0,
+    "axe_regel_ids": [],
+    "axe_best_practice": [],
+    "texte": 33,
+    "texte_unter_16": 0,
+    "texte_unter_14": 0,
+    "kleinste_schrift_px": 16.2,
+    "ziele": 18,
+    "ziele_unter_24": 0,
+    "ziele_unter_24_ohne_abstand": 0,
+    "ziele_unter_44": 0,
+    "inline_links": 0,
+    "woerter_seite": 185,
+    "woerter_bereich": 177,
+    "details": 3,
+    "details_sichtbar": 2,
+    "buttons_sichtbar": 3,
+    "links_sichtbar": 9,
+    "aufklapper_sichtbar": 2,
+    "hauptaktionen_sichtbar": 1,
+    "tabstopps": 14,
+    "tabstopps_vor_nachrichtenfeld": null,
+    "tabstopps_ohne_fokus_2px": 0,
+    "seitenhoehe_px": 3075,
+    "horizontal_ueberlauf_px": 0
+   }
+  }
+ },
+ "meta": {
+  "url": "http://127.0.0.1:42236/",
+  "zeitpunkt": "2026-11-06T07:27:04+00:00",
+  "chromium": "157.0.8103.38",
+  "playwright": "1.64.1",
+  "axe_playwright_python": "0.1.8",
+  "viewports": {
+   "desktop": {
+    "width": 1440,
+    "height": 900
+   },
+   "mobil_390": {
+    "width": 390,
+    "height": 844
+   },
+   "schmal_320": {
+    "width": 320,
+    "height": 640
+   },
+   "zoom_400": {
+    "width": 320,
+    "height": 256
+   }
+  },
+  "zustaende": {
+   "S1_start": "Start (leer)",
+   "S2_pflegefall": "Pflegefall Wien/PVA/ÖGK/Erstantrag – Ansicht nach der letzten Antwort",
+   "S2_plan": "Pflegefall – Plan (alt: dieselbe Seite, Bereich Fallakte .akte; neu: #/plan)",
+   "S2_akte": "Pflegefall – Angaben/Akte (alt: dieselbe Seite, Bereich .akte; neu: #/akte)",
+   "S3_leistung": "Leistung Pflegegeld (alt: aufgeklappte Karte; neu: #/leistung/pflegegeld)",
+   "S4_brief": "Synthetischer Entlassungsbrief geladen (Demo-Knopf)",
+   "S4_akte": "Brief geladen – Dokumente (alt: Bereich .akte; neu: #/akte)",
+   "S5_termin": "Arzttermin vorbereitet (Vorsorge, Graz, vormittags)",
+   "S5_plan": "Termin vorbereitet – Plan (alt: Bereich .akte; neu: #/plan)",
+   "S5_termin_ansicht": "Termin vorbereitet – Terminkarte (alt: article im Bereich #termine; neu: #/termin/<id>)"
+  },
+  "wcag_tags": [
+   "wcag2a",
+   "wcag2aa",
+   "wcag21a",
+   "wcag21aa",
+   "wcag22aa"
+  ],
+  "ui": "neu",
+  "axe_core": "4.12.1"
+ },
+ "merkmale": {
+  "forced_colors": true,
+  "dunkel": true,
+  "hoher_kontrast": true,
+  "reduzierte_bewegung": true,
+  "druck_stylesheet": true,
+  "textgroesse_steuerung": true,
+  "leichte_sprache": true,
+  "farbschema_steuerung": true,
+  "plan_drucken_knopf": true,
+  "angaben_aendern": false,
+  "media_queries": [
+   "(forced-colors: active)",
+   "(max-width: 1023.98px) and (max-height: 480px)",
+   "(max-width: 399.98px)",
+   "(min-width: 1024px)",
+   "(min-width: 600px)",
+   "(prefers-reduced-motion: no-preference)",
+   "(prefers-reduced-motion: reduce)",
+   "print"
+  ]
+ }
+}

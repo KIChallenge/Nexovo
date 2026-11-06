@@ -1,15 +1,19 @@
 """Engine-Tests: Szenarien, Rückfragen, Grenze, Sprache/Stil, Fallakte, Dokument, Wissensfragen, Termine, Status."""
 
 import json
+import re
 from datetime import date
 from io import BytesIO
 
 import pytest
 from pypdf import PdfReader
 
-from lotse import config, dokument, katalog, llm, suche, texte, wissen
+from lotse import config, dokument, formulare, grenzen, katalog, llm, suche, texte, wissen
 from lotse.fallakte import Fallakte, Termin, ics
-from lotse.lotse import Lotse, _eko_eintraege, _eko_zusammenfassung, _termin_datum, _uhrzeit, extrahiere, normalisiere
+from lotse.lotse import (
+    Lotse, UngueltigeAngabe, _eko_eintraege, _eko_zusammenfassung, _grund, _termin_datum, _uhrzeit, extrahiere,
+    normalisiere,
+)
 from lotse.slots import SLOTS
 
 SAETZE = {
@@ -316,11 +320,20 @@ def test_synthetischer_brief_ergibt_reha_buendel_mit_woertlichem_zitat(lotse):
     assert any("Rehabilitation" in d["zitat"] for d in reha["dokument"])
     for d in reha["dokument"]:
         assert d["zitat"] in brieftext
-        assert f"In Ihrem Dokument steht: „{d['zitat']}“" in a.text
+        assert d["text"] == f"In Ihrem Dokument steht: „{d['zitat']}“ (S. {d['seite']})"
         assert d["quelle"]["art"] == "dokument" and d["quelle"]["fundstelle"] == f"S. {d['seite']}"
         assert d["quelle"] in reha["quellen"]
-    en = lotse.einstellungen(s, sprache="en")
-    assert f"Your document states: “{reha['dokument'][0]['zitat']}”" in en.text
+    # Gespräch: Zahl der Empfehlungen und die erste; alle Zitate stehen in den Daten („Meine Akte“)
+    ids = {l.id for l in katalog.alle()}
+    zitate = [e.zitat for e in dokument.empfehlungen(dokument.lade_dokument(BRIEF.name, inhalt)) if e.thema in ids]
+    uebernommen = sum(h["art"] == "dokument" for h in s.herkunft.values())
+    assert len(zitate) > 1 and f"Darin stehen {len(zitate)} ausdrücklich dokumentierte Empfehlungen" in a.text
+    assert f"„{zitate[0]}“ (S. 1) [1]" in a.text and not any(f"„{z}“" in a.text for z in zitate[1:])
+    assert "In Ihrem Dokument steht" not in a.text and f"{uebernommen} Angaben aus dem Dokument" in a.text
+    ausf = lotse.einstellungen(s, stil="ausfuehrlich")
+    assert all(f"• „{z}“ (S. 1)" in ausf.text for z in zitate)
+    en = lotse.einstellungen(s, sprache="en", stil="einfach")
+    assert f"for example: “{zitate[0]}” (p. 1) [1]" in en.text
 
     # Angaben aus dem Dokument werden nicht noch einmal erfragt
     aus_dokument = {k for k, h in s.herkunft.items() if h["art"] == "dokument"}
@@ -616,7 +629,7 @@ def test_termindatum_ohne_jahr_ist_naechster_solcher_tag():
 def test_statusfrage_antwortet_aus_der_fallakte(lotse):
     s = lotse.neue_sitzung()
     leer = lotse.nachricht(s, "Was ist noch offen?")
-    assert "Fallakte ist noch leer" in leer.text and leer.status_uebersicht == {"erledigt": 0, "offen": 0,
+    assert "Plan ist noch leer" in leer.text and leer.status_uebersicht == {"erledigt": 0, "offen": 0,
                                                                              "naechster": ""}
     lotse.nachricht(s, SAETZE["pflege"])
     lotse.setze_status(s, "pflegegeld.antrag_ausfuellen", "erledigt")
@@ -624,7 +637,7 @@ def test_statusfrage_antwortet_aus_der_fallakte(lotse):
     a = lotse.nachricht(s, "Wie weit ist mein Pflegegeld-Antrag?")
     assert s.szenarien == szenarien and a.grenze is None
     titel = katalog.leistung("pflegegeld").titel["de"]
-    assert "Stand Ihrer Fallakte" in a.text and f"• {titel}:" in a.text and "nächster Schritt" in a.text
+    assert "Stand Ihres Plans" in a.text and f"• {titel}:" in a.text and "nächster Schritt" in a.text
     assert a.text.count("• ") == 1  # nur die genannte Leistung
     # gezählt werden nur primäre Leistungen, begonnene Leistungen und Termine
     wichtig = [e for e in s.fallakte.eintraege.values()
@@ -636,7 +649,8 @@ def test_statusfrage_antwortet_aus_der_fallakte(lotse):
     assert a.status_uebersicht["naechster"]
     alle = lotse.nachricht(s, "Was ist noch offen?")
     assert "wichtigsten Anliegen" in alle.text and alle.text.count("• ") == len(wichtig)
-    assert f"Weitere {len(s.fallakte.eintraege) - len(wichtig)} Angebote" in alle.text
+    assert "Weitere Möglichkeiten stehen in Ihrem Plan." in alle.text
+    assert alle.text.count("Ihr nächster Schritt:") == 1  # auf ausdrückliche Frage immer genannt
     # eine begonnene Leistung außerhalb der wichtigsten zählt mit
     weitere = next(lid for lid in s.leistungen if s.fallakte.eintraege[lid] not in wichtig)
     erster = s.fallakte.eintraege[weitere].schritte[0].id
@@ -645,7 +659,7 @@ def test_statusfrage_antwortet_aus_der_fallakte(lotse):
     assert nachher["erledigt"] == vorher["erledigt"] + 1
     assert nachher["offen"] == vorher["offen"] + len(s.fallakte.eintraege[weitere].schritte) - 1
     en = lotse.einstellungen(s, sprache="en")
-    assert "Your case file" in lotse.nachricht(s, "what is still open?").text and en.sprache == "en"
+    assert "Your plan" in lotse.nachricht(s, "what is still open?").text and en.sprache == "en"
 
 
 # ---------------------------------------------------------------- Kürzen und Fokus (P18)
@@ -658,10 +672,11 @@ def test_fahrtkosten_zuerst_mit_naechstem_schritt(lotse):
     assert a.weitere_anzahl == max(0, len(a.buendel) - 3)
     fk = katalog.leistung("fahrtkosten")
     erster = s.fallakte.naechster_schritt("fahrtkosten")
-    assert f"Nächster Schritt: {fk.titel['de']} – {erster.text['de'].rstrip('.')}" in a.text
-    assert all(b["titel"] in a.text for b in a.buendel[:3])
-    if a.weitere_anzahl:
-        assert f"Weitere {a.weitere_anzahl} Angebote" in a.text
+    assert f"Ihr nächster Schritt: {fk.titel['de']} – {erster.text['de'].rstrip('.')}." in a.text
+    titel = [b["titel"] for b in a.buendel[:3]]
+    assert f"Ich habe 3 wichtige Hilfen für Sie gefunden: {titel[0]}, {titel[1]} und {titel[2]}." in a.text
+    if a.weitere_anzahl:  # die Gesamtzahl steht im Plan, nicht im Gespräch
+        assert "Weitere Möglichkeiten stehen in Ihrem Plan." in a.text and str(len(a.buendel)) not in a.text
 
 
 def test_vorsorge_bei_familiaerer_vorbelastung_ohne_risikoaussage(lotse):
@@ -749,6 +764,8 @@ def test_medikamente_aus_brief_werten_alle_eko_eintraege_aus(lotse):
     s = lotse.neue_sitzung()
     a = lotse.dokument(s, BRIEF.name, BRIEF.read_bytes())
     assert a.medikamente and "keine Empfehlung" in a.text
+    assert f"Für {len(a.medikamente)} Medikamente aus dem Dokument" in a.text
+    ausf = lotse.einstellungen(s, stil="ausfuehrlich")  # die Zeilen je Medikament stehen nur ausführlich im Gespräch
     gefunden = [m for m in a.medikamente if m["eko"]]
     assert gefunden
     for m in gefunden:
@@ -760,9 +777,10 @@ def test_medikamente_aus_brief_werten_alle_eko_eintraege_aus(lotse):
         assert eko["einheitlich"] == (len(eko["varianten"]) == 1)
         if eko["einheitlich"]:
             assert eko["box"] in ("gruen", "gelb") and eko["erklaerung"].startswith(("Alle", "Ein Eintrag"))
-            assert f"alle {eko['anzahl']} Einträge" in a.text or eko["anzahl"] == 1
+            assert f"alle {eko['anzahl']} Einträge" in ausf.text or eko["anzahl"] == 1
+            assert f"alle {eko['anzahl']} Einträge" not in a.text
         else:
-            assert "je nach Stärke bzw. Packung" in eko["erklaerung"] and "je nach Stärke bzw. Packung" in a.text
+            assert "je nach Stärke bzw. Packung" in eko["erklaerung"] and "je nach Stärke bzw. Packung" in ausf.text
         assert eko["quellen"][0] in a.quellen
     assert _eko_eintraege("Gibtsnichtxyzpraeparat") == ("", [])
 
@@ -794,7 +812,8 @@ def test_kontrolltermin_aus_brief_bietet_terminvorbereitung_an(lotse):
     a = lotse.dokument(s, BRIEF.name, BRIEF.read_bytes())
     b = next(x for x in a.buendel if x["leistung_id"] == "kontrolltermine")
     assert b["dokument"] and b["termin_anlass"] == "kontrolle"
-    assert texte.t("termin_angebot", "de") in a.text
+    # Angeboten wird die Terminvorbereitung im Plan (Bündel mit Anlass); das Gespräch fasst nur zusammen
+    assert "Termin vorbereiten" not in a.text
     a = lotse.nachricht(s, "Termin vorbereiten")
     assert a.rueckfrage["slot"] in ("termin.anlass", "termin.ort")
 
@@ -975,3 +994,465 @@ def test_weitere_sprache_titel_und_angaben_wie_auf_der_karte(monkeypatch, tmp_pa
     assert fuer_wen["label"].startswith("[ar] ") and fuer_wen["wert"].startswith("[ar] ")
     offen = [b["stelle"]["abhaengig_von"] for b in a.buendel if b["stelle"]["abhaengig_von"]]
     assert offen and all(x["label"].startswith("[ar] ") for x in offen)
+    # Auswahlwerte und ihre Optionen werden gleich übersetzt (Vorbelegung im Änderungsformular passt)
+    assert fuer_wen["wert"] in [o["label"] for o in fuer_wen["optionen"]] and fuer_wen["wert_roh"] == "angehoerige"
+
+
+# ---------------------------------------------------------------- Leichte Sprache
+
+_ABKUERZUNG = re.compile(r"\b(z\.\s?B\.|bzw\.|u\.\s?a\.|d\.\s?h\.|usw\.|ggf\.|evtl\.|ca\.|S\.\s)")
+
+
+def _saetze(text: str) -> list[str]:
+    """Sätze einer Vorlage; Beispiele in Anführungszeichen zählen als ein Wort."""
+    ohne_zitate = re.sub(r"„[^“]*“|“[^”]*”", "ZITAT", text)
+    return [x for x in re.split(r"(?<=[.!?])\s+", ohne_zitate) if x.strip()]
+
+
+def test_leichte_vorlagen_kurz_gleiche_platzhalter_ohne_abkuerzungen():
+    for key, vorlage in texte._LEICHT.items():
+        assert key in texte._ENGINE, key
+        for sp in texte.SPRACHEN:
+            felder = set(re.findall(r"\{(\w+)\}", texte._ENGINE[key][sp]))
+            assert set(re.findall(r"\{(\w+)\}", vorlage[sp])) == felder, (key, sp)
+            assert not _ABKUERZUNG.search(vorlage[sp]), (key, sp)
+            for satz in _saetze(vorlage[sp]):
+                assert len(satz.split()) <= 12, (key, sp, satz)
+    for slot_id, frage in texte.FRAGE_LEICHT.items():
+        for sp in texte.SPRACHEN:
+            assert not _ABKUERZUNG.search(frage[sp]), (slot_id, sp)
+            assert all(len(x.split()) <= 12 for x in _saetze(frage[sp])), (slot_id, sp)
+            # keine Zahl, die nicht schon in der Slot-Frage steht
+            assert set(re.findall(r"\d+", frage[sp])) <= set(re.findall(r"\d+", SLOTS[slot_id].frage[sp])), slot_id
+
+
+def test_leichte_sprache_im_ablauf_mit_gleichen_quellen(lotse):
+    s = lotse.neue_sitzung(stil="leicht")
+    assert lotse.aktuell(s).text == texte.t_leicht("begruessung", "de")
+    a = lotse.nachricht(s, SAETZE["pflege"])
+    assert a.stil == "leicht" and a.text.startswith("Ich habe verstanden. Es geht um: Pflege und Betreuung.")
+    slot_id = a.rueckfrage["slot"]
+    assert a.rueckfrage["frage"] == texte.FRAGE_LEICHT[slot_id]["de"]
+    assert a.rueckfrage["grund"] == texte.t_leicht(_grund(slot_id), "de")
+    assert a.text.endswith(f"{a.rueckfrage['grund']} {a.rueckfrage['frage']}")
+    for b in a.buendel:
+        l = katalog.leistung(b["leistung_id"])
+        assert b["kurz"] == l.leicht["de"] and b["details"] == "" and b["voraussetzungen"] == []
+        # Details und Voraussetzungen stehen nicht im Gespräch
+        assert not (l.details["de"] and l.details["de"] in a.text)
+        assert not any(v["de"] in a.text for v in l.voraussetzungen)
+    einfach = lotse.einstellungen(s, stil="einfach")
+    assert einfach.text.startswith("Ich habe Ihr Anliegen so verstanden")
+    assert einfach.rueckfrage["frage"] == SLOTS[slot_id].frage["de"]
+    assert einfach.buendel[0]["kurz"] == katalog.leistung(einfach.buendel[0]["leistung_id"]).kurz["de"]
+    assert [b["quellen"] for b in einfach.buendel] == [b["quellen"] for b in a.buendel] and einfach.quellen == a.quellen
+    en = lotse.einstellungen(s, sprache="en", stil="leicht")
+    assert en.text.startswith("I understood. This is about: Care and support.")
+    assert en.rueckfrage["frage"] == texte.FRAGE_LEICHT[slot_id]["en"]
+    lotse.einstellungen(s, sprache="de")
+    a, _ = _durchlauf(lotse, s, a)
+    assert texte.t_leicht("keine_fragen", "de") in a.text
+
+
+@pytest.mark.parametrize("frage", ["Welche Dosis Ibuprofen soll ich nehmen?",
+                                   "Brauche ich wegen meiner Diagnose eine Reha?"])
+def test_leichte_sprache_grenzantwort(lotse, frage):
+    s = lotse.neue_sitzung(stil="leicht")
+    a = lotse.nachricht(s, frage)
+    kategorie = a.grenze["kategorie"]
+    assert a.grenze["erlaubt"] is False and a.buendel == [] and s.werte == {}
+    assert a.text.startswith(grenzen.ANTWORTEN_LEICHT[kategorie]["de"])
+    assert grenzen.ANTWORTEN[kategorie]["de"] not in a.text
+    alternativen = [katalog.leistung(lid) for lid in grenzen.ALTERNATIVEN.get(kategorie, [])]
+    assert alternativen and all(l.leicht["de"] in a.text and l.kurz["de"] not in a.text for l in alternativen)
+    assert a.ansage == texte.t("ansage_grenze", "de")
+    # dieselben Belege wie in der üblichen Darstellung
+    assert lotse.nachricht(lotse.neue_sitzung(), frage).quellen == a.quellen
+
+
+def test_weitere_sprache_uebersetzt_leichte_sprache_mit_eigenem_cache(monkeypatch, tmp_path):
+    systeme: list[str] = []
+    uebersetzer = _uebersetzer("[tr]")
+
+    def chat(system, nutzer, max_tokens, json_modus=False, timeout=None):
+        systeme.append(system)
+        return uebersetzer(system, nutzer, max_tokens, json_modus, timeout)
+
+    monkeypatch.setattr(llm, "aktiv", lambda: True)
+    monkeypatch.setattr(llm, "_chat", chat)
+    monkeypatch.setattr(llm, "_cache", {})
+    monkeypatch.setattr(config, "CACHE_DIR", tmp_path)
+    lotse = Lotse()
+    s = lotse.neue_sitzung("tr", "leicht")
+    a = lotse.nachricht(s, PFLEGE_EN)
+    erste = katalog.leistung(a.buendel[0]["leistung_id"])
+    assert a.text.startswith("[tr] ") and a.ansage.startswith("[tr] ")
+    assert a.buendel[0]["kurz"] == f"[tr] {erste.leicht['en']}"
+    uebersetzungen = [x for x in systeme if x.startswith("Du übersetzt")]
+    assert uebersetzungen and all("Leichte Sprache" in x for x in uebersetzungen)
+    cache = json.loads((tmp_path / "uebersetzungen" / "tr.json").read_text(encoding="utf-8"))
+    assert cache and all(k.startswith(llm._LEICHT_SCHLUESSEL) for k in cache)
+    systeme.clear()
+    einfach = lotse.einstellungen(s, stil="einfach")
+    assert einfach.buendel[0]["kurz"] == f"[tr] {erste.kurz['en']}"
+    uebersetzungen = [x for x in systeme if x.startswith("Du übersetzt")]
+    assert uebersetzungen and not any("Leichte Sprache" in x for x in uebersetzungen)
+    assert "Leichte Sprache" in llm._formuliere_system("de", "leicht")
+    assert "Leichte Sprache" not in llm._formuliere_system("de", "einfach")
+
+
+# ---------------------------------------------------------------- Ansage für Screenreader
+
+def test_ansage_auf_allen_wegen(lotse):
+    s = lotse.neue_sitzung()
+    ansagen = {"start": lotse.aktuell(s).ansage}
+    a = lotse.nachricht(s, SAETZE["pflege"])
+    ansagen["szenario"] = a.ansage
+    assert a.ansage.startswith("3 wichtige Hilfen gefunden. Nächster Schritt: ")
+    assert a.ansage.endswith(texte.t("ansage_frage", "de"))
+    slot_id = a.rueckfrage["slot"]
+    a = lotse.nachricht(s, _antwort_fuer(slot_id))
+    ansagen["rueckfrage"] = a.ansage
+    assert a.ansage.startswith("Notiert.") and SLOTS[slot_id].label["de"] not in a.ansage
+    ansagen["unverstanden"] = lotse.nachricht(s, "blau").ansage
+    ansagen["status"] = lotse.nachricht(s, "Was ist noch offen?").ansage
+    assert ansagen["status"].startswith("Stand: ")
+    ansagen["schritt"] = lotse.setze_status(s, "pflegegeld.antrag_ausfuellen", "erledigt").ansage
+    assert ansagen["schritt"].startswith("Status gespeichert: erledigt.")
+    ansagen["angabe"] = lotse.angabe(s, "versicherung.krankenversicherung", "ÖGK").ansage
+    assert ansagen["angabe"].startswith("Gespeichert: Krankenversicherung – ÖGK.")
+    ansagen["wissen"] = lotse.nachricht(s, "Was ist der Unterschied zwischen Kur und Reha?").ansage
+    assert ansagen["wissen"].startswith("Antwort mit ")
+    ansagen["grenze"] = lotse.nachricht(s, "Welche Dosis Ibuprofen soll ich nehmen?").ansage
+    assert ansagen["grenze"].startswith(texte.t("ansage_grenze", "de"))
+    ansagen["leer"] = lotse.nachricht(s, "   ").ansage
+    ansagen["dokument_fehler"] = lotse.dokument(s, "kaputt.pdf", b"%PDF-1.7 kaputt").ansage
+    ansagen["dokument"] = lotse.dokument(s, BRIEF.name, BRIEF.read_bytes()).ansage
+    assert ansagen["dokument"].startswith("Dokument gelesen.")
+    t = lotse.neue_sitzung()
+    ansagen["termin_start"] = lotse.nachricht(t, "Ich möchte einen Arzttermin.").ansage
+    assert ansagen["termin_start"].startswith("Terminvorbereitung gestartet.")
+    ansagen["termin_fertig"] = _termin_durchlauf(lotse, lotse.neue_sitzung()).ansage
+    assert "Ihr Terminauftrag ist fertig." in ansagen["termin_fertig"]
+    t = lotse.neue_sitzung()
+    _termin_durchlauf(lotse, t)
+    ansagen["termin_eingetragen"] = lotse.nachricht(t, "Termin am 12.11.2026 um 10:30").ansage
+    assert ansagen["termin_eingetragen"].startswith("Termin eingetragen: 12.11.2026 um 10:30 Uhr.")
+    ansagen["einstellungen"] = lotse.einstellungen(s, sprache="en").ansage
+    assert ansagen["einstellungen"] == "Settings saved: English, Simple."
+    ansagen["wiederhergestellt"] = lotse.wiederhergestellt(s).ansage
+    assert ansagen["wiederhergestellt"].startswith("Your case is loaded.")
+    ansagen["englisch"] = lotse.nachricht(lotse.neue_sitzung("en"), PFLEGE_EN).ansage
+    assert "important services found" in ansagen["englisch"]
+    for weg, ansage in ansagen.items():
+        assert ansage.strip() and "\n" not in ansage and len(ansage) <= 250, weg
+
+
+# ---------------------------------------------------------------- Kurzes Gespräch ohne Wiederholung
+
+def _absaetze(text: str) -> list[str]:
+    return [x for x in text.split("\n\n") if x.strip()]
+
+
+@pytest.mark.parametrize("stil", ["einfach", "leicht"])
+def test_rueckfragen_ohne_wiederholung_bis_zum_abschluss(lotse, stil):
+    s = lotse.neue_sitzung(stil=stil)
+    a = lotse.nachricht(s, SAETZE["pflege"])
+    naechster = "Ihr nächster Schritt:"  # gleich in beiden Darstellungen
+    assert a.text.count(naechster) == 1
+    danke = texte.t_leicht("notiert", "de") if stil == "leicht" else texte.t("notiert", "de")
+    abschluss = texte.t_leicht("keine_fragen", "de") if stil == "leicht" else texte.t("keine_fragen", "de")
+    gesehen = s.naechster_genannt
+    while a.rueckfrage:
+        slot_id = a.rueckfrage["slot"]
+        a = lotse.nachricht(s, _antwort_fuer(slot_id))
+        teile = _absaetze(a.text)
+        # höchstens: Bestätigung, eine Kerninformation, die Rückfrage bzw. der Abschluss
+        assert teile[0] == danke and len(teile) <= 3, a.text
+        assert texte.SZENARIO_LABEL["pflege"]["de"] not in a.text  # Anliegen nur beim ersten Erkennen bestätigt
+        assert SLOTS[slot_id].label["de"] not in a.text.replace(a.rueckfrage["frage"] if a.rueckfrage else "", "")
+        # der nächste Schritt steht in der Box; im Gespräch nicht mehr, die Ansage meldet Änderungen
+        assert naechster not in a.text, a.text
+        assert ("Nächster Schritt:" in a.ansage) == (s.naechster_genannt != gesehen), a.ansage
+        gesehen = s.naechster_genannt
+    assert teile[-1] == abschluss and s.abschluss_gemeldet
+    # der Abschluss und der nächste Schritt kommen nicht noch einmal
+    a = lotse.angabe(s, "person.vorname", "Maria")
+    assert abschluss not in a.text and naechster not in a.text and len(_absaetze(a.text)) == 1
+
+
+def test_erkanntes_anliegen_nennt_drei_hilfen_ohne_gesamtzahl(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, "Meine Mutter lebt in Wien und kommt allein nicht mehr zurecht")
+    teile = _absaetze(a.text)
+    titel = [b["titel"] for b in a.buendel[:3]]
+    assert teile[0] == "Ich habe Ihr Anliegen so verstanden: Pflege und Betreuung."
+    assert teile[1].startswith(f"Ich habe 3 wichtige Hilfen für Sie gefunden: {titel[0]}, {titel[1]} und {titel[2]}. "
+                               "Ihr nächster Schritt: ")
+    assert teile[1].endswith("Weitere Möglichkeiten stehen in Ihrem Plan.") and len(a.buendel) > 3
+    assert str(len(a.buendel)) not in a.text and "Notiert" not in a.text and "Danke" not in a.text
+    # dasselbe Anliegen noch einmal: keine zweite Bestätigung, keine Wiederholung des nächsten Schritts
+    nochmal = lotse.nachricht(s, "Meine Mutter kommt allein nicht mehr zurecht")
+    assert "verstanden" not in nochmal.text and nochmal.text.count("Ihr nächster Schritt:") <= 1
+    assert [b["leistung_id"] for b in nochmal.buendel] == [b["leistung_id"] for b in a.buendel]
+    # die Daten bleiben vollständig: alle Bündel mit Quellen, Stellen und Formularen
+    assert all(b["quellen"] and b["stelle"]["name"] for b in nochmal.buendel)
+
+
+def test_dokumenttipp_und_bestaetigung_nur_beim_ersten_erkennen(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, SAETZE["entlassung"])
+    tipp = texte.t("dokument_tipp", "de")
+    assert tipp in a.text and "Nach dem Spitalsaufenthalt" in a.text
+    while a.rueckfrage:
+        a = lotse.nachricht(s, _antwort_fuer(a.rueckfrage["slot"]))
+        assert tipp not in a.text and "Nach dem Spitalsaufenthalt" not in a.text
+
+
+def test_naechster_schritt_nur_beim_erkennen_und_auf_frage(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, "Meine Mutter lebt in Wien, bezieht eine Pension von der PVA, ist bei der ÖGK versichert, "
+                           "bekommt noch kein Pflegegeld und kommt allein nicht mehr zurecht")
+    assert a.text.count("Ihr nächster Schritt:") == 1  # erste Antwort beim Erkennen des Anliegens
+    erster = s.fallakte.naechster_schritt()
+    # Status auf „in Arbeit“: derselbe nächste Schritt – weder im Gespräch noch in der Ansage
+    a = lotse.setze_status(s, erster.id, "in_arbeit")
+    assert "Ihr nächster Schritt:" not in a.text and "Nächster Schritt" not in a.ansage
+    # erledigt: der neue nächste Schritt steht in der Box; die Ansage meldet ihn
+    a = lotse.setze_status(s, erster.id, "erledigt")
+    assert "Ihr nächster Schritt:" not in a.text and "Nächster Schritt:" in a.ansage
+    assert a.status_uebersicht["naechster"] and a.fallakte["naechster_schritt"]["id"] != erster.id
+    # auf ausdrückliche Frage immer
+    assert "Ihr nächster Schritt:" in lotse.nachricht(s, "Was ist noch offen?").text
+
+
+# ---------------------------------------------------------------- Angaben ändern („Mein Plan“)
+
+def test_angaben_tragen_alles_fuer_das_aenderungsformular(lotse):
+    s = lotse.neue_sitzung()
+    lotse.nachricht(s, "Meine Mutter lebt in Wien, bekommt noch kein Pflegegeld und kommt allein nicht mehr zurecht")
+    lotse.angabe(s, "aufenthalt.entlassungsdatum", "1.3.2026")
+    a = lotse.angabe(s, "person.svnr", "1234 010180")
+    angaben = {x["slot"]: x for x in a.angaben}
+    art = angaben["pflege.antragsart"]
+    assert (art["typ"], art["wert"], art["wert_roh"], art["muster_hinweis"]) == (
+        "auswahl", "Erstantrag (Zuerkennung)", "zuerkennung", "")
+    assert {"wert": "zuerkennung", "label": "Erstantrag (Zuerkennung)"} in art["optionen"]
+    assert all(x["editierbar"] for x in a.angaben)
+    datum = angaben["aufenthalt.entlassungsdatum"]
+    assert (datum["typ"], datum["wert"], datum["wert_roh"], datum["muster_hinweis"], datum["herkunft"]) == (
+        "datum", "01.03.2026", "01.03.2026", "TT.MM.JJJJ", "von Ihnen geändert")
+    assert angaben["person.bundesland"]["herkunft"] == "aus dem Gespräch"
+    svnr = angaben["person.svnr"]
+    assert (svnr["sensibel"], svnr["wert"], svnr["wert_roh"], svnr["muster_hinweis"]) == (
+        True, "hinterlegt", "", "10 Ziffern")
+    assert s.werte["person.svnr"] == "1234010180" and "1234010180" not in json.dumps(a.to_dict(), ensure_ascii=False)
+    en = {x["slot"]: x for x in lotse.einstellungen(s, sprache="en").angaben}
+    assert {"wert": "zuerkennung", "label": "first application"} in en["pflege.antragsart"]["optionen"]
+    assert en["aufenthalt.entlassungsdatum"]["muster_hinweis"] == "DD.MM.YYYY"
+    assert en["person.svnr"]["herkunft"] == "changed by you"
+
+
+def test_angabe_wirkt_wie_eine_antwort_im_gespraech(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, SAETZE["pflege"])
+    slot_id = a.rueckfrage["slot"]
+    a = lotse.angabe(s, slot_id, _antwort_fuer(slot_id))
+    assert s.herkunft[slot_id] == {"art": "geaendert"} and (a.rueckfrage is None or a.rueckfrage["slot"] != slot_id)
+    vergleich = lotse.neue_sitzung()
+    lotse.nachricht(vergleich, SAETZE["pflege"])
+    b = lotse.nachricht(vergleich, _antwort_fuer(slot_id))
+    assert (a.rueckfrage or {}).get("slot") == (b.rueckfrage or {}).get("slot")
+    assert [x["leistung_id"] for x in a.buendel] == [x["leistung_id"] for x in b.buendel]
+    assert s.fragen_gestellt == vergleich.fragen_gestellt
+    # Löschen: Angabe weg, die Frage kommt wieder, sobald sie den nächsten Schritt verändert
+    a = lotse.angabe(s, slot_id, None)
+    assert slot_id not in s.werte and slot_id not in s.herkunft
+    assert a.text.startswith(f"Gelöscht: {SLOTS[slot_id].label['de']}.")
+    assert a.rueckfrage["slot"] == slot_id and s.fragen_gestellt == vergleich.fragen_gestellt
+
+
+def test_angabe_bundesland_aendert_regionen_formular_und_unterlagen(lotse):
+    l = _formular_leistung()
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, "Meine Mutter lebt in Tirol und kommt allein nicht mehr zurecht")
+    assert next(b for b in a.buendel if b["leistung_id"] == l.id)["formular"] is None
+    a = lotse.angabe(s, "person.bundesland", "Wien")
+    assert "Geändert: Bundesland – Wien." in a.text
+    b = next(x for x in a.buendel if x["leistung_id"] == l.id)
+    assert b["formular"]["id"] == l.formular and b["formular"]["region_hinweis"] == ""
+    # in Wien gelten die Unterlagen des FSW-Formulars (wörtlich, mit Seite); inhaltsgleiche Katalogtexte entfallen
+    formular_texte = {u.text["de"] for u in formulare.formular(l.formular).unterlagen_fuer(l.id)}
+    assert formular_texte <= {u["text"] for u in b["unterlagen"]}
+    assert not {u["de"] for u in l.unterlagen_formular} & {u["text"] for u in b["unterlagen"]}
+    assert all(not x["regionen"] or "Wien" in x["regionen"] for x in a.buendel)
+    a = lotse.angabe(s, "person.bundesland", "Tirol")
+    b = next(x for x in a.buendel if x["leistung_id"] == l.id)
+    assert b["formular"] is None and {u["text"] for u in b["unterlagen"]} == {u["de"] for u in l.unterlagen}
+
+
+def test_angabe_versicherung_loest_stelle_und_kontakt_auf(lotse):
+    l = next(x for x in katalog.alle() if "versicherung.krankenversicherung" in x.stelle_nach
+             and x.kontakt_fuer({"versicherung.krankenversicherung": "SVS"}) != x.stelle.get("kontakt", ""))
+    s = lotse.neue_sitzung()
+    vorher = lotse._buendel_eintrag(s, l.id)["stelle"]
+    lotse.angabe(s, "versicherung.krankenversicherung", "SVS")
+    stelle = lotse._buendel_eintrag(s, l.id)["stelle"]
+    assert stelle["kontakt"] == l.kontakt_fuer(s.werte) != vorher["kontakt"]
+    assert stelle["aufgeloest"] and stelle["name"] == l.stelle_fuer(s.werte)["de"]
+
+
+@pytest.mark.daten
+def test_angabe_antragsart_steht_im_pal080_entwurf(lotse):
+    s = lotse.neue_sitzung()
+    lotse.nachricht(s, SAETZE["pflege"])
+    lotse.angabe(s, "pflege.antragsart", "erhoehung")
+    assert str(PdfReader(BytesIO(lotse.formular_pdf(s, "PAL080"))).get_fields()["Antrag Pflg"].get("/V")) == "/02"
+    a = lotse.angabe(s, "pflege.antragsart", "Erstantrag (Zuerkennung)")  # Beschriftung wird verstanden
+    assert s.werte["pflege.antragsart"] == "zuerkennung"
+    assert str(PdfReader(BytesIO(lotse.formular_pdf(s, "PAL080"))).get_fields()["Antrag Pflg"].get("/V")) == "/01"
+    pg = next(b for b in a.buendel if b["leistung_id"] == "pflegegeld")
+    assert "pflege.antragsart" not in {x["slot"] for x in pg["formular"]["fehlende_angaben"]}
+
+
+@pytest.mark.parametrize("slot_id,wert,hinweis", [
+    ("person.geburtsdatum", "31.02.1950", "TT.MM.JJJJ"),
+    ("person.svnr", "12345", "10 Ziffern"),
+    ("person.bundesland", "Bayern", "angebotenen Möglichkeiten"),
+    ("pflege.stufe", "9", "1 bis 7"),
+])
+def test_ungueltige_angabe_wird_erklaert(lotse, slot_id, wert, hinweis):
+    s = lotse.neue_sitzung()
+    with pytest.raises(UngueltigeAngabe) as fehler:
+        lotse.angabe(s, slot_id, wert)
+    assert hinweis in fehler.value.meldung["de"] and SLOTS[slot_id].label["en"] in fehler.value.meldung["en"]
+    assert slot_id not in s.werte
+
+
+@pytest.mark.parametrize("slot_id", ["termin.datum", "person.lieblingsfarbe"])
+def test_termine_und_unbekannte_angaben_sind_hier_nicht_aenderbar(lotse, slot_id):
+    with pytest.raises(UngueltigeAngabe):
+        lotse.angabe(lotse.neue_sitzung(), slot_id, "12.11.2026")
+
+
+def test_fehlende_angaben_am_formular_mit_slot_und_label(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, "Meine Mutter lebt in Wien und kommt allein nicht mehr zurecht")
+    pg = next(b for b in a.buendel if b["formular"] and b["formular"]["id"] == "PAL080")
+    fehlend = pg["formular"]["fehlende_angaben"]
+    assert fehlend == pg["fehlende_angaben"] and {"person.vorname", "person.svnr"} <= {x["slot"] for x in fehlend}
+    for x in fehlend:
+        assert x == {"slot": x["slot"], "label": SLOTS[x["slot"]].label["de"], "sensibel": SLOTS[x["slot"]].sensibel}
+    a = lotse.angabe(s, "person.vorname", "Maria")
+    pg = next(b for b in a.buendel if b["leistung_id"] == pg["leistung_id"])
+    assert "person.vorname" not in {x["slot"] for x in pg["formular"]["fehlende_angaben"]}
+
+
+def test_angaben_nennen_die_herkunft_als_kennung(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, "Meine Mutter lebt in Wien und kommt allein nicht mehr zurecht")
+    assert {x["slot"]: x["herkunft_art"] for x in a.angaben}["person.bundesland"] == "dialog"
+    a = lotse.angabe(s, "person.bundesland", "Tirol")
+    assert {x["slot"]: x["herkunft_art"] for x in a.angaben}["person.bundesland"] == "geaendert"
+    a = lotse.dokument(s, BRIEF.name, BRIEF.read_bytes())
+    arten = {x["slot"]: x["herkunft_art"] for x in a.angaben}
+    assert arten["person.nachname"] == "dokument" and arten["person.bundesland"] == "geaendert"
+    graz = lotse.nachricht(lotse.neue_sitzung(), "Mein Vater wohnt in Graz und braucht Pflege")
+    assert {x["slot"]: x["herkunft_art"] for x in graz.angaben}["person.bundesland"] == "ort"
+    # die Kennung wird nicht übersetzt
+    en = lotse.einstellungen(s, sprache="en")
+    assert {x["slot"]: x["herkunft_art"] for x in en.angaben} == arten
+
+
+def test_fehlende_angaben_primaer_einmal_mit_betroffenen_leistungen(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, "Meine Mutter lebt in Wien und kommt allein nicht mehr zurecht")
+    primaer = [b for b in a.buendel if b["primaer"] and b["formular"]]
+    erwartet: dict[str, list[str]] = {}
+    for b in primaer:
+        for x in b["formular"]["fehlende_angaben"]:
+            erwartet.setdefault(x["slot"], []).append(b["titel"])
+    liste = a.fehlende_angaben_primaer
+    assert liste and [x["slot"] for x in liste] == list(erwartet)  # jede Angabe einmal
+    for x in liste:
+        assert x["fuer"] == erwartet[x["slot"]]
+        assert (x["label"], x["sensibel"]) == (SLOTS[x["slot"]].label["de"], SLOTS[x["slot"]].sensibel)
+    # Formulare weiterer (nicht primärer) Leistungen zählen nicht mit
+    weitere = {x["slot"] for b in a.buendel if not b["primaer"] and b["formular"] for x in b["formular"]["fehlende_angaben"]}
+    assert not (weitere - set(erwartet)) & {x["slot"] for x in liste}
+    a = lotse.angabe(s, "person.vorname", "Maria")
+    assert "person.vorname" not in {x["slot"] for x in a.fehlende_angaben_primaer}
+
+
+# ---------------------------------------------------------------- Unterlagen: Formular statt Dubletten
+
+# Anzahl der Unterlagen, wo das Formular sicher gilt: vorher (Katalog + Formular, nur wortgleiche zusammengefasst)
+# und nachher (Formular-Unterlagen; Katalog-Unterlagen nur, wenn sie keiner davon inhaltlich entsprechen)
+_UNTERLAGEN_ANZAHL = {
+    "pflegegeld": (9, 5), "pflege_zu_hause": (15, 9), "senioren_wg": (2, 1), "wohn_und_pflegehaus": (4, 4),
+    "rehabilitation": (4, 2), "anschlussheilverfahren": (2, 1), "fahrtkosten": (8, 5), "kur": (3, 2),
+    "mobile_fruehfoerderung": (12, 10),
+}
+
+
+@pytest.mark.parametrize("leistung_id", sorted(_UNTERLAGEN_ANZAHL))
+def test_unterlagen_ohne_dubletten_wo_das_formular_gilt(lotse, leistung_id):
+    l = katalog.leistung(leistung_id)
+    s = lotse.neue_sitzung()
+    s.werte["person.bundesland"] = l.formular_regionen[0] if l.formular_regionen else "Steiermark"
+    lotse._ergaenze_eintrag(s, l)
+    b = lotse._buendel_eintrag(s, leistung_id)
+    texte_ = [u["text"] for u in b["unterlagen"]]
+    kandidaten = [*l.unterlagen, *l.unterlagen_formular]
+    formular_ = formulare.formular(l.formular).unterlagen_fuer(l.id)
+    vorher = len({" ".join(t.lower().split()) for t in [u["de"] for u in kandidaten] + [u.text["de"] for u in formular_]})
+    assert (vorher, len(texte_)) == _UNTERLAGEN_ANZAHL[leistung_id]
+    assert len(set(texte_)) == len(texte_)
+    # alle Unterlagen des Formulars stehen da – wörtlich, mit Formularseite als Beleg
+    for u in formular_:
+        eintrag = next(x for x in b["unterlagen"] if x["text"] == u.text["de"])
+        assert eintrag["quelle"]["art"] == "formular" and eintrag["quelle"]["fundstelle"]
+
+
+def test_eigenstaendige_katalog_unterlagen_bleiben():
+    from lotse.lotse import _ersetzte_unterlagen
+    fk = katalog.leistung("fahrtkosten")
+    bank = next(i for i, u in enumerate(fk.unterlagen, 1) if "IBAN" in u["de"])
+    assert bank not in _ersetzte_unterlagen("fahrtkosten")
+    # immer nötige Katalog-Unterlagen werden nicht durch eine nur bedingt nötige Formular-Unterlage vertreten
+    mf = katalog.leistung("mobile_fruehfoerderung")
+    geburt = next(i for i, u in enumerate(mf.unterlagen, 1) if u["de"].startswith("Geburtsurkunde"))
+    assert geburt not in _ersetzte_unterlagen("mobile_fruehfoerderung")
+    # ohne gültiges Formular (Bundesland unbekannt bzw. anderes Land) bleiben die Katalogtexte
+    s = Lotse().neue_sitzung()
+    Lotse()._ergaenze_eintrag(s, katalog.leistung("pflege_zu_hause"))
+    texte_ = [u.text["de"] for u in s.fallakte.eintraege["pflege_zu_hause"].unterlagen]
+    assert katalog.leistung("pflege_zu_hause").unterlagen[0]["de"] in texte_
+
+
+def test_bedingte_unterlagen_sind_gekennzeichnet(lotse):
+    s = lotse.neue_sitzung()
+    a = lotse.nachricht(s, "Meine Mutter lebt in Wien und kommt allein nicht mehr zurecht")
+    pg = next(b for b in a.buendel if b["leistung_id"] == "pflegegeld")
+    flags = {u["text"]: u["bedingt"] for u in pg["unterlagen"]}
+    assert flags and all(isinstance(v, bool) for v in flags.values())
+    assert [t for t, v in flags.items() if not v] == [
+        "Vorhandene Befunde der Ärztin/des Arztes oder des Krankenhauses in Kopie"]
+    assert all(t.startswith("Nur ") for t, v in flags.items() if v)
+    akte = next(e for e in a.fallakte["eintraege"] if e["leistung_id"] == "pflegegeld")
+    assert {u["text"]: u["bedingt"] for u in akte["unterlagen"]} == flags
+    assert all("bedingt" not in x for x in akte["schritte"])
+
+
+def test_haken_an_ersetzter_unterlage_geht_mit(lotse):
+    l = katalog.leistung("pflege_zu_hause")
+    vertretung = f"{l.id}.unterlage_1"  # Katalog: „Bei Vertretung: Nachweis der Vertretungsbefugnis …“
+    s = lotse.neue_sitzung()
+    lotse.nachricht(s, "Meine Mutter lebt in Tirol und kommt allein nicht mehr zurecht")
+    lotse.setze_status(s, vertretung, "erledigt")
+    lotse.angabe(s, "person.bundesland", "Wien")  # jetzt gilt das FSW-Formular mit eigener Vertretungs-Unterlage
+    ziel = s.fallakte.schritt(vertretung)  # alte ID bleibt als Alias erreichbar
+    assert ziel.id != vertretung and ziel.status == "erledigt" and ziel.quelle is not None
+    assert vertretung not in {u.id for u in s.fallakte.eintraege[l.id].unterlagen}
+    lotse.setze_status(s, vertretung, "offen")
+    assert ziel.status == "offen"

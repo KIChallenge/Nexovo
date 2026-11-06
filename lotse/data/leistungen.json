@@ -1,8 +1,8 @@
 {
  "stand": "2026-11-06",
  "hinweis": {
-  "de": "Leistungskatalog des SV KI-Lotsen. Jede Aussage ist durch die Quellen der jeweiligen Leistung belegt; beleg=\"extern\" bedeutet: Kernaussagen nicht lokal geprüft. Einrichtungen, regionale Stellen, Nutzen und Trägerzuständigkeit tragen jeweils einen eigenen Beleg; externe Seiten wurden am 06.11.2026 abgerufen.",
-  "en": "Benefit catalogue of the SV KI-Lotse. Every statement is backed by the sources of the respective benefit; beleg=\"extern\" means: core statements not verified locally. Facilities, regional bodies, benefits and insurer responsibility each carry their own source; external pages were retrieved on 06.11.2026."
+  "de": "Leistungskatalog des SV KI-Lotsen. Jede Aussage ist durch die Quellen der jeweiligen Leistung belegt; beleg=\"extern\" bedeutet: Kernaussagen nicht lokal geprüft. Einrichtungen, regionale Stellen, Nutzen und Trägerzuständigkeit tragen jeweils einen eigenen Beleg; externe Seiten wurden am 06.11.2026 abgerufen. Das Feld leicht umschreibt kurz, details, voraussetzungen und schritte in Leichter Sprache – ohne neue Inhalte, belegt durch dieselben Quellen.",
+  "en": "Benefit catalogue of the SV KI-Lotse. Every statement is backed by the sources of the respective benefit; beleg=\"extern\" means: core statements not verified locally. Facilities, regional bodies, benefits and insurer responsibility each carry their own source; external pages were retrieved on 06.11.2026. The field leicht paraphrases kurz, details, voraussetzungen and schritte in Easy Read – without new content, backed by the same sources."
  },
  "reihenfolge": {
   "pflege": [
@@ -90,6 +90,10 @@
    "kurz": {
     "de": "Pflegegeld ist ein monatlicher Geldbeitrag, wenn jemand voraussichtlich mindestens sechs Monate lang Betreuung und Hilfe braucht. Den Antrag stellen Sie bei dem Träger, der die Pension auszahlt.",
     "en": "Care allowance is a monthly cash contribution for people who are expected to need care and help for at least six months. You apply to the institution that pays the person's pension."
+   },
+   "leicht": {
+    "de": "Pflegegeld ist monatliches Geld für Pflege und Hilfe. Bedingung: Die Person braucht wahrscheinlich 6 Monate oder länger Hilfe. Wer zahlt die Pension aus? Dort stellen Sie den Antrag.",
+    "en": "Care allowance is monthly money for care and help. Condition: the person probably needs help for 6 months or more. Who pays the pension? You apply there."
    },
    "details": {
     "de": "Es gibt sieben Stufen; entscheidend ist der durchschnittliche Pflegebedarf pro Monat (Stufe 1: mehr als 65 Stunden). Für 2026 gelten monatlich 206,20 € (Stufe 1), 380,30 € (Stufe 2), 592,60 € (Stufe 3), 888,50 € (Stufe 4), 1.206,90 € (Stufe 5), 1.685,40 € (Stufe 6) und 2.214,80 € (Stufe 7). Die Grundbeträge in BPGG § 5 sind nicht mehr aktuell – maßgeblich ist die Anpassung für 2026. Familienmitglieder oder Haushaltsangehörige dürfen den Antrag ohne Vollmacht stellen, wenn kein Zweifel an der Vertretung besteht. Ob und in welcher Stufe Pflegegeld zusteht, entscheidet der Träger nach einem Hausbesuch zur Feststellung des Pflegebedarfs – das kann der Lotse nicht vorhersagen. Ein Antrag bei einem anderen Sozialversicherungsträger wird weitergeleitet und gilt als richtig eingebracht.",
@@ -604,6 +608,10 @@
     "de": "Eine diplomierte Pflegefachkraft berät kostenlos zu Hause und informiert über regionale Unterstützungsangebote. Sie können das direkt im Pflegegeldantrag ankreuzen.",
     "en": "A qualified nurse gives free advice at home and informs you about regional support services. You can request this directly on the care allowance application."
    },
+   "leicht": {
+    "de": "Eine ausgebildete Pflegefachkraft berät Sie kostenlos zu Hause. Die Fachkraft informiert Sie über Hilfen in Ihrer Region. Kreuzen Sie die Beratung im Antrag auf Pflegegeld an. Die gepflegte Person muss der Weitergabe ihrer Kontaktdaten zustimmen.",
+    "en": "A qualified nurse gives you free advice at home. The nurse tells you about support in your region. Tick the advice on the care allowance application. The person cared for must agree to share their contact details."
+   },
    "details": {
     "de": "Im Pflegegeldantrag PAL 080 (Punkt 9) fordern Sie die kostenlose Pflegeberatung an; Name, Sozialversicherungsnummer, Anschrift und Telefonnummer werden dafür an das Kompetenzzentrum zur Qualitätssicherung in der häuslichen Pflege weitergeleitet. Stellen Sie den Antrag für eine Angehörige oder einen Angehörigen, holen Sie vorher deren bzw. dessen Zustimmung ein. Wer bereits Pflegegeld bezieht: Die Pflegegeld-Träger können Hausbesuche zur Information und Beratung durchführen – auch auf Wunsch der pflegebedürftigen Person oder der Angehörigen.",
     "en": "On the care allowance form PAL 080 (item 9) you can request free care counselling; name, social security number, address and phone number are passed on to the competence centre for quality assurance in home care. If you apply for a relative, obtain their consent first. If the person already receives care allowance: the institutions can carry out home visits for information and advice – also at the request of the person or their relatives."
@@ -768,6 +776,10 @@
    "kurz": {
     "de": "Mobile Pflege- und Betreuungsdienste kommen zu Ihnen nach Hause; sie sind Angebote der Bundesländer. In Wien beantragen Sie die Förderung beim Fonds Soziales Wien, für die anderen Bundesländer nennt der Lotse die zuständige Landesstelle.",
     "en": "Mobile care and support services come to your home; they are services of the federal states. In Vienna you apply to the Fonds Soziales Wien for funding; for the other states the navigator names the responsible regional body."
+   },
+   "leicht": {
+    "de": "Mobile Dienste helfen Ihnen zu Hause bei Pflege und Betreuung. Diese Angebote macht Ihr Bundesland. In Wien beantragen Sie die Förderung beim Fonds Soziales Wien. Für andere Bundesländer zeigt Ihnen der Lotse die richtige Stelle.",
+    "en": "Mobile services help you at home with care and support. Your federal state provides these services. In Vienna, you apply for funding to the Fonds Soziales Wien. For other federal states, the navigator shows you the right office."
    },
    "details": {
     "de": "Laut Pflegefondsgesetz sind mobile Betreuungs- und Pflegedienste Angebote der Länder; Angebote und Antragswege unterscheiden sich daher je nach Bundesland – die Stelle für Ihr Bundesland zeigt der Lotse mit Quelle. In Wien kreuzen Sie im FSW-Antrag unter Punkt 10 „Pflege und Betreuung zu Hause“ oder „Tagesbetreuung (Tageszentrum, Tageshospiz)“ an. Sie zahlen einen monatlichen Kostenbeitrag im Nachhinein; er hängt von den genutzten Betreuungseinheiten, Ihrem Einkommen, Unterhaltspflichten, Miet- und Wohnkosten und dem Pflegegeld ab. Betreut eine anerkannte Einrichtung, brauchen Sie mit ihr einen schriftlichen Vertrag; der FSW zahlt die Förderung direkt an die Einrichtung. Medizinische Hauskrankenpflege (z. B. Wundversorgung) ist eine eigene Leistung der Krankenversicherung.",
@@ -1228,6 +1240,10 @@
     "de": "In Wien gibt es betreute Wohngemeinschaften für ältere Menschen. Das Basispaket des FSW bietet Unterstützung und Begleitung im Gemeinschaftsleben.",
     "en": "Vienna has supported shared flats for older people. The FSW basic package offers support and guidance in community life."
    },
+   "leicht": {
+    "de": "In Wien gibt es betreute Wohngemeinschaften für ältere Menschen. In einer Wohngemeinschaft leben mehrere Menschen zusammen. Das Basispaket vom Fonds Soziales Wien unterstützt Sie im Zusammenleben. Sie melden Ihren Bedarf beim Fonds Soziales Wien.",
+    "en": "Vienna has supported shared flats for older people. In a shared flat, several people live together. The basic package of the Fonds Soziales Wien helps with community life. You report your need to the Fonds Soziales Wien."
+   },
    "details": {
     "de": "Die Bedarfsmeldung enthält die Wohngemeinschaft (Partnerorganisation, Ansprechperson), Ihre Daten samt Pflegegeldstufe, den Pflege- und Betreuungsbedarf und eine Begründung für den Einzug. Neue Kund:innen legen den Antrag auf Förderung von Leistungen bei.",
     "en": "The needs notification lists the shared flat (partner organisation, contact person), your details including care level, the care and support need and a reason for moving in. New customers enclose the application for funding of services."
@@ -1377,6 +1393,10 @@
    "kurz": {
     "de": "Geht es zu Hause nicht mehr, fördert der FSW in Wien Plätze in Wohn- und Pflegehäusern, befristet oder unbefristet. In der Beilage „Einrichtungswunsch“ geben Sie gewünschte Bezirke oder Häuser an.",
     "en": "If living at home is no longer possible, the FSW in Vienna subsidises places in residential and nursing homes, temporary or permanent. In the \"preferred facility\" attachment you state preferred districts or homes."
+   },
+   "leicht": {
+    "de": "Geht es zu Hause nicht mehr? Der Fonds Soziales Wien fördert dann einen Platz im Wohn- und Pflegehaus. Das geht für eine begrenzte Zeit oder dauerhaft. In der Beilage „Einrichtungswunsch“ nennen Sie gewünschte Bezirke oder Häuser.",
+    "en": "Is living at home no longer possible? Then the Fonds Soziales Wien funds a place in a nursing home. This can be for a limited time or permanent. In the \"preferred facility\" attachment, you name districts or homes you prefer."
    },
    "details": {
     "de": "Beantragt wird mit dem FSW-Antrag auf Förderung (Punkt 10 „Wohnen und Pflege“). Ist der Einzug dringend, sucht der FSW in ganz Wien einen Platz. Befristet möglich sind z. B. Kurzzeitpflege – Remobilisation (höchstens 92 Tage), Betreutes Wohnen – Entlastung für Angehörige und Urlaubspflege (je höchstens 35 Tage). Der Kostenbeitrag hängt von Einkommen, Unterhaltspflichten und Pflegegeld ab und ist jeden Monat im Vorhinein zu zahlen.",
@@ -1584,6 +1604,10 @@
    "kurz": {
     "de": "Wer eine nahe Angehörige oder einen nahen Angehörigen mit Pflegegeld ab Stufe 3 zu Hause pflegt, kann sich in der Kranken- und Pensionsversicherung absichern. Ab Pflegegeldstufe 4 gibt es zusätzlich einen monatlichen Angehörigenbonus.",
     "en": "If you care at home for a close relative who receives care allowance at level 3 or higher, you can be covered by health and pension insurance. From care level 4 there is also a monthly carer bonus."
+   },
+   "leicht": {
+    "de": "Pflegen Sie zu Hause eine nahe Angehörige oder einen nahen Angehörigen? Hat die Person Pflegegeld ab Stufe 3? Dann können Sie sich für Krankheit und Pension versichern. Ab Stufe 4 gibt es jeden Monat extra Geld: den Angehörigenbonus.",
+    "en": "Do you care at home for a close relative? Does the person get care allowance at level 3 or higher? Then you can have health and pension insurance. From level 4, there is also a monthly carer bonus."
    },
    "details": {
     "de": "Krankenversicherung: Pflegende Angehörige können bei der ÖGK mitversichert sein – ohne Zusatzbeitrag, wenn die gepflegte Person Pflegegeld ab Stufe 3 hat. Ist keine Mitversicherung möglich, gibt es eine Selbstversicherung ohne Wartezeit; die Beiträge zahlt der Ausgleichsfonds für Familienbeihilfen. Pensionsversicherung: Bei Pflege unter erheblicher Beanspruchung der Arbeitskraft in häuslicher Umgebung ist eine Selbstversicherung möglich, je Pflegefall für eine Person. Angehörigenbonus: bei Pflegegeld ab Stufe 4 und Selbst- oder Weiterversicherung in der Pensionsversicherung; 2026 monatlich 134,30 €, ausbezahlt von Amts wegen.",
@@ -1801,6 +1825,10 @@
     "de": "Wer mit dem Arbeitgeber Pflegekarenz oder Pflegeteilzeit vereinbart, um eine pflegebedürftige Person zu betreuen, hat Anspruch auf Pflegekarenzgeld. Stellen Sie den Antrag innerhalb von zwei Monaten ab Beginn.",
     "en": "If you agree care leave or care part-time with your employer to look after a person in need of care, you are entitled to care leave allowance. Apply within two months of the start."
    },
+   "leicht": {
+    "de": "Sie pflegen einen Menschen und arbeiten dafür weniger oder gar nicht? Das vereinbaren Sie mit Ihrem Arbeitgeber als Pflegekarenz oder Pflegeteilzeit. Dann haben Sie ein Recht auf Pflegekarenzgeld. Stellen Sie den Antrag innerhalb von 2 Monaten ab Beginn.",
+    "en": "Do you work less or not at all to care for someone? You agree this with your employer as care leave or care part-time. Then you have a right to care leave allowance. Apply within 2 months of the start."
+   },
    "details": {
     "de": "Pflegekarenzgeld gebührt für die Dauer der Pflegekarenz, höchstens drei Monate (bei Pflegeteilzeit anteilig), und pro pflegebedürftiger Person höchstens sechs Monate. Vorher müssen Sie aus dem Arbeitsverhältnis drei Monate ununterbrochen voll- bzw. krankenversichert gewesen sein. Bei späterem Antrag gibt es das Geld erst ab dem Tag der Antragstellung, verspätete Anträge werden zurückgewiesen. Läuft das Pflegegeldverfahren noch, wird es grundsätzlich binnen zwei Wochen abgeschlossen, sobald Sie erklären, Pflegekarenz oder Pflegeteilzeit nehmen zu wollen.",
     "en": "Care leave allowance is paid for the duration of the leave, at most three months (pro rata for care part-time), and at most six months per person in need of care. Beforehand you must have been fully or health insured from that employment for three uninterrupted months. If you apply later, payment only starts on the day of application; late applications are rejected. If the care allowance procedure is still open, it is generally concluded within two weeks once you declare that you want to take care leave or care part-time."
@@ -1982,6 +2010,10 @@
     "de": "Fallen Sie als pflegende:r Angehörige:r wegen Krankheit, Urlaub oder aus anderen wichtigen Gründen aus, kann es einen Zuschuss aus dem Unterstützungsfonds geben. Das Ansuchen stellen Sie beim Sozialministeriumservice.",
     "en": "If you as a family carer cannot provide care because of illness, holidays or other important reasons, a grant from the support fund may be available. You apply to the Sozialministeriumservice."
    },
+   "leicht": {
+    "de": "Ersatzpflege heißt: Eine andere Person pflegt an Ihrer Stelle. Das brauchen Sie vielleicht bei Krankheit, Urlaub oder einem anderen wichtigen Grund. Für pflegende Angehörige gibt es dafür vielleicht einen Zuschuss. Den Zuschuss beantragen Sie beim Sozialministeriumservice.",
+    "en": "Replacement care means another person provides care instead of you. You may need this because of illness, holidays or another important reason. Family carers may get a grant for this. You apply to the Sozialministeriumservice."
+   },
    "details": {
     "de": "Voraussetzung ist, dass Sie seit mindestens einem Jahr überwiegend pflegen – eine Person mit Pflegegeld ab Stufe 3, oder ab Stufe 1 bei nachweislich demenzieller Erkrankung bzw. bei Minderjährigen – und eine soziale Härte vorliegt. Auch für Kurse zur Wissensvermittlung im Bereich Pflege und Betreuung kann es eine Zuwendung geben (Pflegegeld ab Stufe 1). Zuwendungen gibt es nach Maßgabe der verfügbaren Mittel; Höhe und nötige Unterlagen regeln Richtlinien, die lokal nicht vorliegen.",
     "en": "You must have been the main carer for at least one year – for a person with care allowance from level 3, or from level 1 in case of proven dementia or for minors – and there must be social hardship. A grant may also be available for courses on care and support (care allowance from level 1). Grants depend on available funds; amounts and required documents are set by guidelines that are not available locally."
@@ -2125,6 +2157,10 @@
     "de": "Für eine 24-Stunden-Betreuung zu Hause kann es einen Zuschuss aus dem Unterstützungsfonds geben. Voraussetzung ist unter anderem Pflegegeld mindestens der Stufe 3.",
     "en": "A grant from the support fund may be available for 24-hour care at home. One requirement is care allowance at level 3 or higher."
    },
+   "leicht": {
+    "de": "Bei der 24-Stunden-Betreuung betreut Sie eine Betreuungskraft zu Hause. Dafür gibt es vielleicht Geld als Zuschuss. Eine Bedingung ist Pflegegeld ab Stufe 3. Den Antrag stellen Sie beim Sozialministeriumservice.",
+    "en": "With 24-hour care, a carer looks after you at home. You may get a grant for this. One condition is care allowance at level 3 or higher. You apply to the Sozialministeriumservice."
+   },
    "details": {
     "de": "Voraussetzungen sind eine Betreuung nach dem Hausbetreuungsgesetz, der festgestellte Bedarf an einer bis zu 24-Stunden-Betreuung, Pflegegeld mindestens der Stufe 3 und eine Qualifikation der Betreuungskraft (z. B. eine Ausbildung ähnlich der Heimhilfe oder mindestens sechs Monate sachgerechte Betreuung). Die Förderungen führt das Bundesamt für Soziales und Behindertenwesen durch; Höhe und Details regeln Richtlinien, die lokal nicht vorliegen.",
     "en": "Requirements are care under the Home Care Act, an established need for up to 24-hour care, care allowance at level 3 or higher and a qualification of the carer (e.g. training similar to a home helper or at least six months of proper care). The grants are handled by the Federal Office for Social Affairs and Disability; amounts and details are set by guidelines that are not available locally."
@@ -2259,6 +2295,10 @@
    "kurz": {
     "de": "Diplomierte Pflegekräfte übernehmen auf ärztliche Anordnung medizinische Pflege zu Hause, zum Beispiel Wundversorgung oder Injektionen. Die Krankenversicherung übernimmt das zunächst für bis zu vier Wochen.",
     "en": "Qualified nurses provide medical care at home on a doctor's order, for example wound care or injections. Health insurance covers this initially for up to four weeks."
+   },
+   "leicht": {
+    "de": "Ausgebildete Pflegekräfte kommen zu Ihnen nach Hause und pflegen Sie medizinisch. Zum Beispiel versorgen sie Wunden oder geben Spritzen. Dafür brauchen Sie eine Anordnung von Ihrer Ärztin oder Ihrem Arzt. Die Krankenversicherung zahlt das zuerst für bis zu 4 Wochen.",
+    "en": "Trained nurses come to your home and give medical care. For example, they care for wounds or give injections. You need an order from your doctor. Health insurance first pays for up to 4 weeks."
    },
    "details": {
     "de": "Die Hauskrankenpflege ersetzt einen Spitalsaufenthalt und umfasst nur medizinische und qualifizierte Pflegeleistungen (z. B. Wundversorgung, Injektionen, Sondenernährung). Grundpflege wie Körperpflege und die Hilfe im Haushalt gehören nicht dazu – dafür gibt es Pflegegeld und Angebote wie „Pflege und Betreuung zu Hause“. Je Versicherungsfall dauert sie höchstens vier Wochen; darüber hinaus braucht es eine Bewilligung des Medizinischen Dienstes. Werden keine Vertragspartner der Krankenversicherung in Anspruch genommen, gibt es nur einen Kostenersatz.",
@@ -2458,6 +2498,10 @@
    "kurz": {
     "de": "Brillen, Einlagen, Rollstühle, Prothesen und ähnliche Hilfen bekommen Sie mit ärztlicher Verordnung. Die Krankenversicherung zahlt bis zu Höchstbeträgen, meist mit einem Selbstbehalt.",
     "en": "Glasses, insoles, wheelchairs, prostheses and similar aids are provided on prescription. Health insurance pays up to maximum amounts, usually with a co-payment."
+   },
+   "leicht": {
+    "de": "Für Brillen, Einlagen, Rollstühle und Prothesen brauchen Sie eine ärztliche Verordnung. Das gilt auch für ähnliche Hilfen. Die Krankenversicherung zahlt bis zu einem Höchstbetrag. Meistens zahlen Sie einen Teil selbst.",
+    "en": "You get glasses, insoles, wheelchairs and prostheses with a doctor's prescription. This also applies to similar aids. Health insurance pays up to a maximum amount. You usually pay part of the cost yourself."
    },
    "details": {
     "de": "Bei Heilbehelfen tragen Sie 10 % der Kosten, mindestens 46,20 €; die ÖGK übernimmt höchstens 1.848,00 €. Für Hilfsmittel gilt dasselbe, bei Prothesen und Rollstühlen bis 4.620,00 €. Manche Artikel muss die ÖGK vorher genehmigen; meist leitet der Vertragspartner die Unterlagen weiter. Keine Kostenbeteiligung gibt es u. a. für Kinder bis zum vollendeten 15. Lebensjahr, bei Rezeptgebührenbefreiung wegen sozialer Schutzbedürftigkeit und bei erhöhter Familienbeihilfe; im Rahmen einer medizinischen Rehabilitation entfällt sie ebenfalls. Krankenfahrstühle stellt die ÖGK unter Voraussetzungen leihweise zur Verfügung.",
@@ -2696,6 +2740,10 @@
    "kurz": {
     "de": "Eine Reha hilft, nach einer Krankheit wieder möglichst selbstständig zu leben. Sie muss vorher beantragt werden, mit einer medizinischen Begründung Ihrer Ärztin oder Ihres Arztes.",
     "en": "Rehabilitation helps you live as independently as possible again after an illness. It must be applied for in advance, with a medical justification from your doctor."
+   },
+   "leicht": {
+    "de": "Eine Reha hilft nach einer Krankheit. Ziel ist: Sie leben wieder möglichst selbstständig. Sie müssen die Reha vorher beantragen. Ihre Ärztin oder Ihr Arzt schreibt dazu eine medizinische Begründung.",
+    "en": "Rehab helps after an illness. The goal: you live as independently as possible again. You must apply for rehab in advance. Your doctor writes a medical justification for it."
    },
    "details": {
     "de": "Ob eine Reha medizinisch angezeigt ist, entscheiden Ärztin oder Arzt und der Versicherungsträger – der Lotse hilft nur beim Antrag. Der „Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt“ hat einen Teil für Sie und eine ärztliche Stellungnahme. Formulare gibt es in Krankenanstalten, bei Ärztinnen und Ärzten und in den ÖGK-Kundenservicestellen; bei der ÖGK geht das Einreichen auch über Meine ÖGK. Zuständig kann die Kranken- oder die Pensionsversicherung sein; ein Antrag bei einem Pensions- oder Unfallversicherungsträger wird an den zuständigen Krankenversicherungsträger weitergeleitet, wenn dieser zuständig ist. Für den Aufenthalt in einer Reha-Einrichtung zahlen Sie 2026 je nach Bruttoeinkommen 11,06 €, 18,96 € oder 26,87 € pro Tag, höchstens für 28 Tage im Jahr; keine Zuzahlung gibt es z. B. bei geringem Einkommen (bis 1.308,39 € brutto) oder für Kinder und Jugendliche unter 18.",
@@ -3050,6 +3098,10 @@
     "de": "Nach einem Unfall oder einer Operation kann das Krankenhaus eine Reha im Anschluss an den Aufenthalt beantragen. Das Formular füllt das Krankenhaus aus, Sie geben mit Ihrer Unterschrift Ihr Einverständnis.",
     "en": "After an accident or an operation, the hospital can apply for rehabilitation directly after the stay. The hospital fills in the form and you give your consent by signing."
    },
+   "leicht": {
+    "de": "Sind Sie nach einem Unfall oder einer Operation im Krankenhaus? Dann kann das Krankenhaus eine Reha direkt danach beantragen. Das Krankenhaus füllt das Formular aus. Mit Ihrer Unterschrift sagen Sie Ja dazu.",
+    "en": "Are you in hospital after an accident or an operation? Then the hospital can apply for rehab straight after your stay. The hospital fills in the form. You say yes by signing it."
+   },
    "details": {
     "de": "Der „Antrag auf Anschlussheilverfahren oder Rehabilitation nach Unfall“ ist vom antragstellenden Krankenhaus auszufüllen; darin stehen u. a. der voraussichtliche Entlassungstag, die vorgeschlagene Reha-Einrichtung und der optimale Antrittstermin. Weil das Krankenhaus den Antrag ausfüllt, sprechen Sie das am besten noch während des Aufenthalts an.",
     "en": "The \"application for follow-up treatment or rehabilitation after an accident\" is completed by the applying hospital; it includes the expected discharge date, the proposed rehab facility and the best start date. Since the hospital fills it in, raise it while you are still in hospital."
@@ -3216,6 +3268,10 @@
    "kurz": {
     "de": "Können Sie nicht gehen, übernimmt die ÖGK den Krankentransport mit einer ärztlichen Transportanweisung. Für eigene Fahrten zu Dialyse, Chemo- oder Strahlentherapie gibt es einen Fahrtkostenzuschuss auch ohne Rezeptgebührenbefreiung.",
     "en": "If you cannot walk, ÖGK covers patient transport with a doctor's transport order. For your own trips to dialysis, chemotherapy or radiotherapy there is a travel cost subsidy even without a prescription charge exemption."
+   },
+   "leicht": {
+    "de": "Können Sie nicht gehen? Dann zahlt die Gesundheitskasse ÖGK den Krankentransport. Dafür brauchen Sie eine Transportanweisung von Ihrer Ärztin oder Ihrem Arzt. Für eigene Fahrten zur Dialyse, Chemotherapie oder Strahlentherapie gibt es Geld dazu.",
+    "en": "Are you unable to walk? Then the health insurance fund ÖGK pays for patient transport. You need a transport order from your doctor. You get money towards your own trips to dialysis, chemotherapy or radiotherapy."
    },
    "details": {
     "de": "Krankentransport: Voraussetzung ist eine ärztliche Transportanweisung über die Gehunfähigkeit. Bei Taxi oder Fahrtendienst zahlen Sie 7,55 € pro Fahrtstrecke, mit sanitätsdienstlicher Begleitung 15,10 €; für Fahrten zu Dialyse-, Chemo-, Strahlen- oder Immuntherapien wird kein Kostenanteil eingehoben, ebenso nicht für Kinder bis 15 und bei Rezeptgebührenbefreiung. Fahrtkostenzuschuss für eigene Fahrten: grundsätzlich nur bei Rezeptgebührenbefreiung (nicht bei Erreichen der Rezeptgebühren-Obergrenze); Ausnahme sind Fahrten zu Dialyse, Chemo- oder Strahlentherapie und ausgewählte Reha-Fahrten. Ersetzt wird, wenn der nächstgelegene geeignete Vertragspartner mehr als 20 km entfernt ist: bis 50 km pauschal 7,20 € pro Strecke (mit Begleitperson 10,80 €), darüber 0,13 € pro km (mit Begleitperson 0,22 €). Pro Fahrt einen Stempel der Einrichtung holen und am Ende der Therapie den Antrag für alle Sitzungen einreichen. Das lokal vorliegende Formular trägt im Dateinamen „Wien“; ob es in allen Bundesländern gleich verwendet wird, ist lokal nicht geprüft.",
@@ -3521,6 +3577,10 @@
    "kurz": {
     "de": "Für jedes Medikament auf Kassenrezept zahlen Sie derzeit 7,55 € Rezeptgebühr pro Packung. Bei geringem Einkommen können Sie sich befreien lassen, manche Gruppen sind automatisch befreit.",
     "en": "For each medicine on a health insurance prescription you currently pay a €7.55 prescription charge per pack. On a low income you can apply for an exemption, and some groups are exempt automatically."
+   },
+   "leicht": {
+    "de": "Für jedes Medikament auf Kassenrezept zahlen Sie die Rezeptgebühr. Die Gebühr ist derzeit 7,55 € pro Packung. Bei wenig Einkommen können Sie eine Befreiung beantragen. Manche Menschen sind automatisch befreit.",
+    "en": "On a health insurance prescription, you pay a charge for each medicine. It currently costs €7.55 per pack. With a low income, you can apply for an exemption. Some people are exempt automatically."
    },
    "details": {
     "de": "Ohne Antrag befreit sind zum Beispiel Bezieherinnen und Bezieher einer Ausgleichszulage. Mit Antrag befreit werden Personen, deren monatliche Nettoeinkünfte 1.308,39 € (alleinstehend) bzw. 2.064,12 € (Ehepaare, eingetragene Partnerschaften, Lebensgemeinschaften) nicht übersteigen; bei nachgewiesenen überdurchschnittlichen krankheitsbedingten Ausgaben gelten 1.504,65 € bzw. 2.373,74 €. Die Beträge erhöhen sich unter bestimmten Voraussetzungen um 201,88 € pro Kind; das Einkommen der Partnerin bzw. des Partners im gemeinsamen Haushalt zählt mit. Außerdem gibt es eine Obergrenze: Wer 2026 mit Rezeptgebühren 2 % des Jahresnettoeinkommens erreicht, ist für den Rest des Jahres automatisch befreit. Eine Befreiung hilft auch beim Fahrtkostenzuschuss und – bei sozialer Schutzbedürftigkeit – beim Selbstbehalt für Heilbehelfe.",
@@ -3985,6 +4045,10 @@
    "kurz": {
     "de": "Sind Sie nach dem Spital weiter arbeitsunfähig, brauchen Sie eine Krankmeldung von einer Vertragsärztin oder einem Vertragsarzt. Ist die Entgeltfortzahlung erschöpft, zahlt die ÖGK Krankengeld.",
     "en": "If you are still unable to work after hospital, you need a sick note from a contract doctor. Once continued pay from your employer ends, ÖGK pays sickness benefit."
+   },
+   "leicht": {
+    "de": "Können Sie nach dem Spital noch nicht arbeiten? Dann brauchen Sie eine Krankmeldung von einer Vertragsärztin oder einem Vertragsarzt. Zuerst zahlt Ihr Arbeitgeber Ihren Lohn weiter. Danach zahlt die Gesundheitskasse ÖGK das Krankengeld.",
+    "en": "Are you still unable to work after hospital? Then you need a sick note from a contract doctor. First, your employer continues to pay your wages. After that, the health insurance fund ÖGK pays sickness benefit."
    },
    "details": {
     "de": "Nach einem stationären Krankenhaus- oder Reha-Aufenthalt lassen Sie sich die weitere Arbeitsunfähigkeit grundsätzlich von einer Vertragsärztin oder einem Vertragsarzt bescheinigen. Krankengeld gebührt grundsätzlich ab dem vierten Tag der Arbeitsunfähigkeit; Anspruch haben grundsätzlich nur Pflichtversicherte. Es beträgt vom 4. bis 42. Tag 50 %, ab dem 43. Tag 60 % der Bemessungsgrundlage und wird automatisch alle vier Wochen im Nachhinein überwiesen. Die Arbeitsunfähigkeit melden Sie unverzüglich Ihrer Dienstgeberin bzw. Ihrem Dienstgeber; das Ende melden Sie der ÖGK sofort.",
@@ -4451,6 +4515,10 @@
     "de": "Nach mindestens sechs Wochen Krankenstand können Sie mit Ihrer Dienstgeberin oder Ihrem Dienstgeber vereinbaren, schrittweise mit weniger Stunden zurückzukehren. Zusätzlich zum Teilzeitentgelt zahlt die ÖGK Wiedereingliederungsgeld.",
     "en": "After at least six weeks of sick leave you can agree with your employer to return gradually with fewer hours. In addition to part-time pay, ÖGK pays a reintegration allowance."
    },
+   "leicht": {
+    "de": "Sind Sie seit mindestens 6 Wochen im Krankenstand? Dann können Sie Schritt für Schritt mit weniger Stunden zurückkommen. Das vereinbaren Sie mit Ihrem Arbeitgeber. Die Gesundheitskasse ÖGK zahlt zusätzlich Wiedereingliederungsgeld.",
+    "en": "Have you been on sick leave for at least 6 weeks? Then you can return to work step by step with fewer hours. You agree this with your employer. The health insurance fund ÖGK also pays a reintegration allowance."
+   },
    "details": {
     "de": "Voraussetzungen sind u. a. eine mindestens sechswöchige durchgehende Arbeitsunfähigkeit, ein seit mindestens drei Monaten bestehendes Dienstverhältnis, eine schriftliche Vereinbarung mit Wiedereingliederungsplan und die Genehmigung durch den Medizinischen Dienst der ÖGK. Die Arbeitszeit wird um mindestens 25 % und höchstens 50 % reduziert, auf mindestens zwölf Wochenstunden. Vereinbarung, Plan und allfällige medizinische Unterlagen müssen rechtzeitig vor Beginn bei der ÖGK sein; beginnen können Sie frühestens am Tag nach Zustellung der Bewilligung. Für arbeitsrechtliche Fragen ist die Arbeiterkammer Anlaufstelle.",
     "en": "Requirements include at least six weeks of continuous incapacity, employment for at least three months, a written agreement with a reintegration plan and approval by the ÖGK medical service. Working time is reduced by at least 25% and at most 50%, to at least twelve hours a week. The agreement, plan and any medical documents must reach ÖGK in good time; you can start at the earliest the day after the approval is delivered. For employment law questions contact the Chamber of Labour (Arbeiterkammer)."
@@ -4636,6 +4704,10 @@
    "kurz": {
     "de": "Die ÖGK kann Kur- und Erholungsaufenthalte zur Festigung der Gesundheit gewähren, als freiwillige Leistung. Sie beantragen den Aufenthalt vorher und Ihre Ärztin oder Ihr Arzt begründet ihn medizinisch.",
     "en": "ÖGK can grant spa and convalescence stays to strengthen your health, as a voluntary benefit. You apply in advance and your doctor provides the medical justification."
+   },
+   "leicht": {
+    "de": "Eine Kur oder ein Erholungsaufenthalt soll Ihre Gesundheit stärken. Die Gesundheitskasse ÖGK kann den Aufenthalt freiwillig bewilligen. Sie stellen den Antrag vorher. Ihre Ärztin oder Ihr Arzt schreibt eine medizinische Begründung.",
+    "en": "A health resort stay or convalescence stay should strengthen your health. The health insurance fund ÖGK can approve it voluntarily. You apply in advance. Your doctor writes a medical justification."
    },
    "details": {
     "de": "Verwendet wird derselbe Antrag wie für die Rehabilitation („Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt“); die ÖGK prüft und bewilligt. Formulare liegen bei Ärztinnen und Ärzten und in den ÖGK-Kundenservicestellen auf. Für den Aufenthalt zahlen Sie 2026 je nach Bruttoeinkommen 11,06 €, 18,96 € oder 26,87 € pro Tag; die Zuzahlung entfällt z. B. bei geringem Einkommen (Bruttoerwerbseinkommen bis 1.308,39 €) oder bei Ausgleichszulage.",
@@ -5076,6 +5148,10 @@
     "de": "Belastet Sie eine Krankheit oder Behandlung finanziell stark, können Sie bei der ÖGK einen freiwilligen Zuschuss beantragen. Berücksichtigt werden Familien-, Einkommens- und Vermögensverhältnisse.",
     "en": "If an illness or treatment puts you under heavy financial strain, you can apply to ÖGK for a voluntary grant. Family, income and assets are taken into account."
    },
+   "leicht": {
+    "de": "Kostet Sie eine Krankheit oder Behandlung sehr viel Geld? Dann können Sie bei der Gesundheitskasse ÖGK einen Zuschuss beantragen. Die ÖGK gibt den Zuschuss freiwillig. Dabei beachtet sie Familie, Einkommen und Vermögen.",
+    "en": "Does an illness or treatment cost you a lot of money? Then you can ask the health insurance fund ÖGK for a grant. ÖGK gives the grant voluntarily. It looks at your family, income and assets."
+   },
    "details": {
     "de": "Der Zuschuss betrifft finanzielle Belastungen im Zusammenhang mit einer Krankheit oder medizinischen Behandlung, die zu einer Kassenleistung führt. Sie stellen einen schriftlichen Antrag und legen insbesondere die Einkommensnachweise aller im Haushalt lebenden Personen sowie Rechnungen und Kostenvoranschläge bei. Nähere Informationen gibt es in den Kundenservicestellen.",
     "en": "The grant covers financial burdens related to an illness or medical treatment that leads to a health insurance benefit. You submit a written application and enclose in particular proof of income of everyone in the household as well as invoices and cost estimates. More information is available at the customer service centres."
@@ -5448,6 +5524,10 @@
     "de": "Bei plötzlichen Beschwerden beraten diplomierte Pflegekräfte unter 1450, rund um die Uhr. Sie sagen Ihnen, welche Anlaufstelle die richtige ist.",
     "en": "For sudden symptoms, qualified nurses give advice on 1450, around the clock. They tell you which service is the right one."
    },
+   "leicht": {
+    "de": "Haben Sie plötzlich Beschwerden? Dann rufen Sie 1450 an. Ausgebildete Pflegekräfte beraten Sie dort rund um die Uhr. Die Pflegekräfte nennen Ihnen die richtige Stelle für Hilfe.",
+    "en": "Do you have sudden symptoms? Then call 1450. Trained nurses give you advice there around the clock. They tell you the right place to get help."
+   },
    "details": {
     "de": "Wählen Sie 1450 ohne Vorwahl – an 365 Tagen im Jahr, zu jeder Tages- und Nachtzeit. Nach einem standardisierten Abfrageschema wird die Dringlichkeit festgestellt; die Empfehlungen reichen von Tipps zur Selbstbehandlung über eine (Fach-)Arztpraxis bis zur Spitalsambulanz, bei akuten Problemen wird der Rettungsdienst verständigt. Das Service ist kostenlos, Sie zahlen nur die üblichen Gesprächskosten.",
     "en": "Dial 1450 without an area code – 365 days a year, day and night. The urgency is assessed using a standardised questionnaire; recommendations range from self-care tips to a (specialist) practice or a hospital outpatient clinic, and in acute cases the ambulance service is alerted. The service is free; you only pay the usual call charges."
@@ -5591,6 +5671,10 @@
    "kurz": {
     "de": "Ab 18 Jahren können Sie jedes Jahr kostenlos zur Vorsorgeuntersuchung gehen. Erste Anlaufstelle ist meist Ihre Hausärztin oder Ihr Hausarzt.",
     "en": "From the age of 18 you can have a free preventive check-up every year. Your first point of contact is usually your GP."
+   },
+   "leicht": {
+    "de": "Ab 18 Jahren können Sie jedes Jahr zur Vorsorgeuntersuchung gehen. Die Untersuchung ist kostenlos. Meistens gehen Sie dafür zu Ihrer Hausärztin oder Ihrem Hausarzt. Dort füllen Sie zuerst einen Fragebogen aus.",
+    "en": "From age 18, you can have a preventive check-up every year. The check-up is free. You usually go to your family doctor for it. There you first fill in a questionnaire."
    },
    "details": {
     "de": "Die Vorsorgeuntersuchung konzentriert sich auf Herz-Kreislauf-Erkrankungen, Stoffwechselerkrankungen wie Diabetes, Beratung zur Früherkennung von Krebserkrankungen und Erkrankungen des höheren Alters. Zuerst füllen Sie einen Fragebogen aus – unter anderem zu Vorerkrankungen und erblicher Vorbelastung; dann werden Körperwerte erhoben und Blut abgenommen. Zur Früherkennung von Dickdarmkrebs werden ab dem 45. Lebensjahr alle zehn Jahre eine Darmspiegelung und bei jeder Vorsorgeuntersuchung ein Test auf nicht sichtbares Blut im Stuhl angeboten. Familiäre Erkrankungen besprechen Sie dort mit der Ärztin oder dem Arzt – der Lotse gibt keine persönliche Risikoeinschätzung. Viele Wahlärztinnen und Wahlärzte mit „VU-Vertrag“ rechnen direkt mit der ÖGK ab.",
@@ -6054,6 +6138,10 @@
     "de": "Frauen zwischen 45 und 74 Jahren können alle zwei Jahre mit der e-card zur Mammografie gehen, ohne Überweisung. Frauen zwischen 40 und 44 sowie ab 75 melden sich dafür kostenlos an.",
     "en": "Women aged 45 to 74 can have a mammogram every two years with their e-card, without a referral. Women aged 40 to 44 and over 75 can register for free."
    },
+   "leicht": {
+    "de": "Frauen zwischen 45 und 74 können alle 2 Jahre zur Mammografie gehen. Die Mammografie ist eine Untersuchung der Brust. Sie brauchen nur die e-card, keine Überweisung. Mit 40 bis 44 oder ab 75 melden Sie sich kostenlos an.",
+    "en": "Women aged 45 to 74 can have a mammogram every 2 years. A mammogram is an examination of the breast. You only need your e-card, no referral. Women aged 40 to 44 or over 75 register for free."
+   },
    "details": {
     "de": "Die e-card ist alle zwei Jahre automatisch freigeschaltet; den Termin vereinbaren Sie direkt bei einer Radiologin oder einem Radiologen (Standorte: www.frueh-erkennen.at). Anmeldung für 40- bis 44-Jährige und ab 75: kostenlose Serviceline 0800 500 181 oder www.frueh-erkennen.at. Bei Beschwerden, im Verdachtsfall oder bei familiär erhöhtem Risiko ist eine Zuweisung zur diagnostischen Mammografie durch eine Ärztin oder einen Arzt jederzeit möglich – ob das angezeigt ist, entscheidet die Ärztin oder der Arzt.",
     "en": "The e-card is automatically activated every two years; book directly with a radiologist (locations: www.frueh-erkennen.at). Registration for women aged 40–44 and over 75: free service line 0800 500 181 or www.frueh-erkennen.at. With symptoms, suspicion or a family history of increased risk, a doctor can refer you for a diagnostic mammogram at any time – whether this is indicated is the doctor's decision."
@@ -6195,6 +6283,10 @@
    "kurz": {
     "de": "Für Kinder gibt es ein umfangreiches kostenloses Impfangebot. Für Erwachsene sind etwa Impfungen gegen Influenza und COVID-19 kostenlos, ab 60 Jahren auch gegen Gürtelrose und Pneumokokken.",
     "en": "Children have an extensive free vaccination programme. For adults, vaccinations against influenza and COVID-19 are free, and from 60 also against shingles and pneumococcus."
+   },
+   "leicht": {
+    "de": "Für Kinder gibt es viele kostenlose Impfungen. Für Erwachsene sind manche Impfungen kostenlos. Das sind zum Beispiel Impfungen gegen Grippe und COVID-19. Ab 60 Jahren gibt es auch kostenlose Impfungen gegen Gürtelrose und Pneumokokken.",
+    "en": "Children get many free vaccinations. Some vaccinations for adults are free. Examples are vaccinations against flu and COVID-19. From age 60, vaccinations against shingles and pneumococcus are also free."
    },
    "details": {
     "de": "Impfungen für Erwachsene sind in Österreich großteils privat zu bezahlen; die ÖGK beteiligt sich finanziell an österreichweiten Impfprogrammen. Für die Zeckenimpfung (FSME) können Sie einen Kostenzuschuss erhalten. Ihre Impfungen sehen Sie im e-Impfpass über das ELGA-Portal (www.gesundheit.gv.at). Für Impfungen wenden Sie sich an Ihre Ärztin oder Ihren Arzt; Impftermine können Sie auch über die Meine ÖGK-App buchen.",
@@ -6381,6 +6473,10 @@
     "de": "Ein kostenloses ÖGK-Programm für Menschen ab der Lebensmitte, von Bewegung und Ernährung bis zur Sturzvorbeugung. Für Personen ab 65 gibt es kostenlose Kurse zur Sturzvorbeugung.",
     "en": "A free ÖGK programme for people from mid-life, from exercise and nutrition to fall prevention. For people aged 65 and over there are free fall-prevention courses."
    },
+   "leicht": {
+    "de": "„Bewusst leben +“ ist ein kostenloses Programm der Gesundheitskasse ÖGK. Es ist für Menschen ab der Mitte des Lebens. Es geht um Bewegung, Ernährung und Schutz vor Stürzen. Ab 65 Jahren gibt es kostenlose Kurse zum Schutz vor Stürzen.",
+    "en": "\"Bewusst leben +\" is a free programme from the health insurance fund ÖGK. It is for people in mid-life and older. It covers exercise, food and preventing falls. From age 65, there are free courses to prevent falls."
+   },
    "details": {
     "de": "Neben einer 24-teiligen Videoreihe gibt es eine Broschüre; Ratgeber, DVDs bzw. USB-Sticks (solange der Vorrat reicht) und ein Gymnastikband können Sie kostenlos unter www.oegk.at/bewusstleben bestellen. „Trittsicher & aktiv“ bietet österreichweit kostenlose, mehrwöchige Kurse für Personen ab 65 Jahren. Kontakt zum Programm: Tel. 05 0766-158008 (Mo–Fr, 08.00 bis 12.00 Uhr).",
     "en": "Besides a 24-part video series there is a brochure; guides, DVDs or USB sticks (while stocks last) and an exercise band can be ordered free of charge at www.oegk.at/bewusstleben. \"Trittsicher & aktiv\" offers free multi-week courses across Austria for people aged 65 and over. Programme contact: phone 05 0766-158008 (Mon–Fri, 8 am to 12 noon)."
@@ -6505,6 +6601,10 @@
     "de": "Kostenlose Bewegungskurse in der Gruppe für alle ab 18 mit leichten Rückenbeschwerden oder Risikofaktoren dafür. Ein Kurs dauert 14 Wochen mit je zwei Einheiten, eine Anmeldung ist nötig.",
     "en": "Free group exercise courses for anyone aged 18 or over with mild back pain or risk factors for it. A course runs for 14 weeks with two sessions a week; registration is required."
    },
+   "leicht": {
+    "de": "Es gibt kostenlose Bewegungskurse in der Gruppe für den Rücken. Die Kurse sind für Menschen ab 18 mit leichten Rückenbeschwerden oder Risikofaktoren. Ein Kurs dauert 14 Wochen, mit 2 Terminen pro Woche. Sie müssen sich anmelden.",
+    "en": "There are free group exercise courses for your back. From 18, people with mild back pain or risk factors can join. A course lasts 14 weeks, with 2 sessions a week. You must register."
+   },
    "details": {
     "de": "Dazu gibt es eine kostenlose Online-Bewegungsberatung und Webinare für alle Interessierten sowie Übungsanleitungen, Videos und Audioanleitungen für zu Hause. Mehr unter www.oegk.at/ruecken.",
     "en": "There is also free online exercise advice and webinars for everyone interested, plus instructions, videos and audio guides for home. More at www.oegk.at/ruecken."
@@ -6622,6 +6722,10 @@
    "kurz": {
     "de": "Die ÖGK unterstützt beim Rauchstopp mit Gruppenkursen, Online-Vorträgen und Einzelterminen. Das Rauchfrei Telefon berät kostenlos unter 0800 810 013.",
     "en": "ÖGK supports you in quitting with group courses, online talks and individual sessions. The Rauchfrei Telefon gives free advice on 0800 810 013."
+   },
+   "leicht": {
+    "de": "Die Gesundheitskasse ÖGK hilft Ihnen beim Rauchstopp. Es gibt Gruppenkurse, Online-Vorträge und Einzeltermine. Das Rauchfrei Telefon berät Sie kostenlos unter 0800 810 013.",
+    "en": "The health insurance fund ÖGK helps you to stop smoking. It offers group courses, online talks and individual sessions. The Rauchfrei Telefon gives free advice on 0800 810 013."
    },
    "details": {
     "de": "Das Rauchfrei Telefon (Mo–Fr 10.00 bis 18.00 Uhr) informiert, unterstützt beim Start in ein nikotinfreies Leben und begleitet nach dem Rauchstopp. Die ÖGK-Angebote umfassen Gruppenkurse, Online-Vorträge und Einzeltermine für spezielle Personengruppen (z. B. Schwangere, chronisch Kranke), begleitet von Klinischen und Gesundheitspsychologinnen und -psychologen. Termine: www.oegk.at/nikotinfrei.",
@@ -6767,6 +6871,10 @@
     "de": "Die ÖGK bietet alltagstaugliche Tipps, Übungen und Vorträge für die psychische Gesundheit. Es gibt auch Kurse „Erste Hilfe für die Seele“.",
     "en": "ÖGK offers practical tips, exercises and talks for mental wellbeing. There are also \"first aid for the mind\" courses."
    },
+   "leicht": {
+    "de": "Die Gesundheitskasse ÖGK hat Angebote für die psychische Gesundheit. Es gibt Tipps, Übungen und Vorträge für den Alltag. Es gibt auch Kurse mit dem Namen „Erste Hilfe für die Seele“. Dort lernen Sie: So helfen Sie anderen Erwachsenen bei psychischen Problemen.",
+    "en": "The health insurance fund ÖGK has offers for mental wellbeing. There are tips, exercises and talks for everyday life. There are also courses called \"first aid for the mind\". There you learn how to help other adults with mental health problems."
+   },
    "details": {
     "de": "Vorträge gibt es in Präsenz und online; in den Kursen „Erste Hilfe für die Seele“ lernen Sie, anderen Erwachsenen bei psychischen Problemen „Erste Hilfe“ zu leisten. Fragen zum Angebot: Tel. 05 0766-126206, momentefuermich@oegk.at, www.oegk.at/mentalgesund.",
     "en": "Talks are held in person and online; in the \"first aid for the mind\" courses you learn how to help other adults with mental health problems. Questions: phone 05 0766-126206, momentefuermich@oegk.at, www.oegk.at/mentalgesund."
@@ -6870,6 +6978,10 @@
    "kurz": {
     "de": "Die ÖGK bietet in den Regionen Ernährungsberatung, Nikotin- und Tabakentwöhnung, Workshops, Vorträge und Aktionstage an. Welche Termine es in Ihrer Nähe gibt, erfahren Sie in der Kundenservicestelle oder online.",
     "en": "ÖGK offers nutrition advice, smoking cessation, workshops, talks and action days in the regions. Ask your customer service centre or look online for dates near you."
+   },
+   "leicht": {
+    "de": "Die Gesundheitskasse ÖGK hat Angebote in Ihrer Region. Es gibt zum Beispiel Ernährungsberatung, Hilfe beim Rauchstopp, Workshops und Vorträge. Termine in Ihrer Nähe erfahren Sie in der Kundenservicestelle. Sie finden die Termine auch im Internet.",
+    "en": "The health insurance fund ÖGK has offers in your region. Examples are nutrition advice, help to stop smoking, workshops and talks. Ask at a customer service centre for dates near you. You can also find the dates online."
    },
    "details": {
     "de": "Das Programm für Gesundheitsförderung und Prävention gilt für alle Versicherten – von der Geburt bis ins hohe Alter – und animiert zu mehr Bewegung und gesünderer Ernährung, hilft bei Suchtproblemen und fördert die psychische Gesundheit; dazu kommen Webinare. Angebote und Termine: www.oegk.at/gesundleben.",
@@ -7004,6 +7116,10 @@
     "de": "Kostenlose Bewegungskurse in Parks, laut Website von Juni bis September. Diese Angaben stammen aus einer externen Quelle und sind nicht lokal geprüft.",
     "en": "Free exercise classes in parks, according to the website from June to September. This information comes from an external source and has not been verified locally."
    },
+   "leicht": {
+    "de": "„Bewegt im Park“ sind kostenlose Bewegungskurse in Parks. Die Website sagt: Die Kurse gibt es von Juni bis September. Diese Angaben kommen aus dem Internet. Der Lotse hat sie nicht selbst geprüft.",
+    "en": "\"Bewegt im Park\" offers free exercise classes in parks. The website says: the classes run from June to September. This information comes from the internet. The navigator has not checked it itself."
+   },
    "details": {
     "de": "„Bewegt im Park“ wird im Use Case als Bewegungsangebot genannt, ist aber im ÖGK-Serviceratgeber 2026 nicht enthalten. Kursorte und Zeiten finden Sie auf www.bewegt-im-park.at – bitte prüfen Sie dort die aktuellen Angaben.",
     "en": "\"Bewegt im Park\" is mentioned in the use case as an exercise offer but is not included in the ÖGK service guide 2026. You can find locations and times at www.bewegt-im-park.at – please check the current details there."
@@ -7087,6 +7203,10 @@
    "kurz": {
     "de": "Jugendliche von 15 bis 18 Jahren, die schon im Arbeitsleben stehen, werden einmal pro Jahr zu einem kostenlosen Gesundheits-Check eingeladen. Er findet vertraulich in Berufsschule, Betrieb oder einem ÖGK-Gesundheitszentrum statt.",
     "en": "Young people aged 15 to 18 who are already working are invited to a free health check once a year. It takes place confidentially at vocational school, the workplace or an ÖGK health centre."
+   },
+   "leicht": {
+    "de": "Sind Sie zwischen 15 und 18 Jahre alt und arbeiten Sie schon? Dann bekommen Sie einmal im Jahr eine Einladung zum Gesundheits-Check. Der Check ist kostenlos und vertraulich. Er findet in der Berufsschule, im Betrieb oder in einem ÖGK-Gesundheitszentrum statt.",
+    "en": "Are you aged 15 to 18 and already working? Then you get an invitation to a health check once a year. The check is free and confidential. Places: vocational school, workplace or an ÖGK health centre."
    },
    "details": {
     "de": "Im Fokus stehen Bewegung, Ernährung, Nikotin-, Tabak- und Alkoholkonsum sowie riskantes Sexualverhalten; die Untersuchung unterliegt der ärztlichen Schweigepflicht. Fahrtkosten im Zusammenhang mit der Untersuchung ersetzt der Krankenversicherungsträger.",
@@ -7199,6 +7319,10 @@
    "kurz": {
     "de": "Die Eltern-Kind-Pass-Untersuchungen schützen die Gesundheit der werdenden Mutter und des Kindes. Sie sind auch Voraussetzung für das volle Kinderbetreuungsgeld.",
     "en": "The parent-child passport check-ups protect the health of the expectant mother and the child. They are also required for the full childcare allowance."
+   },
+   "leicht": {
+    "de": "Im Eltern-Kind-Pass stehen Untersuchungen für Schwangere und Kinder. Die Untersuchungen schützen die Gesundheit von Mutter und Kind. Ohne die Untersuchungen bekommen Sie weniger Kinderbetreuungsgeld. Weisen Sie die Untersuchungen rechtzeitig nach.",
+    "en": "The parent-child passport lists check-ups for pregnant women and children. The check-ups protect the health of mother and child. Without the check-ups, you get less childcare allowance. Prove the check-ups in time."
    },
    "details": {
     "de": "Werden die zehn vorgeschriebenen Untersuchungen nicht rechtzeitig durchgeführt bzw. nachgewiesen, wird das Kinderbetreuungsgeld je Elternteil um 1.300,00 € gekürzt (plus 650,00 € für jedes weitere Mehrlingskind) – beim KBG-Konto wie beim einkommensabhängigen Kinderbetreuungsgeld.",
@@ -7538,6 +7662,10 @@
    "kurz": {
     "de": "Eltern bekommen nach der Geburt Kinderbetreuungsgeld, entweder als pauschales Konto oder einkommensabhängig. Den Antrag stellen Sie beim zuletzt zuständigen Krankenversicherungsträger.",
     "en": "Parents receive childcare allowance after the birth, either as a flat-rate account or income-related. You apply to the health insurer that was last responsible."
+   },
+   "leicht": {
+    "de": "Nach der Geburt bekommen Eltern Kinderbetreuungsgeld. Sie wählen: ein Konto mit festen Beträgen oder Geld nach Ihrem Einkommen. Den Antrag stellen Sie bei Ihrer letzten Krankenversicherung. Bedingung ist die Familienbeihilfe.",
+    "en": "After the birth, parents get childcare allowance. You choose: a flat-rate account or money based on income. You apply to the health insurance you had last. Family allowance is a condition."
    },
    "details": {
     "de": "Pauschales KBG-Konto: bei einem Elternteil 365 bis 851 Tage, 41,14 € bis 17,65 € täglich – je länger, desto geringer der Tagesbetrag. Einkommensabhängig: bei einem Elternteil längstens 365 Tage ab Geburt (beide Elternteile: 426 Tage), höchstens 80,12 € täglich; Voraussetzung ist eine kranken- und pensionsversicherungspflichtige Erwerbstätigkeit in den 182 Tagen vor der Geburt bzw. dem Mutterschutz. Allgemeine Voraussetzungen sind u. a. Bezug der Familienbeihilfe, gemeinsamer Haushalt mit dem Kind und die Eltern-Kind-Pass-Untersuchungen. Ausbezahlt wird frühestens ab der Geburt; verspätete Anträge wirken höchstens 182 Tage zurück. Bei annähernd gleicher Aufteilung gibt es einen Partnerschaftsbonus von 500,00 € pro Elternteil; Väter können den Familienzeitbonus (54,87 € täglich, Antrag binnen 91 Tagen ab Geburt) erhalten.",
@@ -8033,6 +8161,10 @@
     "de": "Für minderjährige Kinder gibt es Familienbeihilfe, 2026 ab 138,40 € pro Kind und Monat und mit dem Alter steigend. Darüber entscheidet das Finanzamt Österreich.",
     "en": "Family allowance is paid for minor children, from €138.40 per child and month in 2026, rising with age. The Finanzamt Österreich (tax office) decides."
    },
+   "leicht": {
+    "de": "Für minderjährige Kinder gibt es Familienbeihilfe. Im Jahr 2026 sind das mindestens 138,40 € pro Kind und Monat. Mit dem Alter des Kindes wird der Betrag höher. Das Finanzamt Österreich entscheidet darüber.",
+    "en": "Family allowance is for children who are not yet adults. In 2026, it is at least €138.40 per child per month. The amount rises with the child's age. The tax office Finanzamt Österreich decides."
+   },
    "details": {
     "de": "Die Höhe richtet sich nach dem Alter: 138,40 € ab der Geburt, 148,00 € ab 3 Jahren, 171,80 € ab 10 Jahren, 200,40 € ab 19 Jahren (monatlich ab 1. Jänner 2026); für mehrere Kinder gibt es Zuschläge, für ein erheblich behindertes Kind 189,20 € mehr (gesondert zu beantragen). Familienbeihilfe gibt es grundsätzlich nur auf Antrag; anlässlich der Geburt kann das Finanzamt sie auch automatisch ohne Antrag gewähren. Rückwirkend höchstens fünf Jahre. Für volljährige Kinder gibt es sie u. a. während einer Berufsausbildung bis zum vollendeten 24. Lebensjahr. Die Familienbeihilfe ist Voraussetzung für das Kinderbetreuungsgeld.",
     "en": "The amount depends on age: €138.40 from birth, €148.00 from 3, €171.80 from 10, €200.40 from 19 (monthly from 1 January 2026); there are supplements for several children and €189.20 more for a child with a significant disability (separate application). Family allowance is generally paid only on application; on the birth of a child the tax office can also grant it automatically. It is backdated by at most five years. For adult children it is paid e.g. during vocational training up to the age of 24. Family allowance is a requirement for childcare allowance."
@@ -8213,6 +8345,10 @@
    "kurz": {
     "de": "Während des Beschäftigungsverbots vor und nach der Geburt bekommen versicherte Mütter Wochengeld statt Lohn. Die Höhe richtet sich nach dem Nettoverdienst der letzten drei Monate.",
     "en": "During the employment ban before and after the birth, insured mothers receive maternity benefit instead of pay. The amount depends on net earnings in the last three months."
+   },
+   "leicht": {
+    "de": "Vor und nach der Geburt dürfen Mütter eine Zeit lang nicht arbeiten. In dieser Zeit bekommen versicherte Mütter Wochengeld statt Lohn. Die Höhe hängt vom Nettoverdienst der letzten 3 Monate ab.",
+    "en": "Mothers may not work for a time before and after the birth. During this time, insured mothers get maternity benefit instead of wages. The amount depends on your net pay in the last 3 months."
    },
    "details": {
     "de": "Das Beschäftigungsverbot gilt in den letzten acht Wochen vor der voraussichtlichen Entbindung und den ersten acht Wochen danach (nach Früh-, Mehrlings- oder Kaiserschnittgeburten zwölf Wochen). Sie brauchen eine ärztliche Bestätigung über den voraussichtlichen Entbindungstermin und eine Arbeits- und Entgeltbestätigung der Dienstgeberin bzw. des Dienstgebers; nach der Geburt reichen Sie die Geburtsurkunde ein. Eine Videoberatung zum Wochengeld können Sie über die Meine ÖGK-App vereinbaren.",
@@ -8632,6 +8768,10 @@
     "de": "Frühe Hilfen begleiten Schwangere und Familien mit Kindern bis zum dritten Geburtstag, kostenlos, vertraulich und auf Wunsch anonym. Sie helfen auch bei Behördenwegen und Arztbesuchen.",
     "en": "Frühe Hilfen support pregnant women and families with children up to their third birthday, free of charge, confidentially and anonymously if desired. They also help with dealing with authorities and doctor visits."
    },
+   "leicht": {
+    "de": "Frühe Hilfen begleiten Schwangere und Familien mit kleinen Kindern. Das gilt bis zum dritten Geburtstag des Kindes. Die Hilfe ist kostenlos und vertraulich, auf Wunsch auch anonym. Frühe Hilfen unterstützen auch bei Ämtern und Arztbesuchen.",
+    "en": "Frühe Hilfen support pregnant women and families with small children. This applies until the child's third birthday. The help is free and confidential, and you can stay anonymous. They also help with official matters and doctor visits."
+   },
    "details": {
     "de": "Termine finden zu Hause oder am Frühe-Hilfen-Standort statt. Themen sind z. B. Unsicherheiten im Umgang mit dem Kind, psychosoziale Belastungen, Erkrankungen, Beziehungskonflikte oder materielle Sorgen; bei Bedarf vermitteln die Frühen Hilfen zu anderen Angeboten. Mehr unter www.fruehehilfen.at.",
     "en": "Appointments take place at home or at a Frühe Hilfen location. Topics include uncertainty in dealing with the child, psychosocial stress, illness, relationship conflicts or financial worries; if needed they refer you to other services. More at www.fruehehilfen.at."
@@ -8769,6 +8909,10 @@
    "kurz": {
     "de": "Die Mobile Frühförderung ist in Wien eine Leistung des Fonds Soziales Wien im Bereich Behinderung und Inklusion. Für den Antrag brauchen Sie eine Stellungnahme einer Frühförderstelle.",
     "en": "Mobile early intervention is a service of the Fonds Soziales Wien in the area of disability and inclusion in Vienna. For the application you need a statement from an early intervention centre."
+   },
+   "leicht": {
+    "de": "In Wien bietet der Fonds Soziales Wien die Mobile Frühförderung an. Die Frühförderung gehört zum Bereich Behinderung und Inklusion. Für den Antrag brauchen Sie eine Stellungnahme von einer Frühförderstelle.",
+    "en": "In Vienna, the Fonds Soziales Wien offers mobile early intervention. It belongs to the area of disability and inclusion. For the application, you need a statement from an early intervention centre."
    },
    "details": {
     "de": "Im FSW-Antrag auf Förderung kreuzen Sie unter „Leistungen Behinderung und Inklusion“ die Mobile Frühförderung an. Beilegen: eine Stellungnahme von Wiener Sozialdienste, ÖHTB, Contrast oder Therapieinstitut Keil sowie bei Minderjährigen Geburtsurkunde, Nachweise über die Geburtsdaten beider Eltern und – falls vorhanden – einen Nachweis der Obsorge. Für Minderjährige wird eine obsorgeberechtigte Person angegeben.",
@@ -8940,6 +9084,10 @@
    "kurz": {
     "de": "Bei schweren Zahnfehlstellungen zahlt die ÖGK Kindern und Jugendlichen die Zahnspange („Gratis-Zahnspange“). Zwischen 10 und 18 Jahren übernimmt sie einmal pro Jahr die Mundhygiene.",
     "en": "For severe misalignment of teeth ÖGK pays for braces for children and adolescents (\"free braces\"). Between 10 and 18 it covers oral hygiene once a year."
+   },
+   "leicht": {
+    "de": "Stehen die Zähne von Ihrem Kind sehr schief? Dann zahlt die Gesundheitskasse ÖGK die Zahnspange. Das beurteilt die Zahnärztin oder der Zahnarzt. Von 10 bis 18 zahlt die ÖGK einmal im Jahr die Mundhygiene.",
+    "en": "Are your child's teeth very crooked? Then the health insurance fund ÖGK pays for braces. The dentist or orthodontist assesses this. From 10 to 18, ÖGK pays for oral hygiene once a year."
    },
    "details": {
     "de": "Wie schwer eine Fehlstellung ist, wird nach dem IOTN-Index bestimmt; bei Schweregrad 4 oder 5 übernimmt die ÖGK die Kosten – das beurteilt die Zahnärztin bzw. Kieferorthopädin oder der Zahnarzt bzw. Kieferorthopäde. Voraussetzung für jede Kostenbeteiligung ist, dass der Therapievorschlag vom Zahnmedizinischen Dienst der ÖGK bewilligt wird; die Einreichung übernimmt meist die Praxis. Mundhygiene: einmal pro Jahr, bei festsitzender Zahnspange zweimal; bei Wahlzahnärztinnen und -ärzten gibt es 2026 54,96 € Kostenerstattung. Konservierende Behandlungen wie Füllungen sind nach Vorlage der e-card kostenlos.",
@@ -9211,6 +9359,10 @@
     "de": "Kostenlose Workshops der ÖGK für werdende Eltern und Eltern von Babys und Kleinkindern rund um die Ernährung. Themen sind Schwangerschaft und Stillzeit, das erste Lebensjahr und Kinder von 1 bis 3 Jahren.",
     "en": "Free ÖGK workshops on nutrition for expectant parents and parents of babies and toddlers. Topics are pregnancy and breastfeeding, the first year of life and children aged 1 to 3."
    },
+   "leicht": {
+    "de": "Die Gesundheitskasse ÖGK hat kostenlose Workshops zum Thema Essen. Die Workshops sind für werdende Eltern und Eltern von kleinen Kindern. Es geht um Schwangerschaft, Stillzeit und das erste Lebensjahr. Es geht auch um Kinder von 1 bis 3 Jahren.",
+    "en": "The health insurance fund ÖGK has free workshops about food. They are for parents-to-be and parents of small children. Topics are pregnancy, breastfeeding and the first year of life. They also cover children aged 1 to 3."
+   },
    "details": {
     "de": "In den Workshops erhalten Eltern wissenschaftlich gesicherte und aktuelle Ernährungsempfehlungen sowie alltagsnahe Tipps. Mehr unter www.oegk.at/revan.",
     "en": "In the workshops parents receive scientifically sound, up-to-date nutrition recommendations and practical tips. More at www.oegk.at/revan."
@@ -9315,6 +9467,10 @@
    "kurz": {
     "de": "Kinder sind grundsätzlich bis zum 18. Geburtstag bei einem versicherten Elternteil mitversichert. Babys bekommen nach der Geburt automatisch eine eigene e-card.",
     "en": "Children are generally co-insured with an insured parent until their 18th birthday. Babies automatically receive their own e-card after birth."
+   },
+   "leicht": {
+    "de": "Kinder sind bei einem versicherten Elternteil mitversichert. Das heißt: Die Kinder sind über die Mutter oder den Vater versichert. In der Regel gilt das bis zum Alter von 18 Jahren. Babys bekommen nach der Geburt automatisch eine eigene e-card.",
+    "en": "Children are co-insured with an insured parent. This means they are insured through their mother or father. As a rule, this applies until their 18th birthday. Babies automatically get their own e-card after birth."
    },
    "details": {
     "de": "Die e-card kommt, sobald die ÖGK die Geburtsurkunde von der Personenstandsbehörde erhalten hat. Nach dem 18. Geburtstag ist ein Prüfformular nötig – außer das Kind ist bei der ÖGK gemeldet und es besteht ein bescheidmäßig zuerkannter Anspruch auf Familienbeihilfe; dann verlängert die ÖGK automatisch. Für Stief-, Enkel- und Pflegekinder gelten eigene Voraussetzungen; nötig ist das Prüfformular „Anspruchsberechtigung für Angehörige“ samt Urkunden.",
@@ -9636,6 +9792,10 @@
    "kurz": {
     "de": "Steht im Entlassungsbrief ein Kontroll- oder Nachsorgetermin, vereinbaren Sie ihn rechtzeitig bei der genannten Stelle. Nehmen Sie die e-card und, falls nötig, eine Überweisung mit – der Lotse bereitet die Terminanfrage vor.",
     "en": "If your discharge letter mentions a follow-up or check-up appointment, book it in good time with the named provider. Bring your e-card and, if needed, a referral – the navigator prepares the appointment request."
+   },
+   "leicht": {
+    "de": "Steht im Entlassungsbrief ein Termin zur Kontrolle oder Nachsorge? Dann vereinbaren Sie den Termin rechtzeitig bei der genannten Stelle. Nehmen Sie die e-card mit, wenn nötig auch eine Überweisung. Der Lotse bereitet die Anfrage für den Termin vor.",
+    "en": "Does your discharge letter mention a check-up or follow-up appointment? Then book it in good time with the named provider. Bring your e-card and, if needed, a referral. The navigator prepares the appointment request."
    },
    "details": {
     "de": "Der Lotse übernimmt nur Termine und Aufgaben, die im Dokument ausdrücklich stehen; ob eine Kontrolle nötig ist, entscheidet die Ärztin oder der Arzt. Bei Vertragsärztinnen und -ärzten, Vertragseinrichtungen wie Spitalsambulanzen und in den Gesundheitseinrichtungen der ÖGK legen Sie die e-card oder einen Überweisungs- bzw. Zuweisungsschein vor. Über ELGA können behandelnde Ärztinnen und Ärzte Vorbefunde und Entlassungsberichte einsehen. Können Sie nicht gehen, übernimmt die Kasse mit ärztlicher Transportanweisung den Transport zur nächstgelegenen geeigneten Vertragsärztin bzw. zum nächstgelegenen geeigneten Vertragsarzt (siehe „Transport und Fahrtkosten“).",
@@ -9999,6 +10159,10 @@
     "de": "Wer sich in einer Notlage befindet, kann Geld- und Sachleistungen für Lebensunterhalt und Wohnen bekommen. Zuständig ist Ihr Bundesland – die Stelle für Ihr Land zeigt der Lotse mit Quelle.",
     "en": "If you are in financial need, you can receive cash and in-kind benefits for living costs and housing. Your federal state is responsible – the navigator shows the body for your state with its source."
    },
+   "leicht": {
+    "de": "Reicht Ihr eigenes Geld nicht zum Leben und Wohnen? Dann gibt es vielleicht Geld und andere Hilfe für Leben und Wohnen. Zuständig ist Ihr Bundesland. Der Lotse zeigt Ihnen die Stelle für Ihr Land mit Quelle.",
+    "en": "Is your own money not enough for living and housing? Then you may get money and other help. Your federal state is responsible. The navigator shows you the office for your state, with its source."
+   },
    "details": {
     "de": "Sozialhilfe heißt je nach Bundesland auch Mindestsicherung oder Sozialunterstützung; geregelt ist sie in den Mindestsicherungs- und Sozialhilfegesetzen der Länder. Den Antrag stellen Sie grundsätzlich bei der Bezirksverwaltungsbehörde Ihres Wohnsitzes; je nach Land auch über die Gemeinde oder online. Eigene Mittel wie Einkommen und Vermögen müssen grundsätzlich zuerst eingesetzt werden. Wer Sozialhilfe bezieht und nicht krankenversichert ist, wird vom Sozialamt zur Krankenversicherung angemeldet. Mit einer Leistung nach den Sozialhilfegesetzen sind Sie ohne Antrag von der Rezeptgebühr befreit, und bei Reha oder Kur entfällt die Zuzahlung.",
     "en": "Depending on the state, social assistance is also called minimum income or social support; it is governed by the states' minimum income and social assistance acts. You generally apply to the district authority of your place of residence; depending on the state also via the municipality or online. Your own means such as income and assets generally have to be used first. If you receive social assistance and have no health insurance, the social office registers you for health insurance. With a benefit under the social assistance acts you are exempt from the prescription charge without application, and there is no co-payment for rehab or spa stays."
@@ -10327,6 +10491,10 @@
    "kurz": {
     "de": "Ist Ihre Pension samt übrigem Nettoeinkommen niedriger als der gesetzliche Richtsatz, bekommen Sie den Unterschied als Ausgleichszulage. Sie wird mit dem Pensionsantrag festgestellt; mit Ausgleichszulage sind Sie ohne Antrag von der Rezeptgebühr befreit.",
     "en": "If your pension plus other net income is below the statutory reference rate, you receive the difference as an equalisation supplement. It is assessed with the pension application; with the supplement you are exempt from the prescription charge without applying."
+   },
+   "leicht": {
+    "de": "Ist Ihre Pension mit anderem Nettoeinkommen niedriger als der gesetzliche Richtsatz? Dann bekommen Sie den Unterschied als Ausgleichszulage. Ihre Pensionsversicherung prüft das zusammen mit dem Pensionsantrag. Mit Ausgleichszulage zahlen Sie keine Rezeptgebühr.",
+    "en": "Is your pension plus other net income below the legal reference rate? Then you get the difference as an equalisation supplement. Your pension insurance checks this with the pension application. With the supplement, you pay no prescription charge."
    },
    "details": {
     "de": "Berücksichtigt wird auch das Nettoeinkommen der Ehepartnerin bzw. des Ehepartners oder der eingetragenen Partnerin bzw. des eingetragenen Partners im gemeinsamen Haushalt. Voraussetzung ist der rechtmäßige, gewöhnliche Aufenthalt im Inland. Wird die Ausgleichszulage erst später beantragt, gebührt sie frühestens ab dem Beginn des vollen Kalendermonats vor der Antragstellung. Ändert sich das Einkommen, stellt der Pensionsversicherungsträger die Ausgleichszulage auf Antrag oder von Amts wegen neu fest. Mit Ausgleichszulage entfällt die Zuzahlung bei Reha- und Kuraufenthalten. Für Selbständige und Bäuerinnen bzw. Bauern gelten gleichartige Regeln im GSVG bzw. BSVG.",
@@ -10760,6 +10928,10 @@
     "de": "Wer arbeitslos ist, die Anwartschaft erfüllt und der Arbeitsvermittlung zur Verfügung steht, hat Anspruch auf Arbeitslosengeld. Es gebührt frühestens ab dem Antrag beim AMS – stellen Sie ihn deshalb rasch.",
     "en": "If you are unemployed, meet the qualifying period and are available for job placement, you are entitled to unemployment benefit. It is paid at the earliest from your application to the AMS – so apply promptly."
    },
+   "leicht": {
+    "de": "Sind Sie arbeitslos und bereit für eine neue Arbeit? Dann gibt es vielleicht Arbeitslosengeld vom Arbeitsmarktservice AMS. Das Geld gibt es frühestens ab Ihrem Antrag. Stellen Sie den Antrag deshalb schnell.",
+    "en": "Are you unemployed and ready for a new job? Then you may get unemployment benefit from the employment service AMS. You get the money from your application at the earliest. So apply quickly."
+   },
    "details": {
     "de": "Der Arbeitsvermittlung steht zur Verfügung, wer eine Beschäftigung aufnehmen kann und darf sowie arbeitsfähig, arbeitswillig und arbeitslos ist. Den Antrag stellen Sie mit dem bundeseinheitlichen Formular vorrangig online über das eAMS; wem das nicht möglich ist, kann ihn persönlich bei der regionalen Geschäftsstelle stellen. Beim ersten Antrag oder wenn der letzte Bezug mehr als zwei Jahre zurückliegt, ist eine persönliche Vorsprache innerhalb von zwei Wochen vorgesehen.",
     "en": "You are available for job placement if you can and may take up employment and are able and willing to work and unemployed. You apply with the nationwide form, primarily online via eAMS; if that is not possible, you can apply in person at the regional office. For a first application, or if your last benefit was more than two years ago, a personal appointment within two weeks is required."
@@ -10929,6 +11101,10 @@
     "de": "Ist das Arbeitslosengeld ausgeschöpft und befinden Sie sich in einer Notlage, kann das AMS auf Antrag Notstandshilfe gewähren. Beantragen Sie sie innerhalb von fünf Jahren nach dem Ende des Arbeitslosengeldes.",
     "en": "If your unemployment benefit has run out and you are in financial need, the AMS can grant unemployment assistance on application. Apply within five years after your unemployment benefit ended."
    },
+   "leicht": {
+    "de": "Ist Ihr Arbeitslosengeld zu Ende? Reicht Ihr Geld nicht für das Nötigste zum Leben? Dann können Sie beim Arbeitsmarktservice AMS Notstandshilfe beantragen. Stellen Sie den Antrag innerhalb von 5 Jahren nach dem Arbeitslosengeld.",
+    "en": "Has your unemployment benefit ended? Is your money not enough for the basic needs of life? Then you can apply to the employment service AMS for unemployment assistance. Apply within 5 years after your unemployment benefit ended."
+   },
    "details": {
     "de": "Voraussetzung ist, dass Sie der Vermittlung zur Verfügung stehen und sich in einer Notlage befinden; eine Notlage liegt vor, wenn die notwendigen Lebensbedürfnisse nicht befriedigt werden können. Den Antrag stellen Sie wie beim Arbeitslosengeld mit dem bundeseinheitlichen Formular beim AMS, vorrangig online über das eAMS.",
     "en": "You must be available for job placement and be in financial need; need exists if the necessary living requirements cannot be met. As with unemployment benefit, you apply with the nationwide form to the AMS, primarily online via eAMS."
@@ -11077,6 +11253,10 @@
    "kurz": {
     "de": "In allen Bezirken gibt es geförderte Familienberatungsstellen, die Sie kostenlos beraten – etwa bei Trennung, Paarkonflikten, Erziehung oder Schwangerschaft. Eine Beratungsstelle in Ihrer Nähe finden Sie über die Suche auf familienberatung.gv.at.",
     "en": "Every district has publicly funded family counselling centres that advise you free of charge – for example on separation, relationship conflicts, parenting or pregnancy. You can find a centre near you via the search on familienberatung.gv.at."
+   },
+   "leicht": {
+    "de": "In jedem Bezirk gibt es Familienberatungsstellen. Die Beratung ist kostenlos. Themen sind zum Beispiel Trennung, Streit in der Partnerschaft, Erziehung oder Schwangerschaft. Eine Stelle in Ihrer Nähe finden Sie auf familienberatung.gv.at.",
+    "en": "There are family counselling centres in every district. The counselling is free. Topics include separation, relationship conflicts, parenting or pregnancy. You can find a centre near you on familienberatung.gv.at."
    },
    "details": {
     "de": "In Österreich gibt es rund 400 Familien- und Partnerberatungsstellen verschiedener Träger; sie werden aus dem Budget des Bundeskanzleramtes gefördert, finanziert aus dem Ausgleichsfonds für Familienbeihilfen nach dem Familienberatungsförderungsgesetz. Die Beratung ist kostenlos. Daneben bietet das Bundeskanzleramt eine kostenlose und anonyme Onlineberatung an.",
@@ -11258,6 +11438,10 @@
    "kurz": {
     "de": "Bei Schulden helfen die staatlich anerkannten Schuldenberatungen kostenlos und unabhängig. Sie beraten im öffentlichen Auftrag in ganz Österreich.",
     "en": "If you are in debt, the state-recognised debt counselling services help free of charge and independently. They advise on behalf of the public sector throughout Austria."
+   },
+   "leicht": {
+    "de": "Haben Sie Schulden? Dann hilft Ihnen die staatlich anerkannte Schuldenberatung. Die Beratung ist kostenlos und unabhängig. Es gibt sie in ganz Österreich.",
+    "en": "Do you have debts? Then the state-recognised debt counselling services can help you. The counselling is free and independent. It is available throughout Austria."
    },
    "details": {
     "de": "Die staatlich anerkannten Schuldenberatungen beraten kostenfrei, lösungsorientiert und unabhängig. Eine Beratungsstelle finden Sie über das Webportal schuldenberatung.at.",

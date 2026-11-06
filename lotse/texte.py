@@ -10,7 +10,7 @@ from lotse.models import WEITERE_SPRACHEN, Quelle
 from lotse.slots import SLOTS
 
 SPRACHEN = ("de", "en")  # Basissprachen: alle Texte liegen in beiden vor
-STILE = ("einfach", "ausfuehrlich")
+STILE = ("einfach", "ausfuehrlich", "leicht")  # leicht = Leichte Sprache (eigene Vorlagen in _LEICHT)
 SPRACH_NAMEN = {"de": "Deutsch", "en": "English"}
 RTL = frozenset({"ar"})
 
@@ -50,14 +50,12 @@ _ENGINE: dict[str, dict[str, str]] = {
         "en": "I understood your request as: {szenarien}.",
     },
     "gefunden": {
-        "de": "Ich habe {n} passende Leistungen gefunden, jeweils mit zuständiger Stelle und Quelle. "
-              "Am wichtigsten für Sie: {wichtigste}.",
-        "en": "I found {n} matching services, each with the responsible body and a source. "
-              "Most important for you: {wichtigste}.",
+        "de": "Ich habe {k} wichtige Hilfen für Sie gefunden: {wichtigste}.",
+        "en": "I found {k} important services for you: {wichtigste}.",
     },
     "gefunden_weitere": {
-        "de": "Weitere {n} Angebote stehen in Ihrer Fallakte.",
-        "en": "{n} more offers are listed in your case file.",
+        "de": "Weitere Möglichkeiten stehen in Ihrem Plan.",
+        "en": "More options are listed in your plan.",
     },
     "nutzen_zeile": {
         "de": "• {titel}: {nutzen} [{n}]",
@@ -70,8 +68,8 @@ _ENGINE: dict[str, dict[str, str]] = {
               "an examination is right for you – I do not assess personal risk.",
     },
     "gefunden_eine": {
-        "de": "Ich habe eine passende Leistung gefunden. Sie steht in Ihrer Fallakte, mit zuständiger Stelle und Quelle.",
-        "en": "I found one matching service. It is listed in your case file, with the responsible body and a source.",
+        "de": "Ich habe eine passende Hilfe für Sie gefunden: {titel}.",
+        "en": "I found one matching service for you: {titel}.",
     },
     "gefunden_keine": {
         "de": "Dazu habe ich in meinem Leistungskatalog noch keine passende Leistung.",
@@ -82,20 +80,16 @@ _ENGINE: dict[str, dict[str, str]] = {
         "en": "• {titel}: {kurz}",
     },
     "naechster": {
-        "de": "Nächster Schritt: {titel} – {schritt}.",
-        "en": "Next step: {titel} – {schritt}.",
+        "de": "Ihr nächster Schritt: {titel} – {schritt}.",
+        "en": "Your next step: {titel} – {schritt}.",
     },
     "alles_erledigt": {
-        "de": "Alle Schritte in Ihrer Fallakte sind erledigt.",
-        "en": "All steps in your case file are done.",
+        "de": "Alle Schritte in Ihrem Plan sind erledigt.",
+        "en": "All steps in your plan are done.",
     },
     "notiert": {
-        "de": "Notiert: {label} – {wert}.",
-        "en": "Noted: {label} – {wert}.",
-    },
-    "notiert_sensibel": {
-        "de": "Notiert: {label}.",
-        "en": "Noted: {label}.",
+        "de": "Danke, notiert.",
+        "en": "Thank you, noted.",
     },
     "uebersprungen": {
         "de": "In Ordnung, diese Angabe lasse ich offen.",
@@ -130,8 +124,8 @@ _ENGINE: dict[str, dict[str, str]] = {
         "en": "One more question:",
     },
     "keine_fragen": {
-        "de": "Ich habe keine weiteren Fragen. Den Formularentwurf laden Sie in der Fallakte herunter.",
-        "en": "I have no further questions. You can download the draft form from your case file.",
+        "de": "Alles beisammen. Den Antrag finden Sie in Ihrem Plan.",
+        "en": "That's everything. You will find the application in your plan.",
     },
     "formular_hinweis": {
         "de": "Das Formular ist ein Entwurf. Fehlende persönliche Angaben ergänzen Sie selbst im PDF. "
@@ -150,14 +144,27 @@ _ENGINE: dict[str, dict[str, str]] = {
               "word for word and with the page number.",
     },
     "dokument_gelesen": {
-        "de": "Ich habe Ihr Dokument „{name}“ gelesen ({seiten}). Ich übernehme nur ausdrücklich "
-              "dokumentierte Empfehlungen und deute keine medizinischen Inhalte.",
-        "en": "I have read your document “{name}” ({seiten}). I only take over explicitly documented "
-              "recommendations and do not interpret medical content.",
+        "de": "Ich habe Ihr Dokument „{name}“ gelesen ({seiten}).",
+        "en": "I have read your document “{name}” ({seiten}).",
     },
     "dokument_steht": {
         "de": "In Ihrem Dokument steht: „{zitat}“ (S. {seite})",
         "en": "Your document states: “{zitat}” (p. {seite})",
+    },
+    # Kurzfassung im Gespräch: Zahl der Empfehlungen und die erste; alle Zitate stehen in „Meine Akte“
+    "dokument_empfehlung_eine": {
+        "de": "Darin steht eine ausdrücklich dokumentierte Empfehlung: „{zitat}“ (S. {seite}) {marke}.",
+        "en": "It contains one explicitly documented recommendation: “{zitat}” (p. {seite}) {marke}.",
+    },
+    "dokument_empfehlungen": {
+        "de": "Darin stehen {n} ausdrücklich dokumentierte Empfehlungen, zum Beispiel: „{zitat}“ (S. {seite}) "
+              "{marke}. Alle Zitate mit Seitenangabe stehen in Ihrer Akte.",
+        "en": "It contains {n} explicitly documented recommendations, for example: “{zitat}” (p. {seite}) "
+              "{marke}. All quotes with page numbers are in your records.",
+    },
+    "dokument_zitat_zeile": {
+        "de": "• „{zitat}“ (S. {seite}) {marke}",
+        "en": "• “{zitat}” (p. {seite}) {marke}",
     },
     "dokument_keine_empfehlung": {
         "de": "In diesem Dokument habe ich keine ausdrücklich dokumentierte Empfehlung zu einer Leistung gefunden. "
@@ -166,8 +173,8 @@ _ENGINE: dict[str, dict[str, str]] = {
               "Please discuss questions about its content with your doctor.",
     },
     "dokument_stammdaten": {
-        "de": "Aus dem Dokument übernommen: {labels}. Diese Angaben frage ich nicht noch einmal.",
-        "en": "Taken from the document: {labels}. I will not ask for these again.",
+        "de": "Für das Formular habe ich {anzahl} aus dem Dokument übernommen.",
+        "en": "I took {anzahl} for the form from the document.",
     },
     "dokument_fehler": {
         "de": "Dieses Dokument konnte ich nicht lesen. Bitte laden Sie eine PDF- oder Textdatei oder ein Foto "
@@ -266,12 +273,12 @@ _ENGINE: dict[str, dict[str, str]] = {
         "en": "Where to get the appointment: {wo}",
     },
     "termin_suche": {
-        "de": "Suchen und vereinbaren: {namen} (Links in der Fallakte).",
-        "en": "Search and book: {namen} (links in your case file).",
+        "de": "Suchen und vereinbaren: {namen} (Links in Ihrem Plan).",
+        "en": "Search and book: {namen} (links in your plan).",
     },
     "termin_anfrage": {
-        "de": "Einen fertigen Text für Ihre Anfrage per Telefon oder E-Mail finden Sie in der Fallakte.",
-        "en": "You will find a ready-made text for your request by phone or email in your case file.",
+        "de": "Den fertigen Anfragetext, Hinweise und Suchdienste finden Sie in Ihrem Plan.",
+        "en": "You will find the ready-made request text, tips and search services in your plan.",
     },
     "termin_sprache_de": {
         "de": "Den Anfragetext habe ich auf Deutsch vorbereitet, damit ihn die Ordination sicher versteht.",
@@ -279,14 +286,14 @@ _ENGINE: dict[str, dict[str, str]] = {
     },
     "termin_datum_tipp": {
         "de": "Sobald Sie einen Termin haben, schreiben Sie mir zum Beispiel „Termin am 12.11.2026 um 10:30“ – dann "
-              "trage ich ihn in die Fallakte ein und erstelle einen Kalendereintrag.",
+              "trage ich ihn in Ihren Plan ein und erstelle einen Kalendereintrag.",
         "en": "As soon as you have an appointment, write for example “appointment on 12.11.2026 at 10:30” – I will "
-              "then add it to your case file and create a calendar entry.",
+              "then add it to your plan and create a calendar entry.",
     },
     "termin_vereinbart": {
-        "de": "Eingetragen: {titel} am {datum}{uhrzeit}. Den Kalendereintrag (.ics) laden Sie in der Fallakte herunter. "
+        "de": "Eingetragen: {titel} am {datum}{uhrzeit}. Den Kalendereintrag (.ics) laden Sie in Ihrem Plan herunter. "
               "Vereinbart haben Sie den Termin selbst – ich habe ihn nur notiert.",
-        "en": "Added: {titel} on {datum}{uhrzeit}. You can download the calendar entry (.ics) from your case file. "
+        "en": "Added: {titel} on {datum}{uhrzeit}. You can download the calendar entry (.ics) from your plan. "
               "You booked the appointment yourself – I have only noted it.",
     },
     "uhrzeit_um": {
@@ -298,15 +305,10 @@ _ENGINE: dict[str, dict[str, str]] = {
         "en": "Appointment marked as done: {titel}.",
     },
     "termin_unbekannt": {
-        "de": "In Ihrer Fallakte steht noch kein Termin. Schreiben Sie zum Beispiel „Ich möchte einen Arzttermin“, "
+        "de": "In Ihrem Plan steht noch kein Termin. Schreiben Sie zum Beispiel „Ich möchte einen Arzttermin“, "
               "dann bereite ich ihn mit Ihnen vor.",
-        "en": "There is no appointment in your case file yet. Write for example “I would like a doctor's appointment” "
+        "en": "There is no appointment in your plan yet. Write for example “I would like a doctor's appointment” "
               "and I will prepare it with you.",
-    },
-    "termin_angebot": {
-        "de": "Den Termin kann ich mit Ihnen vorbereiten: Schreiben Sie „Termin vorbereiten“ oder nutzen Sie den Knopf "
-              "in der Fallakte.",
-        "en": "I can prepare the appointment with you: write “prepare appointment” or use the button in your case file.",
     },
     "termin_titel": {
         "de": "Termin: {anlass}",
@@ -342,14 +344,10 @@ _ENGINE: dict[str, dict[str, str]] = {
         "de": " Meine e-card bringe ich mit.",
         "en": " I will bring my e-card.",
     },
-    # Weiterverfolgen (Status der Fallakte)
+    # Weiterverfolgen (Status des Plans bzw. der Fallakte)
     "status_einleitung": {
-        "de": "Stand Ihrer Fallakte: In Ihren wichtigsten Anliegen sind {erledigt} von {gesamt} Schritten erledigt.",
-        "en": "Your case file: in your most important matters, {erledigt} of {gesamt} steps are done.",
-    },
-    "notiert_ort": {
-        "de": "Notiert: {label} – {wert} (aus Ihrer Ortsangabe {ort}).",
-        "en": "Noted: {label} – {wert} (from the place you named, {ort}).",
+        "de": "Stand Ihres Plans: In Ihren wichtigsten Anliegen sind {erledigt} von {gesamt} Schritten erledigt.",
+        "en": "Your plan: in your most important matters, {erledigt} of {gesamt} steps are done.",
     },
     # Erklärung kuratierter Leistungen (Sach- und Vergleichsfragen)
     "leistung_erklaerung": {
@@ -361,8 +359,8 @@ _ENGINE: dict[str, dict[str, str]] = {
         "en": "Matching passages in the legal sources (quotes are in German):",
     },
     "leistung_erklaerung_angebot": {
-        "de": "Wenn Sie Ihre Situation beschreiben, lege ich die passenden Leistungen mit Schritten in Ihrer Fallakte an.",
-        "en": "If you describe your situation, I will add the matching services with steps to your case file.",
+        "de": "Wenn Sie Ihre Situation beschreiben, lege ich die passenden Leistungen mit Schritten in Ihrem Plan an.",
+        "en": "If you describe your situation, I will add the matching services with steps to your plan.",
     },
     # Erstattungskodex: alle Einträge zu einem Namen
     "eko_einheitlich": {
@@ -427,8 +425,8 @@ _ENGINE: dict[str, dict[str, str]] = {
         "en": "• {titel}: done",
     },
     "status_leer": {
-        "de": "Ihre Fallakte ist noch leer. Beschreiben Sie Ihre Situation, dann lege ich die passenden Leistungen an.",
-        "en": "Your case file is still empty. Describe your situation and I will add the matching services.",
+        "de": "Ihr Plan ist noch leer. Beschreiben Sie Ihre Situation, dann lege ich die passenden Leistungen an.",
+        "en": "Your plan is still empty. Describe your situation and I will add the matching services.",
     },
     "wiederhergestellt": {
         "de": "Ihr Fall ist wiederhergestellt.",
@@ -457,13 +455,17 @@ _ENGINE: dict[str, dict[str, str]] = {
         "de": "Text per KI aus dem Foto abgeschrieben – Zitate beziehen sich auf die Abschrift.",
         "en": "Text transcribed from the photo by AI – quotes refer to the transcript.",
     },
-    "impfungen_einleitung_impfpass": {
-        "de": "Laut Ihrem Impfpass dokumentiert (nur abgeschrieben, keine Bewertung):",
-        "en": "Documented in your vaccination record (copied only, not assessed):",
+    # Kurzfassung im Gespräch; die einzelnen Einträge stehen in „Meine Akte“ (ausführlich auch im Gespräch)
+    "impfungen_kurz_impfpass": {
+        "de": "Laut Ihrem Impfpass dokumentiert: {anzahl} (nur abgeschrieben, keine Bewertung). "
+              "Die Liste steht in Ihrer Akte.",
+        "en": "Documented in your vaccination record: {anzahl} (copied only, not assessed). "
+              "The list is in your records.",
     },
-    "impfungen_einleitung": {
-        "de": "Laut Ihrem Dokument dokumentierte Impfungen (nur abgeschrieben, keine Bewertung):",
-        "en": "Vaccinations documented in your document (copied only, not assessed):",
+    "impfungen_kurz": {
+        "de": "Laut Ihrem Dokument dokumentiert: {anzahl} (nur abgeschrieben, keine Bewertung). "
+              "Die Liste steht in Ihrer Akte.",
+        "en": "Documented in your document: {anzahl} (copied only, not assessed). The list is in your records.",
     },
     "impfung_zeile": {
         "de": "• {impfung}: {datum} (S. {seite})",
@@ -473,11 +475,11 @@ _ENGINE: dict[str, dict[str, str]] = {
         "de": "Welche Impfungen Sie brauchen, klären Sie bitte mit Ihrer Ärztin oder Ihrem Arzt.",
         "en": "Please ask your doctor which vaccinations you need.",
     },
-    "medikamente_einleitung": {
-        "de": "Im Dokument genannte Medikamente – nur der Erstattungsstatus laut Erstattungskodex, keine Empfehlung "
-              "zu Einnahme, Wechsel oder Dosierung:",
-        "en": "Medicines named in the document – reimbursement status from the reimbursement code only, no advice "
-              "on taking, switching or dosage:",
+    "medikamente_kurz": {
+        "de": "Für {anzahl} aus dem Dokument steht der Erstattungsstatus laut Erstattungskodex in Ihrer Akte – "
+              "keine Empfehlung zu Einnahme, Wechsel oder Dosierung.",
+        "en": "For {anzahl} named in the document, the reimbursement status from the reimbursement code is in your "
+              "records – no advice on taking, switching or dosage.",
     },
     "medikament_nicht_gefunden": {
         "de": "• {name} (S. {seite}): im Erstattungskodex nicht gefunden",
@@ -491,6 +493,558 @@ _ENGINE: dict[str, dict[str, str]] = {
         "de": "Die Übersetzung ist gerade nicht verfügbar – Teile dieser Antwort stehen auf Englisch.",
         "en": "Translation is not available right now – parts of this answer are shown in English.",
     },
+    # Angaben ändern („Mein Plan“ → „Ihre Angaben“)
+    "geaendert": {
+        "de": "Geändert: {label} – {wert}.",
+        "en": "Changed: {label} – {wert}.",
+    },
+    "geaendert_sensibel": {
+        "de": "Geändert: {label}. Diesen Wert speichere ich nicht dauerhaft; er kommt nur in den Formularentwurf.",
+        "en": "Changed: {label}. I do not store this value permanently; it only goes into the draft form.",
+    },
+    "geloescht": {
+        "de": "Gelöscht: {label}.",
+        "en": "Deleted: {label}.",
+    },
+    # Prüfmeldungen beim Ändern einer Angabe (ohne Anführungszeichen im Englischen, damit sie übersetzbar bleiben)
+    "angabe_unbekannt": {
+        "de": "Diese Angabe kann hier nicht geändert werden.",
+        "en": "This detail cannot be changed here.",
+    },
+    "angabe_auswahl": {
+        "de": "Bitte wählen Sie für „{label}“ eine der angebotenen Möglichkeiten.",
+        "en": "Please choose one of the options for {label}.",
+    },
+    "angabe_datum": {
+        "de": "Bitte prüfen Sie „{label}“. Geben Sie ein gültiges Datum im Format {muster} ein.",
+        "en": "Please check {label}. Enter a valid date in the format {muster}.",
+    },
+    "angabe_muster": {
+        "de": "Bitte prüfen Sie „{label}“. Erwartet: {muster}.",
+        "en": "Please check {label}. Expected: {muster}.",
+    },
+    "angabe_ungueltig": {
+        "de": "Bitte prüfen Sie Ihre Eingabe bei „{label}“.",
+        "en": "Please check your entry for {label}.",
+    },
+    # Kurze Ansage für Screenreader (eine Zeile je Antwort, in jeder Darstellung gleich)
+    "ansage_start": {
+        "de": "Willkommen. Beschreiben Sie Ihre Situation oder laden Sie ein Dokument hoch.",
+        "en": "Welcome. Describe your situation or upload a document.",
+    },
+    "ansage_gefunden": {
+        "de": "{n} wichtige Hilfen gefunden.",
+        "en": "{n} important services found.",
+    },
+    "ansage_gefunden_eine": {
+        "de": "Eine passende Hilfe gefunden.",
+        "en": "One matching service found.",
+    },
+    "ansage_gefunden_keine": {
+        "de": "Keine passende Hilfe gefunden.",
+        "en": "No matching service found.",
+    },
+    "ansage_notiert": {
+        "de": "Notiert.",
+        "en": "Noted.",
+    },
+    "ansage_abschluss": {
+        "de": "Alle Fragen beantwortet.",
+        "en": "All questions answered.",
+    },
+    "ansage_geaendert": {
+        "de": "Gespeichert: {label} – {wert}.",
+        "en": "Saved: {label} – {wert}.",
+    },
+    "ansage_geaendert_sensibel": {
+        "de": "Gespeichert: {label}.",
+        "en": "Saved: {label}.",
+    },
+    "ansage_geloescht": {
+        "de": "Gelöscht: {label}.",
+        "en": "Deleted: {label}.",
+    },
+    "ansage_naechster": {
+        "de": "Nächster Schritt: {titel} – {schritt}.",
+        "en": "Next step: {titel} – {schritt}.",
+    },
+    "ansage_naechster_titel": {
+        "de": "Nächster Schritt: {titel}.",
+        "en": "Next step: {titel}.",
+    },
+    "ansage_alles_erledigt": {
+        "de": "Alle Schritte erledigt.",
+        "en": "All steps done.",
+    },
+    "ansage_frage": {
+        "de": "Eine Frage an Sie.",
+        "en": "One question for you.",
+    },
+    "ansage_grenze": {
+        "de": "Medizinische Frage. Das kann ich nicht beurteilen. Bitte fragen Sie Ihre Ärztin oder Ihren Arzt.",
+        "en": "Medical question. I cannot assess this. Please ask your doctor.",
+    },
+    "ansage_wissen": {
+        "de": "Antwort mit {n} Quellen.",
+        "en": "Answer with {n} sources.",
+    },
+    "ansage_wissen_eine": {
+        "de": "Antwort mit einer Quelle.",
+        "en": "Answer with one source.",
+    },
+    "ansage_status": {
+        "de": "Stand: {erledigt} von {gesamt} Schritten erledigt.",
+        "en": "Progress: {erledigt} of {gesamt} steps done.",
+    },
+    "ansage_status_gesetzt": {
+        "de": "Status gespeichert: {status}.",
+        "en": "Status saved: {status}.",
+    },
+    "ansage_termin_start": {
+        "de": "Terminvorbereitung gestartet.",
+        "en": "Appointment preparation started.",
+    },
+    "ansage_termin_fertig": {
+        "de": "Ihr Terminauftrag ist fertig.",
+        "en": "Your appointment request is ready.",
+    },
+    "ansage_termin_eingetragen": {
+        "de": "Termin eingetragen: {datum}{uhrzeit}.",
+        "en": "Appointment added: {datum}{uhrzeit}.",
+    },
+    "ansage_termin_erledigt": {
+        "de": "Termin als erledigt vermerkt.",
+        "en": "Appointment marked as done.",
+    },
+    "ansage_dokument": {
+        "de": "Dokument gelesen.",
+        "en": "Document read.",
+    },
+    "ansage_wiederhergestellt": {
+        "de": "Ihr Fall ist geladen.",
+        "en": "Your case is loaded.",
+    },
+    "ansage_einstellungen": {
+        "de": "Einstellungen gespeichert: {sprachname}, {darstellung}.",
+        "en": "Settings saved: {sprachname}, {darstellung}.",
+    },
+}
+
+# Leichte Sprache (stil "leicht"): gleiche Schlüssel und Platzhalter wie _ENGINE, gleiche Aussage. Kurze Sätze mit je
+# einer Aussage, höchstens 12 Wörter, keine Abkürzungen wie „z. B.“; Fachwörter werden im Satz erklärt. Keine neuen
+# Fakten: Fachliches kommt weiter nur aus Katalog und Quellen. Fehlt ein Schlüssel, gilt der Text aus _ENGINE.
+_LEICHT: dict[str, dict[str, str]] = {
+    "begruessung": {
+        "de": "Willkommen! Ich bin der Lotse für die Sozialversicherung. Schreiben Sie in eigenen Worten: "
+              "Worum geht es? Sie können auch ein Dokument hochladen. Zum Beispiel einen Brief vom Spital. "
+              "Ich zeige Ihnen passende Hilfen. Ich zeige Ihnen auch die nächsten Schritte. "
+              "Bei jeder Aussage steht die Quelle.",
+        "en": "Welcome! I am the guide for social insurance. Tell me in your own words: "
+              "What is it about? You can also upload a document. For example a letter from the hospital. "
+              "I show you help that fits. I also show you the next steps. "
+              "Every statement has a source.",
+    },
+    "leer": {
+        "de": "Bitte schreiben Sie Ihr Anliegen. Ein oder zwei Sätze reichen.",
+        "en": "Please write what you need. One or two sentences are enough.",
+    },
+    "verstanden": {
+        "de": "Ich habe verstanden. Es geht um: {szenarien}.",
+        "en": "I understood. This is about: {szenarien}.",
+    },
+    "gefunden": {
+        "de": "Ich habe {k} wichtige Hilfen für Sie gefunden: {wichtigste}.",
+        "en": "I found {k} important services for you: {wichtigste}.",
+    },
+    "gefunden_weitere": {
+        "de": "Weitere Hilfen stehen in Ihrem Plan.",
+        "en": "More services are in your plan.",
+    },
+    "gefunden_eine": {
+        "de": "Ich habe eine passende Hilfe gefunden: {titel}.",
+        "en": "I found one service that fits: {titel}.",
+    },
+    "gefunden_keine": {
+        "de": "Dafür kenne ich noch keine passende Hilfe.",
+        "en": "I do not know a service for this yet.",
+    },
+    "vorsorge_einleitung": {
+        "de": "Für die Vorsorge gibt es diese Programme. Fragen Sie Ihre Ärztin oder Ihren Arzt: "
+              "Passt eine Untersuchung für Sie? Ich bewerte kein persönliches Risiko.",
+        "en": "There are these programmes for prevention. Ask your doctor: "
+              "Is an examination right for you? I do not assess your personal risk.",
+    },
+    "naechster": {
+        "de": "Ihr nächster Schritt: {titel} – {schritt}.",
+        "en": "Your next step: {titel} – {schritt}.",
+    },
+    "alles_erledigt": {
+        "de": "Sie haben alle Schritte erledigt.",
+        "en": "You have done all steps.",
+    },
+    "notiert": {
+        "de": "Danke. Ich habe das notiert.",
+        "en": "Thank you. I wrote that down.",
+    },
+    "uebersprungen": {
+        "de": "Gut. Diese Frage lasse ich offen.",
+        "en": "All right. I will leave this question open.",
+    },
+    "nicht_verstanden": {
+        "de": "Diese Antwort habe ich nicht verstanden.",
+        "en": "I did not understand this answer.",
+    },
+    "moegliche_antworten": {
+        "de": "Sie können so antworten: {optionen}.",
+        "en": "You can answer like this: {optionen}.",
+    },
+    "format_datum": {
+        "de": "Bitte schreiben Sie das Datum so: Tag, Monat, Jahr. Zum Beispiel: 05.03.1950.",
+        "en": "Please write the date like this: day, month, year. For example: 05.03.1950.",
+    },
+    "grund_region": {
+        "de": "Ich möchte Ihnen Hilfen in Ihrer Region zeigen.",
+        "en": "I want to show you help in your region.",
+    },
+    "grund_stelle": {
+        "de": "Ich möchte Ihnen die richtige Stelle nennen.",
+        "en": "I want to tell you the right office.",
+    },
+    "grund_antrag": {
+        "de": "Ich möchte das Formular richtig vorbereiten.",
+        "en": "I want to prepare the form correctly.",
+    },
+    "grund_sonst": {
+        "de": "Ich habe noch eine Frage.",
+        "en": "I have one more question.",
+    },
+    "grund_termin": {
+        "de": "Ich möchte den Termin gut vorbereiten.",
+        "en": "I want to prepare the appointment well.",
+    },
+    "zurueck_zur_frage": {
+        "de": "Zurück zu meiner Frage.",
+        "en": "Back to my question.",
+    },
+    "keine_fragen": {
+        "de": "Jetzt ist alles da. Den Antrag finden Sie in Ihrem Plan.",
+        "en": "Now everything is there. You find the application in your plan.",
+    },
+    "dokument_tipp": {
+        "de": "Haben Sie einen Brief vom Spital? Dann laden Sie ihn hoch. "
+              "Ich übernehme nur klar geschriebene Empfehlungen. Ich schreibe sie wörtlich ab. Ich nenne auch die Seite.",
+        "en": "Do you have a letter from the hospital? Then upload it. "
+              "I only take clearly written recommendations. I copy them word for word. I also name the page.",
+    },
+    "dokument_gelesen": {
+        "de": "Ich habe Ihr Dokument „{name}“ gelesen. Es hat {seiten}.",
+        "en": "I have read your document “{name}”. It has {seiten}.",
+    },
+    "dokument_steht": {
+        "de": "In Ihrem Dokument steht: „{zitat}“ (Seite {seite})",
+        "en": "Your document says: “{zitat}” (page {seite})",
+    },
+    "dokument_empfehlung_eine": {
+        "de": "Im Dokument steht eine klare Empfehlung: „{zitat}“ (Seite {seite}) {marke}.",
+        "en": "The document has one clear recommendation: “{zitat}” (page {seite}) {marke}.",
+    },
+    "dokument_empfehlungen": {
+        "de": "Im Dokument stehen {n} klare Empfehlungen. Ein Beispiel: „{zitat}“ (Seite {seite}) {marke}. "
+              "Alle Zitate stehen in Ihrer Akte.",
+        "en": "The document has {n} clear recommendations. One example: “{zitat}” (page {seite}) {marke}. "
+              "All quotes are in your records.",
+    },
+    "dokument_zitat_zeile": {
+        "de": "• „{zitat}“ (Seite {seite}) {marke}",
+        "en": "• “{zitat}” (page {seite}) {marke}",
+    },
+    "dokument_keine_empfehlung": {
+        "de": "In diesem Dokument steht keine klare Empfehlung für eine Hilfe. Haben Sie Fragen zum Inhalt? "
+              "Dann fragen Sie Ihre Ärztin oder Ihren Arzt.",
+        "en": "This document has no clear recommendation for a service. Do you have questions about the content? "
+              "Then ask your doctor.",
+    },
+    "dokument_stammdaten": {
+        "de": "Ich habe {anzahl} für das Formular übernommen.",
+        "en": "I took {anzahl} for the form.",
+    },
+    "dokument_fehler": {
+        "de": "Ich kann dieses Dokument nicht lesen. Bitte laden Sie eine andere Datei hoch. "
+              "Das geht: PDF, Text-Datei oder Foto. Fotos bitte als JPG, PNG oder WebP.",
+        "en": "I cannot read this document. Please upload another file. "
+              "These work: PDF, text file or photo. Photos please as JPG, PNG or WebP.",
+    },
+    "dokument_transkribiert": {
+        "de": "Die künstliche Intelligenz hat den Text vom Foto abgeschrieben. Die Zitate kommen aus dieser Abschrift.",
+        "en": "The artificial intelligence copied the text from the photo. The quotes come from this copy.",
+    },
+    "wissen_einleitung": {
+        "de": "Das habe ich in den Quellen gefunden:",
+        "en": "This is what I found in the sources. The quotes are in German:",
+    },
+    "wissen_nichts": {
+        "de": "Dazu habe ich keine sichere Quelle gefunden. Bitte fragen Sie Ihre Sozialversicherung.",
+        "en": "I found no reliable source for this. Please ask your social insurance.",
+    },
+    "quellen_fehlen": {
+        "de": "Für diese Frage fehlen mir Daten. Es fehlen die Gesetze und der Erstattungskodex. "
+              "Mehr dazu steht in der Datei README. Der Abschnitt heißt „Daten“.",
+        "en": "Data is missing for this question. The laws and the reimbursement code are missing. "
+              "The file README tells you more. The section is called “Daten”.",
+    },
+    "wissen_tipp": {
+        "de": "Sie können auch Ihre Situation beschreiben. Zum Beispiel: „{beispiel}“",
+        "en": "You can also describe your situation. For example: “{beispiel}”",
+    },
+    "wissen_angebot": {
+        "de": "Ich helfe Ihnen gern bei diesen Themen: {szenarien}. Ich helfe auch bei einem Arzttermin. "
+              "Schreiben Sie dafür: „Ich möchte einen Arzttermin“.",
+        "en": "I am happy to help with these topics: {szenarien}. I can also help with a doctor's appointment. "
+              "Just write: “I would like a doctor's appointment”.",
+    },
+    "pflegegeld_einleitung": {
+        "de": "So viel Pflegegeld gibt es {jahr} in jeder Stufe:",
+        "en": "This is the care allowance in {jahr} for each level:",
+    },
+    "pflegegeld_fehlt": {
+        "de": "Ich habe die Beträge für das Pflegegeld nicht gefunden.",
+        "en": "I did not find the amounts of care allowance.",
+    },
+    "ekodex_einleitung": {
+        "de": "Das steht im Erstattungskodex:",
+        "en": "This is in the reimbursement code:",
+    },
+    "ekodex_nichts": {
+        "de": "Dazu habe ich im Erstattungskodex nichts gefunden. Nennen Sie mir bitte die Pharmazentralnummer. "
+              "Die Nummer steht auf der Packung.",
+        "en": "I found nothing about this in the reimbursement code. Please tell me the pharmacy central number. "
+              "It is on the package.",
+    },
+    "status_gesetzt": {
+        "de": "Gespeichert: {titel} – {schritt}. Neuer Stand: {status}.",
+        "en": "Saved: {titel} – {schritt}. New status: {status}.",
+    },
+    "grenze_alternativen": {
+        "de": "Dabei kann ich Ihnen helfen:",
+        "en": "I can help you with this:",
+    },
+    "termin_start": {
+        "de": "Gern bereite ich den Termin mit Ihnen vor. Ich kann den Termin nicht buchen. "
+              "Das machen Sie selbst. Ich gebe Ihnen alles dafür mit.",
+        "en": "I am happy to prepare the appointment with you. I cannot book the appointment. "
+              "You do that yourself. I give you everything you need.",
+    },
+    "termin_fertig": {
+        "de": "Ihr Termin-Auftrag ist fertig: {details}.",
+        "en": "Your appointment request is ready: {details}.",
+    },
+    "termin_wo": {
+        "de": "Hier bekommen Sie den Termin: {wo}",
+        "en": "Where you get the appointment: {wo}",
+    },
+    "termin_suche": {
+        "de": "Hier können Sie suchen: {namen}. Die Links stehen in Ihrem Plan.",
+        "en": "You can search here: {namen}. The links are in your plan.",
+    },
+    "termin_anfrage": {
+        "de": "Den fertigen Text für Ihre Anfrage finden Sie in Ihrem Plan. Dort stehen auch Hinweise und Suchdienste.",
+        "en": "You find the ready-made request text in your plan. Tips and search services are there too.",
+    },
+    "termin_sprache_de": {
+        "de": "Den Text habe ich auf Deutsch geschrieben. So versteht ihn die Praxis sicher.",
+        "en": "I wrote the text in German. That way the practice will understand it.",
+    },
+    "termin_datum_tipp": {
+        "de": "Haben Sie einen Termin bekommen? Dann schreiben Sie mir Datum und Uhrzeit. "
+              "Zum Beispiel: „Termin am 12.11.2026 um 10:30“. Ich trage den Termin in Ihren Plan ein. "
+              "Dann bekommen Sie einen Eintrag für Ihren Kalender.",
+        "en": "Did you get an appointment? Then write me the date and time. "
+              "For example: “appointment on 12.11.2026 at 10:30”. I add the appointment to your plan. "
+              "Then you get an entry for your calendar.",
+    },
+    "termin_vereinbart": {
+        "de": "Ich habe eingetragen: {titel} am {datum}{uhrzeit}. Den Eintrag für Ihren Kalender finden Sie in "
+              "Ihrem Plan. Den Termin haben Sie selbst vereinbart. Ich habe ihn nur notiert.",
+        "en": "I added: {titel} on {datum}{uhrzeit}. You find the entry for your calendar in your plan. "
+              "You booked the appointment yourself. I only wrote it down.",
+    },
+    "termin_erledigt": {
+        "de": "Erledigt: {titel}.",
+        "en": "Done: {titel}.",
+    },
+    "termin_unbekannt": {
+        "de": "In Ihrem Plan steht noch kein Termin. Schreiben Sie zum Beispiel: „Ich möchte einen Arzttermin“. "
+              "Dann bereite ich den Termin mit Ihnen vor.",
+        "en": "There is no appointment in your plan yet. Write for example: “I would like a doctor's appointment”. "
+              "Then I will prepare it with you.",
+    },
+    "status_einleitung": {
+        "de": "So weit sind Sie: {erledigt} von {gesamt} Schritten sind erledigt.",
+        "en": "Your progress: {erledigt} of {gesamt} steps are done.",
+    },
+    "status_zeile": {
+        "de": "• {titel}: {erledigt} von {gesamt} erledigt. Als Nächstes: {schritt}",
+        "en": "• {titel}: {erledigt} of {gesamt} done. Next: {schritt}",
+    },
+    "status_zeile_fertig": {
+        "de": "• {titel}: alles erledigt",
+        "en": "• {titel}: all done",
+    },
+    "status_termin_vorbereitet": {
+        "de": "• {titel}: vorbereitet, noch kein Termin",
+        "en": "• {titel}: prepared, no appointment yet",
+    },
+    "status_termin_vereinbart": {
+        "de": "• {titel}: Termin am {datum}{uhrzeit}",
+        "en": "• {titel}: appointment on {datum}{uhrzeit}",
+    },
+    "status_leer": {
+        "de": "Ihr Plan ist noch leer. Beschreiben Sie Ihre Situation. Dann zeige ich Ihnen passende Hilfen.",
+        "en": "Your plan is still empty. Describe your situation. Then I show you services that fit.",
+    },
+    "wiederhergestellt": {
+        "de": "Ihr Fall ist wieder da.",
+        "en": "Your case is back.",
+    },
+    "leistung_erklaerung": {
+        "de": "Das steht in meiner Liste der Hilfen. Bei jeder Hilfe steht die Quelle:",
+        "en": "This is in my list of services. Each one has a source:",
+    },
+    "leistung_erklaerung_recht": {
+        "de": "Dazu steht in den Gesetzen:",
+        "en": "The laws say this. The quotes are in German:",
+    },
+    "leistung_erklaerung_angebot": {
+        "de": "Beschreiben Sie Ihre Situation. Dann trage ich passende Hilfen in Ihren Plan ein. "
+              "Mit allen Schritten.",
+        "en": "Describe your situation. Then I add services that fit to your plan. With all steps.",
+    },
+    "bild_ki_inaktiv": {
+        "de": "Fotos kann ich nur im KI-Modus lesen. KI heißt künstliche Intelligenz. Der KI-Modus ist gerade aus. "
+              "Bitte laden Sie das Dokument als PDF hoch. Oder als Text-Datei.",
+        "en": "I can only read photos in AI mode. AI means artificial intelligence. AI mode is off right now. "
+              "Please upload the document as a PDF. Or as a text file.",
+    },
+    "bild_format": {
+        "de": "Dieses Bild-Format kann ich nicht lesen. Bitte speichern Sie das Foto als JPG, PNG oder WebP. "
+              "Oder laden Sie ein PDF hoch.",
+        "en": "I cannot read this picture format. Please save the photo as JPG, PNG or WebP. Or upload a PDF.",
+    },
+    "bild_unlesbar": {
+        "de": "Auf dem Foto kann ich keinen Text lesen. Bitte machen Sie ein neues Foto. "
+              "Das Dokument soll gerade liegen. Das Foto soll scharf und hell sein. Oder laden Sie ein PDF hoch.",
+        "en": "I cannot read any text on the photo. Please take a new photo. "
+              "The document should lie straight. The photo should be sharp and bright. Or upload a PDF.",
+    },
+    "impfungen_kurz_impfpass": {
+        "de": "Ihr Impfpass nennt {anzahl}. Ich habe die Einträge nur abgeschrieben. Ich bewerte sie nicht. "
+              "Die Liste steht in Ihrer Akte.",
+        "en": "Your vaccination record lists {anzahl}. I only copied the entries. I do not assess them. "
+              "The list is in your records.",
+    },
+    "impfungen_kurz": {
+        "de": "Ihr Dokument nennt {anzahl}. Ich habe die Einträge nur abgeschrieben. Ich bewerte sie nicht. "
+              "Die Liste steht in Ihrer Akte.",
+        "en": "Your document lists {anzahl}. I only copied the entries. I do not assess them. "
+              "The list is in your records.",
+    },
+    "impfung_zeile": {
+        "de": "• {impfung}: {datum} (Seite {seite})",
+        "en": "• {impfung}: {datum} (page {seite})",
+    },
+    "impfungen_arzt": {
+        "de": "Welche Impfungen brauchen Sie? Das sagt Ihnen Ihre Ärztin oder Ihr Arzt.",
+        "en": "Which vaccinations do you need? Your doctor will tell you.",
+    },
+    "medikamente_kurz": {
+        "de": "Im Dokument stehen {anzahl}. Ihr Eintrag im Erstattungskodex steht in Ihrer Akte. "
+              "Ich gebe keine Empfehlung zur Einnahme. Ich gebe keine Empfehlung zur Dosis.",
+        "en": "The document names {anzahl}. Their entry in the reimbursement code is in your records. "
+              "I give no advice on taking them. I give no advice on the dose.",
+    },
+    "geaendert": {
+        "de": "Ich habe geändert: {label} – {wert}.",
+        "en": "I changed: {label} – {wert}.",
+    },
+    "geaendert_sensibel": {
+        "de": "Ich habe geändert: {label}. Diesen Wert speichere ich nicht dauerhaft. Er kommt nur in das Formular.",
+        "en": "I changed: {label}. I do not store this value for long. It only goes into the form.",
+    },
+    "geloescht": {
+        "de": "Ich habe gelöscht: {label}.",
+        "en": "I deleted: {label}.",
+    },
+}
+
+# Rückfragen in Leichter Sprache (gleiche Frage wie slots.SLOTS[...].frage, kürzer); sonst gilt die Slot-Frage.
+FRAGE_LEICHT: dict[str, dict[str, str]] = {
+    "anliegen.fuer_wen": {
+        "de": "Geht es um Sie selbst? Oder geht es um eine Person aus Ihrer Familie?",
+        "en": "Is this about you? Or is it about someone in your family?",
+    },
+    "person.bundesland": {
+        "de": "In welchem Bundesland wohnt die Person?",
+        "en": "Which federal state does the person live in?",
+    },
+    "versicherung.krankenversicherung": {
+        "de": "Bei welcher Krankenkasse ist die Person versichert? Zum Beispiel die Gesundheitskasse ÖGK, die SVS "
+              "oder die BVAEB.",
+        "en": "Which health insurance does the person have? For example the health insurance fund ÖGK, the SVS "
+              "or the BVAEB.",
+    },
+    "versicherung.pension": {
+        "de": "Bekommt die Person eine Pension? Wer zahlt die Pension? Zum Beispiel die Pensionsversicherung PVA, "
+              "die SVS oder die BVAEB.",
+        "en": "Does the person get a pension? Who pays the pension? For example the pension insurance PVA, the SVS "
+              "or the BVAEB.",
+    },
+    "pflege.stufe": {
+        "de": "Welche Pflegegeld-Stufe hat die Person jetzt? Es gibt die Stufen 1 bis 7.",
+        "en": "Which care level does the person have now? There are levels 1 to 7.",
+    },
+    "kind.alter": {
+        "de": "Wie alt ist das Kind? Bitte in Jahren.",
+        "en": "How old is the child? Please in years.",
+    },
+    "person.geschlecht": {
+        "de": "Welches Geschlecht soll im Antrag stehen?",
+        "en": "Which gender should be on the form?",
+    },
+    "reha.form": {
+        "de": "Was steht im ärztlichen Dokument? Ambulante oder stationäre Reha?",
+        "en": "What does the medical document say? Outpatient or inpatient rehab?",
+    },
+    "termin.anlass": {
+        "de": "Wofür ist der Termin? Zum Beispiel Vorsorge, Kontrolle, Impfung oder Zahnarzt.",
+        "en": "What is the appointment for? For example check-up, follow-up, vaccination or dentist.",
+    },
+    "termin.ort": {
+        "de": "Wo soll der Termin sein? Bitte nennen Sie einen Ort oder Bezirk.",
+        "en": "Where should the appointment be? Please name a town or district.",
+    },
+    "termin.zeit": {
+        "de": "Wann passt es Ihnen besser? Am Vormittag oder am Nachmittag?",
+        "en": "What suits you better? Mornings or afternoons?",
+    },
+}
+
+# Eingabehilfe für Formularfelder (Angaben ändern, fehlende Angaben); "" = freie Eingabe bzw. Auswahl
+MUSTER_HINWEIS: dict[str, dict[str, str]] = {
+    "termin.uhrzeit": {"de": "HH:MM", "en": "HH:MM"},
+    "person.svnr": {"de": "10 Ziffern", "en": "10 digits"},
+    "person.plz": {"de": "4 Ziffern", "en": "4 digits"},
+    "bank.iban": {"de": "AT und 18 Ziffern", "en": "AT and 18 digits"},
+    "pflege.stufe": {"de": "Zahl von 1 bis 7", "en": "number from 1 to 7"},
+    "kind.alter": {"de": "Alter in Jahren", "en": "age in years"},
+}
+DATUM_HINWEIS = {"de": "TT.MM.JJJJ", "en": "DD.MM.YYYY"}
+
+# Zählwörter für kurze Zusammenfassungen („3 Impfungen“, „1 Angabe“): (Einzahl, Mehrzahl) je Sprache
+_ZAEHLWORT: dict[str, dict[str, tuple[str, str]]] = {
+    "seite": {"de": ("Seite", "Seiten"), "en": ("page", "pages")},
+    "angabe": {"de": ("Angabe", "Angaben"), "en": ("detail", "details")},
+    "impfung": {"de": ("Impfung", "Impfungen"), "en": ("vaccination", "vaccinations")},
+    "medikament": {"de": ("Medikament", "Medikamente"), "en": ("medicine", "medicines")},
 }
 
 SZENARIO_LABEL: dict[str, dict[str, str]] = {
@@ -634,8 +1188,6 @@ KNOPF_LABEL: dict[str, dict[str, dict[str, str]]] = {
 # Texte der Oberfläche (werden über /api/texte an die UI geliefert).
 UI: dict[str, dict[str, str]] = {
     "titel": {"de": "SV KI-Lotse", "en": "SV AI Navigator"},
-    "untertitel": {"de": "Ihr Weg durch die Leistungen der Sozialversicherung",
-                   "en": "Your way through social insurance services"},
     "sprache": {"de": "Sprache", "en": "Language"},
     "stil": {"de": "Darstellung", "en": "Style"},
     "einfach": {"de": "Einfach", "en": "Simple"},
@@ -647,12 +1199,8 @@ UI: dict[str, dict[str, str]] = {
                                  "en": "Answers are built rule-based from the local sources."},
     "modus_titel_ki": {"de": "Ein Sprachmodell formuliert – nur aus belegten Quellen, mit Prüfung jeder Ausgabe.",
                        "en": "A language model phrases answers – only from cited sources, every output is checked."},
-    "hochladen": {"de": "Dokument hochladen", "en": "Upload document"},
     "hochladen_hilfe": {"de": "PDF, Textdatei oder Foto (JPG, PNG, WebP), z. B. Entlassungsbrief oder Impfpass",
                         "en": "PDF, text file or photo (JPG, PNG, WebP), e.g. discharge letter or vaccination record"},
-    "neuer_fall": {"de": "Neuer Fall", "en": "New case"},
-    "beispiele": {"de": "Beispiele", "en": "Examples"},
-    "demo_dokumente": {"de": "Demo-Dokumente", "en": "Demo documents"},
     "grenze_titel": {"de": "Medizinische Grenze", "en": "Medical limit"},
     "grenze_hinweis": {
         "de": "Der Lotse stellt keine Diagnosen, deutet keine Befunde, bewertet keine gesundheitlichen Risiken "
@@ -667,9 +1215,6 @@ UI: dict[str, dict[str, str]] = {
     "senden": {"de": "Senden", "en": "Send"},
     "sie": {"de": "Sie", "en": "You"},
     "lotse": {"de": "Lotse", "en": "Navigator"},
-    "fallakte_titel": {"de": "Ihre Fallakte", "en": "Your case file"},
-    "fallakte_leer": {"de": "Noch keine Leistungen. Beschreiben Sie Ihre Situation oder laden Sie ein Dokument hoch.",
-                      "en": "No services yet. Describe your situation or upload a document."},
     "angaben": {"de": "Ihre Angaben", "en": "Your details"},
     "angabe_hinterlegt": {"de": "hinterlegt", "en": "stored"},
     "naechster": {"de": "Nächster Schritt", "en": "Next step"},
@@ -680,13 +1225,11 @@ UI: dict[str, dict[str, str]] = {
     "stand": {"de": "Stand", "en": "As of"},
     "stand_unbekannt": {"de": "Stand unbekannt", "en": "date unknown"},
     "extern_badge": {"de": "extern – nicht lokal geprüft", "en": "external – not checked locally"},
-    "lokal_badge": {"de": "lokal belegt", "en": "locally sourced"},
     "formular": {"de": "Formular", "en": "Form"},
     "entwurf_laden": {"de": "Entwurf herunterladen (PDF)", "en": "Download draft (PDF)"},
     "fehlend": {"de": "Noch selbst im PDF zu ergänzen", "en": "Still to be completed in the PDF"},
     "unterlagen": {"de": "Unterlagen", "en": "Documents to enclose"},
     "schritte": {"de": "Schritte", "en": "Steps"},
-    "details": {"de": "Details", "en": "Details"},
     "voraussetzungen": {"de": "Voraussetzungen", "en": "Requirements"},
     "dokument_zitat": {"de": "In Ihrem Dokument steht", "en": "Your document states"},
     "status_offen": {"de": "offen", "en": "open"},
@@ -704,6 +1247,7 @@ UI: dict[str, dict[str, str]] = {
     "aus_dokument": {"de": "aus Dokument", "en": "from document"},
     "aus_gespraech": {"de": "aus dem Gespräch", "en": "from the conversation"},
     "aus_ortsangabe": {"de": "aus Ihrer Ortsangabe", "en": "from the place you named:"},
+    "aus_aenderung": {"de": "von Ihnen geändert", "en": "changed by you"},
     "seite": {"de": "S.", "en": "p."},
     "szenario_pflege": {"de": "Pflege", "en": "Care"},
     "szenario_gesundheit": {"de": "Gesundheit", "en": "Health"},
@@ -717,12 +1261,10 @@ UI: dict[str, dict[str, str]] = {
     "antwortmoeglichkeiten": {"de": "Antwortmöglichkeiten", "en": "Answer options"},
     "quelle": {"de": "Quelle", "en": "Source"},
     "skip_link": {"de": "Zur Eingabe springen", "en": "Skip to input"},
-    "foto": {"de": "Foto aufnehmen", "en": "Take photo"},
     "weitere_sprachen": {"de": "Weitere Sprachen", "en": "More languages"},
     "nur_ki": {"de": "nur im KI-Modus", "en": "AI mode only"},
     "weitere_sprachen_hinweis": {"de": "Weitere Sprachen gibt es nur im KI-Modus. Zitate bleiben im Original.",
                                  "en": "More languages are only available in AI mode. Quotes stay in the original."},
-    "weitere_angebote": {"de": "Weitere Angebote ({n})", "en": "More services ({n})"},
     "nutzen_titel": {"de": "Warum das hilft", "en": "Why this helps"},
     "einrichtungen_titel": {"de": "Wo Sie Angebote finden", "en": "Where to find services"},
     "oesterreichweit": {"de": "österreichweit", "en": "throughout Austria"},
@@ -741,7 +1283,7 @@ UI: dict[str, dict[str, str]] = {
     "termin_speichern": {"de": "Termin speichern", "en": "Save appointment"},
     "datum": {"de": "Datum", "en": "Date"},
     "uhrzeit": {"de": "Uhrzeit", "en": "Time"},
-    "ics_laden": {"de": "In den Kalender (.ics)", "en": "Add to calendar (.ics)"},
+    "ics_laden": {"de": "In Kalender eintragen (.ics)", "en": "Add to calendar (.ics)"},
     "termin_status_vorbereitet": {"de": "vorbereitet", "en": "prepared"},
     "termin_status_vereinbart": {"de": "vereinbart", "en": "booked"},
     "termin_status_erledigt": {"de": "erledigt", "en": "done"},
@@ -750,7 +1292,7 @@ UI: dict[str, dict[str, str]] = {
     "kopiert": {"de": "Text kopiert", "en": "Text copied"},
     "kopieren_fehler": {"de": "Kopieren nicht möglich – bitte den Text markieren und kopieren.",
                         "en": "Copying failed – please select and copy the text."},
-    "szenario_unterstuetzung": {"de": "Unterstützung", "en": "Support"},
+    "szenario_unterstuetzung": {"de": "Geld & Unterstützung", "en": "Money & support"},
     "szenario_termin": {"de": "Arzttermin", "en": "Doctor's appointment"},
     "dokumente_titel": {"de": "Ihre Dokumente", "en": "Your documents"},
     "seiten": {"de": "Seiten", "en": "pages"},
@@ -787,6 +1329,112 @@ UI: dict[str, dict[str, str]] = {
     "mikro_fehler": {"de": "Spracheingabe ist gerade nicht möglich.", "en": "Voice input is not available right now."},
     "vorlesen": {"de": "Vorlesen", "en": "Read aloud"},
     "vorlesen_stop": {"de": "Vorlesen beenden", "en": "Stop reading"},
+    # --- Oberfläche 2026-11 (Ansichten, Einstellungen, Plan, Leistung) ---
+    "nav_label": {"de": "Hauptnavigation", "en": "Main navigation"},
+    "plan_titel": {"de": "Mein Plan", "en": "My plan"},
+    "einstellungen": {"de": "Einstellungen", "en": "Settings"},
+    "schliessen": {"de": "Schließen", "en": "Close"},
+    "skip_inhalt": {"de": "Zum Inhalt springen", "en": "Skip to content"},
+    "gespraechsverlauf": {"de": "Gesprächsverlauf", "en": "Conversation history"},
+    "ansicht_angezeigt": {"de": "Ansicht: {titel}", "en": "View: {titel}"},
+    "antwort_da": {"de": "Neue Antwort vom Lotsen.", "en": "New answer from the navigator."},
+    "leicht": {"de": "Leichte Sprache", "en": "Easy language"},
+    "textgroesse": {"de": "Textgröße", "en": "Text size"},
+    "groesse_100": {"de": "Normal", "en": "Normal"},
+    "groesse_115": {"de": "Größer", "en": "Larger"},
+    "groesse_130": {"de": "Am größten", "en": "Largest"},
+    "farbschema": {"de": "Farbschema", "en": "Colour scheme"},
+    "farbe_system": {"de": "Wie System", "en": "Same as device"},
+    "farbe_hell": {"de": "Hell", "en": "Light"},
+    "farbe_dunkel": {"de": "Dunkel", "en": "Dark"},
+    "farbe_kontrast": {"de": "Hoher Kontrast", "en": "High contrast"},
+    "belege_anzeigen": {"de": "Belege anzeigen", "en": "Show sources"},
+    "belege_hilfe": {"de": "Zeigt bei jeder Aussage die Quelle: Gesetz, Seite oder Webseite.",
+                     "en": "Shows the source of every statement: law, page or website."},
+    "vorlesetempo": {"de": "Vorlesetempo", "en": "Reading speed"},
+    "tempo_langsam": {"de": "Langsam", "en": "Slow"},
+    "tempo_normal": {"de": "Normal", "en": "Normal"},
+    "tempo_schnell": {"de": "Schnell", "en": "Fast"},
+    "einstellungen_hinweis": {"de": "Ihre Einstellungen gelten sofort und bleiben auf diesem Gerät gespeichert.",
+                              "en": "Your settings apply immediately and are saved on this device."},
+    "tastatur_titel": {"de": "Bedienung mit der Tastatur", "en": "Using the keyboard"},
+    "tastatur_text": {
+        "de": "Tab: zum nächsten Element. Enter: Nachricht senden. Umschalt und Enter: neue Zeile. "
+              "Esc: dieses Fenster schließen. Eigene Tastenkürzel gibt es nicht, damit Screenreader ungestört arbeiten.",
+        "en": "Tab: next element. Enter: send message. Shift and Enter: new line. "
+              "Esc: close this window. There are no extra shortcuts, so screen readers work undisturbed.",
+    },
+    "worum_geht_es": {"de": "Worum geht es?", "en": "What is it about?"},
+    "beispiel_dokumente": {"de": "Beispiel-Dokumente ausprobieren", "en": "Try sample documents"},
+    "beispiel_dokumente_hinweis": {"de": "Erfundene Dokumente zum Ausprobieren, keine echten Daten.",
+                                   "en": "Made-up documents to try out, no real data."},
+    "grenze_kurz": {"de": "Keine Diagnosen und keine medizinischen Ratschläge. Gesundheitsfragen: Ärztin, Arzt oder 1450.",
+                    "en": "No diagnoses and no medical advice. Health questions: your doctor or 1450."},
+    "fortschritt": {"de": "{erledigt} von {gesamt} Schritten erledigt", "en": "{erledigt} of {gesamt} steps done"},
+    "antrag_vorbereiten": {"de": "Antrag vorbereiten", "en": "Prepare application"},
+    "details_ansehen": {"de": "Details ansehen", "en": "View details"},
+    "erledigt_knopf": {"de": "Erledigt", "en": "Done"},
+    "alles_erledigt_kurz": {"de": "Alle Schritte erledigt.", "en": "All steps done."},
+    "schritt_erledigt": {"de": "Erledigt: {text}", "en": "Done: {text}"},
+    "schritt_wieder_offen": {"de": "Wieder offen: {text}", "en": "Open again: {text}"},
+    "danach": {"de": "Danach", "en": "After that"},
+    "aendern": {"de": "Ändern", "en": "Change"},
+    "speichern": {"de": "Speichern", "en": "Save"},
+    "abbrechen": {"de": "Abbrechen", "en": "Cancel"},
+    "loeschen": {"de": "Löschen", "en": "Delete"},
+    "eintragen": {"de": "Eintragen", "en": "Enter"},
+    "bitte_waehlen": {"de": "Bitte wählen", "en": "Please choose"},
+    "angaben_leer": {"de": "Noch keine Angaben. Der Lotse übernimmt sie aus dem Gespräch oder aus Dokumenten.",
+                     "en": "No details yet. The navigator takes them from the conversation or from documents."},
+    "angabe_neu": {"de": "Neuer Wert für {label}", "en": "New value for {label}"},
+    "angabe_format": {"de": "Format: {muster}", "en": "Format: {muster}"},
+    "angabe_leer_fehler": {"de": "Bitte tragen Sie etwas ein oder wählen Sie „Löschen“.",
+                           "en": "Please enter something or choose “Delete”."},
+    "angabe_sensibel_hinweis": {"de": "Nur für den Formularentwurf. Wird nicht gespeichert und nicht exportiert.",
+                                "en": "Only for the form draft. Not saved and not exported."},
+    "fehlende_hilfe": {"de": "Was Sie hier eintragen, steht danach schon im PDF-Entwurf.",
+                       "en": "What you enter here is then already filled in the PDF draft."},
+    "fehlende_fuer": {"de": "für {formulare}", "en": "for {formulare}"},
+    "weitere_moeglichkeiten": {"de": "Weitere Möglichkeiten ({n})", "en": "More options ({n})"},
+    "plan_drucken": {"de": "Plan drucken", "en": "Print plan"},
+    "plan_vorlesen": {"de": "Plan vorlesen", "en": "Read plan aloud"},
+    "plan_leer": {"de": "Ihr Plan ist noch leer. Erzählen Sie im Gespräch, worum es geht. Dann erscheinen hier Ihre "
+                        "nächsten Schritte.",
+                  "en": "Your plan is still empty. Tell the navigator what it is about. Then your next steps appear here."},
+    "zum_gespraech": {"de": "Zum Gespräch", "en": "Go to the conversation"},
+    "fall_sichern_hilfe": {"de": "Speichert Ihren Fall als Datei auf diesem Gerät, ohne sensible Angaben.",
+                           "en": "Saves your case as a file on this device, without sensitive details."},
+    "neuer_fall_frage": {"de": "Einen neuen Fall beginnen? Das bisherige Gespräch wird geschlossen. Mit „Fall speichern“ "
+                               "können Sie es vorher sichern.",
+                         "en": "Start a new case? The current conversation will be closed. You can keep it first with "
+                               "“Save case”."},
+    "zurueck_plan": {"de": "Zurück zu Mein Plan", "en": "Back to My plan"},
+    "so_gehen_sie_vor": {"de": "So gehen Sie vor", "en": "How to proceed"},
+    "belege_titel": {"de": "Belege", "en": "Sources"},
+    "angaben_ergaenzen": {"de": "Angaben ergänzen", "en": "Add details"},
+    "leistung_fehlt": {"de": "Diese Leistung steht nicht (mehr) in Ihrem Plan.",
+                       "en": "This service is not (or no longer) in your plan."},
+    "leistungen_liste": {"de": "Alle Leistungen in Ihrem Plan", "en": "All services in your plan"},
+    "druck_datum": {"de": "Erstellt am {datum}", "en": "Created on {datum}"},
+    # --- Oberfläche 2026-11, drei Bereiche (Gespräch, Mein Plan, Meine Akte) ---
+    "akte_titel": {"de": "Meine Akte", "en": "My records"},
+    "dokument_hinzufuegen": {"de": "Dokument hinzufügen", "en": "Add document"},
+    "beispiele_ausprobieren": {"de": "Beispiele zum Ausprobieren", "en": "Examples to try"},
+    "naechster_schritt_titel": {"de": "Ihr nächster Schritt", "en": "Your next step"},
+    "zu_meinem_plan": {"de": "Zu meinem Plan", "en": "Go to my plan"},
+    "ansehen": {"de": "Ansehen", "en": "View"},
+    "termin_oeffnen": {"de": "Termin öffnen", "en": "Open appointment"},
+    "mehr_zur_leistung": {"de": "Mehr zu dieser Leistung", "en": "More about this service"},
+    "belege_n": {"de": "Belege ({n})", "en": "Sources ({n})"},
+    "in_akte_ergaenzen": {"de": "In Meine Akte ergänzen", "en": "Add in My records"},
+    "antrag_herunterladen": {"de": "Antrag herunterladen (PDF)", "en": "Download application (PDF)"},
+    "neuen_fall_beginnen": {"de": "Neuen Fall beginnen", "en": "Start a new case"},
+    "fehlen_noch": {"de": "Für Formulare fehlen noch", "en": "Still missing for forms"},
+    "dokumente_leer": {"de": "Noch keine Dokumente. Sie können zum Beispiel einen Entlassungsbrief hinzufügen.",
+                       "en": "No documents yet. You can add a discharge letter, for example."},
+    "unterlagen_immer": {"de": "Immer nötig", "en": "Always needed"},
+    "unterlagen_bedingt": {"de": "Nur wenn es auf Sie zutrifft ({n})", "en": "Only if it applies to you ({n})"},
+    "alle_anzeigen": {"de": "Alle {n} anzeigen", "en": "Show all {n}"},
 }
 
 
@@ -799,6 +1447,51 @@ def t(key: str, sprache: str, **kw: object) -> str:
 def beide(key: str, **kw: object) -> dict[str, str]:
     """Text in beiden Sprachen. Werte in `kw` dürfen `{de, en}`-Dicts sein."""
     return {sp: t(key, sp, **{k: (v[sp] if isinstance(v, dict) else v) for k, v in kw.items()}) for sp in SPRACHEN}
+
+
+def t_leicht(key: str, sprache: str, **kw: object) -> str:
+    """Engine-Text in Leichter Sprache; ohne eigene Vorlage der übliche Text."""
+    if key not in _LEICHT:
+        return t(key, sprache, **kw)
+    vorlage = _LEICHT[key][sprache if sprache in SPRACHEN else "de"]
+    return vorlage.format(**kw) if kw else vorlage
+
+
+def beide_leicht(key: str, **kw: object) -> dict[str, str] | None:
+    """Leichte-Sprache-Text in beiden Sprachen; None, wenn es keine eigene Vorlage gibt (dann gilt `beide`)."""
+    if key not in _LEICHT:
+        return None
+    return {sp: t_leicht(key, sp, **{k: (v[sp] if isinstance(v, dict) else v) for k, v in kw.items()})
+            for sp in SPRACHEN}
+
+
+def frage(slot_id: str, sprache: str, stil: str) -> str:
+    """Rückfrage zu einem Slot; in Leichter Sprache die kürzere Fassung aus FRAGE_LEICHT, wenn vorhanden."""
+    if stil == "leicht" and slot_id in FRAGE_LEICHT:
+        return FRAGE_LEICHT[slot_id][sprache]
+    return SLOTS[slot_id].frage[sprache]
+
+
+def muster_hinweis(slot_id: str, sprache: str) -> str:
+    """Eingabeformat eines Slots für Formularfelder („TT.MM.JJJJ“, „10 Ziffern“); "" ohne festes Format."""
+    if SLOTS[slot_id].typ == "datum":
+        return DATUM_HINWEIS[sprache]
+    return MUSTER_HINWEIS.get(slot_id, {}).get(sprache, "")
+
+
+def stil_label(stil: str, sprache: str) -> str:
+    return UI[stil][sprache]
+
+
+def anzahl(wort: str, n: int) -> dict[str, str]:
+    """„1 Seite“ / „3 Seiten“ in beiden Sprachen."""
+    return {sp: f"{n} {_ZAEHLWORT[wort][sp][0 if n == 1 else 1]}" for sp in SPRACHEN}
+
+
+def aufzaehlung(teile: list[str], sprache: str) -> str:
+    """„A, B und C“ bzw. „A, B and C“."""
+    und = {"de": "und", "en": "and"}[sprache if sprache in SPRACHEN else "de"]
+    return f"{', '.join(teile[:-1])} {und} {teile[-1]}" if len(teile) > 1 else "".join(teile)
 
 
 def wert_anzeige(slot_id: str, wert: str, sprache: str) -> str:

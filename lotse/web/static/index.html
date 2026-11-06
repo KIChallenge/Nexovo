@@ -1,129 +1,252 @@
 <!doctype html>
-<html lang="de" dir="ltr">
+<html lang="de" dir="ltr" data-farbe="hell" data-groesse="100" data-belege="aus">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>SV KI-Lotse</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/static/style.css">
+  <script type="module" src="/static/app.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#eingabe" data-t="skip_link">Zur Eingabe springen</a>
+  <a class="skip-link" href="#inhalt" data-t="skip_inhalt">Zum Inhalt springen</a>
+  <a class="skip-link" href="#eingabe" id="skip-eingabe" data-t="skip_link">Zur Eingabe springen</a>
 
   <header class="kopf">
-    <div class="marke">
-      <span class="marke-zeichen" aria-hidden="true"></span>
-      <div>
-        <h1 data-t="titel">SV KI-Lotse</h1>
-        <p class="untertitel" data-t="untertitel">Ihr Weg durch die Leistungen der Sozialversicherung</p>
-      </div>
-    </div>
-    <div class="steuerung">
-      <div class="schalter" role="group" aria-labelledby="lbl-sprache">
-        <span id="lbl-sprache" class="schalter-label" data-t="sprache">Sprache</span>
-        <button type="button" data-sprache="de" aria-pressed="true" lang="de">DE</button>
-        <button type="button" data-sprache="en" aria-pressed="false" lang="en">EN</button>
-        <label for="sprache-weitere" class="sr-only" data-t="weitere_sprachen">Weitere Sprachen</label>
-        <select id="sprache-weitere" class="sprache-weitere" aria-describedby="sprache-weitere-hilfe"></select>
-        <span id="sprache-weitere-hilfe" class="sr-only" data-t="weitere_sprachen_hinweis"></span>
-      </div>
-      <div class="schalter" role="group" aria-labelledby="lbl-stil">
-        <span id="lbl-stil" class="schalter-label" data-t="stil">Darstellung</span>
-        <button type="button" data-stil="einfach" aria-pressed="true" data-t="einfach">Einfach</button>
-        <button type="button" data-stil="ausfuehrlich" aria-pressed="false" data-t="ausfuehrlich">Ausführlich</button>
-      </div>
-      <span id="modus" class="badge badge-modus" role="status">regelbasiert</span>
-      <button type="button" id="neu" class="knopf knopf-sekundaer" data-t="neuer_fall">Neuer Fall</button>
-    </div>
+    <span class="marke"><span class="marke-zeichen" aria-hidden="true"></span><span class="marke-name"
+        data-t="titel">SV KI-Lotse</span></span>
+    <button type="button" id="einstellungen-knopf" class="knopf" aria-haspopup="dialog" aria-controls="einstellungen"
+            data-icon="zahnrad"><span data-t="einstellungen">Einstellungen</span></button>
   </header>
 
-  <nav class="leiste" aria-labelledby="lbl-beispiele">
-    <div class="leiste-gruppe" role="group" aria-labelledby="lbl-beispiele">
-      <span id="lbl-beispiele" class="leiste-label" data-t="beispiele">Beispiele</span>
-      <button type="button" class="chip" data-szenario="pflege" data-t="szenario_pflege">Pflege</button>
-      <button type="button" class="chip" data-szenario="gesundheit" data-t="szenario_gesundheit">Gesundheit</button>
-      <button type="button" class="chip" data-szenario="entlassung" data-t="szenario_entlassung">Nach dem Spital</button>
-      <button type="button" class="chip" data-szenario="kind" data-t="szenario_kind">Kind</button>
-      <button type="button" class="chip" data-szenario="unterstuetzung" data-t="szenario_unterstuetzung">Unterstützung</button>
-      <button type="button" class="chip" data-szenario="termin" data-t="szenario_termin">Arzttermin</button>
-    </div>
-    <div class="leiste-gruppe" role="group" aria-labelledby="lbl-demo" id="demo-gruppe" hidden>
-      <span id="lbl-demo" class="leiste-label" data-t="demo_dokumente">Demo-Dokumente</span>
-    </div>
+  <nav class="tabs" aria-labelledby="nav-titel">
+    <span id="nav-titel" class="sr-only" data-t="nav_label">Hauptnavigation</span>
+    <ul>
+      <li><a href="#/gespraech" data-route="gespraech" data-icon="gespraech" aria-current="page"><span
+          data-t="chat_titel">Gespräch</span></a></li>
+      <li><a href="#/plan" data-route="plan" data-icon="plan"><span data-t="plan_titel">Mein Plan</span></a></li>
+      <li><a href="#/akte" data-route="akte" data-icon="akte"><span data-t="akte_titel">Meine Akte</span></a></li>
+    </ul>
   </nav>
 
-  <aside class="grenze" role="note" aria-labelledby="grenze-titel">
-    <strong id="grenze-titel" data-t="grenze_titel">Medizinische Grenze</strong>
-    <span data-t="grenze_hinweis">Der Lotse stellt keine Diagnosen, deutet keine Befunde, bewertet keine gesundheitlichen
-      Risiken und empfiehlt keine Therapien, Medikamente oder Dosierungen. Gesundheitliche Fragen klären Sie mit Ihrer
-      Ärztin oder Ihrem Arzt; telefonische Gesundheitsberatung: 1450.</span>
-    <span class="grenze-quelle" id="grenze-quelle">(Quelle: ÖGK – Leistungen und Services 2026, PDF-S. 42)</span>
-  </aside>
+  <main id="inhalt" tabindex="-1" aria-busy="false">
+    <p id="fehler-meldung" class="fehler-meldung" role="alert" hidden></p>
 
-  <main class="haupt">
-    <section class="chat" aria-labelledby="chat-titel">
-      <h2 id="chat-titel" data-t="chat_titel">Gespräch</h2>
-      <ol id="verlauf" class="verlauf" aria-live="polite" aria-relevant="additions"></ol>
-      <div id="optionen" class="optionen" role="group" aria-labelledby="optionen-label" hidden>
-        <span id="optionen-label" class="sr-only" data-t="antwortmoeglichkeiten"></span>
+    <!-- Gespräch -->
+    <section id="ansicht-gespraech" class="ansicht" aria-labelledby="h-gespraech">
+      <h1 id="h-gespraech" tabindex="-1" data-t="chat_titel">Gespräch</h1>
+      <div class="gespraech-raster">
+        <aside id="naechster-box" class="naechster-box" aria-labelledby="naechster-box-titel" hidden>
+          <h2 id="naechster-box-titel" data-t="naechster_schritt_titel">Ihr nächster Schritt</h2>
+          <div id="naechster-box-inhalt"></div>
+          <a href="#/plan" class="knopf" data-icon="weiter"><span data-t="zu_meinem_plan">Zu meinem Plan</span></a>
+        </aside>
+
+        <div class="gespraech-haupt">
+          <div id="start" class="start">
+            <h2 id="start-titel" data-t="worum_geht_es">Worum geht es?</h2>
+            <div class="kacheln" role="group" aria-labelledby="start-titel">
+              <button type="button" class="kachel" data-szenario="pflege" data-t="szenario_pflege">Pflege</button>
+              <button type="button" class="kachel" data-szenario="entlassung" data-t="szenario_entlassung">Nach dem Spital</button>
+              <button type="button" class="kachel" data-szenario="gesundheit" data-t="szenario_gesundheit">Gesundheit</button>
+              <button type="button" class="kachel" data-szenario="kind" data-t="szenario_kind">Kind</button>
+              <button type="button" class="kachel" data-szenario="unterstuetzung" data-t="szenario_unterstuetzung">Geld &amp; Unterstützung</button>
+              <button type="button" class="kachel" data-szenario="termin" data-t="szenario_termin">Arzttermin</button>
+            </div>
+          </div>
+
+          <div id="verlauf-log" class="verlauf-log" role="log" aria-live="off" aria-labelledby="verlauf-titel" hidden>
+            <span id="verlauf-titel" class="sr-only" data-t="gespraechsverlauf">Gesprächsverlauf</span>
+            <ol id="verlauf" class="verlauf" tabindex="0" aria-labelledby="verlauf-titel"></ol>
+          </div>
+          <div id="vorlesen-zeile" class="vorlesen-zeile" hidden><button type="button" id="vorlesen-antwort"
+              class="knopf vorlesen" aria-pressed="false" data-icon="lautsprecher" data-label="vorlesen"><span
+              class="knopf-text">Vorlesen</span></button></div>
+
+          <div id="optionen" class="optionen" role="group" aria-labelledby="optionen-frage" hidden>
+            <p id="optionen-frage" class="sr-only"></p>
+            <div id="optionen-knoepfe" class="optionen-knoepfe"></div>
+          </div>
+
+          <p class="grenze-zeile"><strong data-t="grenze_titel">Medizinische Grenze</strong>:
+            <span data-t="grenze_kurz">Keine Diagnosen und keine medizinischen Ratschläge.</span></p>
+
+          <form id="eingabe-form" class="eingabe">
+            <label for="eingabe" class="feld-label" data-t="chat_label">Ihre Nachricht</label>
+            <textarea id="eingabe" rows="2" maxlength="2000" required dir="auto"></textarea>
+            <div class="eingabe-knoepfe">
+              <label class="knopf datei-knopf" for="datei" data-icon="hochladen"><span
+                  data-t="dokument_hinzufuegen">Dokument hinzufügen</span></label>
+              <input type="file" id="datei" class="sr-only"
+                     accept=".pdf,.txt,.jpg,.jpeg,.png,.webp,application/pdf,text/plain,image/*"
+                     aria-describedby="datei-hilfe">
+              <span class="eingabe-rechts">
+                <button type="button" id="mikro" class="knopf knopf-icon" aria-pressed="false" data-icon="mikro"
+                        hidden><span id="mikro-text" class="sr-only">Spracheingabe starten</span></button>
+                <button type="submit" id="senden" class="knopf hauptaktion" data-icon="senden"><span
+                    data-t="senden">Senden</span></button>
+              </span>
+            </div>
+            <p id="datei-hilfe" class="leise" data-t="hochladen_hilfe"></p>
+            <p id="mikro-status" class="mikro-status" role="status"></p>
+          </form>
+
+          <details id="demo" class="demo" hidden>
+            <summary data-t="beispiele_ausprobieren">Beispiele zum Ausprobieren</summary>
+            <div id="demo-knoepfe" class="knopf-zeile"></div>
+          </details>
+        </div>
       </div>
-      <form id="eingabe-form" class="eingabe">
-        <label for="eingabe" data-t="chat_label">Ihre Nachricht</label>
-        <div class="eingabe-zeile">
-          <textarea id="eingabe" rows="2" maxlength="2000" required dir="auto"></textarea>
-          <button type="button" id="mikro" class="knopf knopf-sekundaer knopf-mikro" aria-pressed="false" hidden>
-            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="2" width="6" height="12" rx="3"></rect>
-              <path d="M5 10v1a7 7 0 0 0 14 0v-1"></path>
-              <path d="M12 18v4"></path>
-            </svg>
-            <span id="mikro-text" class="sr-only">Spracheingabe starten</span>
-          </button>
-          <button type="submit" class="knopf" data-t="senden">Senden</button>
-        </div>
-        <div class="eingabe-extras">
-          <label class="knopf knopf-sekundaer knopf-klein datei-knopf" for="datei">
-            <span data-t="hochladen">Dokument hochladen</span>
-          </label>
-          <input type="file" id="datei" class="sr-only"
-                 accept=".pdf,.txt,.jpg,.jpeg,.png,.webp,application/pdf,text/plain,image/*"
-                 aria-describedby="datei-hilfe">
-          <label class="knopf knopf-sekundaer knopf-klein datei-knopf" for="foto">
-            <span data-t="foto">Foto aufnehmen</span>
-          </label>
-          <input type="file" id="foto" class="sr-only" accept="image/*" capture="environment"
-                 aria-describedby="datei-hilfe">
-          <span id="datei-hilfe" class="leise datei-hilfe" data-t="hochladen_hilfe"></span>
-        </div>
-        <p id="mikro-status" class="mikro-status" role="status" aria-live="polite"></p>
-      </form>
     </section>
 
-    <section class="akte" aria-labelledby="akte-titel">
-      <div class="akte-kopf">
-        <h2 id="akte-titel" data-t="fallakte_titel">Ihre Fallakte</h2>
-        <div class="akte-aktionen">
-          <a id="fall-speichern" class="knopf knopf-sekundaer knopf-klein" download data-t="fall_speichern">Fall speichern</a>
-          <label class="knopf knopf-sekundaer knopf-klein datei-knopf" for="fall-datei">
-            <span data-t="fall_laden">Fall laden</span>
-          </label>
-          <input type="file" id="fall-datei" class="sr-only" accept=".json,application/json"
-                 aria-describedby="fall-datei-hilfe">
-          <span id="fall-datei-hilfe" class="sr-only" data-t="fall_laden_hilfe"></span>
-        </div>
+    <!-- Mein Plan -->
+    <section id="ansicht-plan" class="ansicht" aria-labelledby="h-plan" hidden>
+      <h1 id="h-plan" tabindex="-1" data-t="plan_titel">Mein Plan</h1>
+      <p class="nur-druck druck-datum" id="druck-datum"></p>
+      <div class="nur-druck druck-grenze">
+        <p><strong data-t="grenze_titel">Medizinische Grenze</strong></p>
+        <p data-t="grenze_hinweis"></p>
+        <p id="grenze-quelle-druck"></p>
       </div>
-      <div id="uebersicht" class="uebersicht" hidden></div>
-      <div id="naechster" class="naechster" hidden></div>
-      <div id="angaben" class="angaben" hidden></div>
-      <p id="akte-leer" class="akte-leer" data-t="fallakte_leer">Noch keine Leistungen. Beschreiben Sie Ihre Situation
-        oder laden Sie ein Dokument hoch.</p>
-      <div id="termine" class="termine"></div>
-      <div id="dokumente" class="dok-panels"></div>
-      <div id="karten" class="karten"></div>
-      <div id="historie" class="historie" hidden></div>
+      <div id="plan-inhalt"></div>
+      <p class="knopf-zeile plan-fuss">
+        <button type="button" id="plan-drucken" class="knopf" data-icon="drucker"><span
+            data-t="plan_drucken">Plan drucken</span></button>
+        <button type="button" id="plan-vorlesen" class="knopf vorlesen" aria-pressed="false" data-icon="lautsprecher"
+                data-label="plan_vorlesen" hidden><span class="knopf-text">Plan vorlesen</span></button>
+      </p>
+    </section>
+
+    <!-- Meine Akte -->
+    <section id="ansicht-akte" class="ansicht" aria-labelledby="h-akte" hidden>
+      <h1 id="h-akte" tabindex="-1" data-t="akte_titel">Meine Akte</h1>
+      <div id="akte-inhalt"></div>
+      <section class="akte-abschnitt" aria-labelledby="dok-titel">
+        <h2 id="dok-titel" tabindex="-1" data-t="dokumente_titel">Ihre Dokumente</h2>
+        <p>
+          <label class="knopf hauptaktion datei-knopf" for="akte-datei" data-icon="hochladen"><span
+              data-t="dokument_hinzufuegen">Dokument hinzufügen</span></label>
+          <input type="file" id="akte-datei" class="sr-only"
+                 accept=".pdf,.txt,.jpg,.jpeg,.png,.webp,application/pdf,text/plain,image/*"
+                 aria-describedby="akte-datei-hilfe">
+        </p>
+        <p id="akte-datei-hilfe" class="leise" data-t="hochladen_hilfe"></p>
+        <div id="akte-dokumente"></div>
+      </section>
+      <div id="akte-verlauf"></div>
+      <div class="knopf-zeile akte-fuss">
+        <a id="fall-speichern" class="knopf" download data-icon="herunterladen"><span
+            data-t="fall_speichern">Fall speichern</span></a>
+        <label class="knopf datei-knopf" for="fall-datei" data-icon="hochladen"><span
+            data-t="fall_laden">Fall laden</span></label>
+        <input type="file" id="fall-datei" class="sr-only" accept=".json,application/json"
+               aria-describedby="fall-datei-hilfe">
+        <button type="button" id="neu" class="knopf" data-t="neuen_fall_beginnen">Neuen Fall beginnen</button>
+      </div>
+      <p id="fall-datei-hilfe" class="leise"><span data-t="fall_sichern_hilfe"></span> <span
+          data-t="fall_laden_hilfe"></span></p>
+    </section>
+
+    <!-- Unteransichten von „Mein Plan“ -->
+    <section id="ansicht-leistung" class="ansicht" aria-labelledby="h-leistung" hidden>
+      <p class="zurueck-zeile"><a href="#/plan" class="knopf zurueck" data-icon="zurueck"><span
+          data-t="zurueck_plan">Zurück zu Mein Plan</span></a></p>
+      <h1 id="h-leistung" tabindex="-1"></h1>
+      <div id="leistung-inhalt"></div>
+    </section>
+
+    <section id="ansicht-termin" class="ansicht" aria-labelledby="h-termin" hidden>
+      <p class="zurueck-zeile"><a href="#/plan" class="knopf zurueck" data-icon="zurueck"><span
+          data-t="zurueck_plan">Zurück zu Mein Plan</span></a></p>
+      <h1 id="h-termin" tabindex="-1"></h1>
+      <div id="termin-inhalt"></div>
     </section>
   </main>
 
-  <script src="/static/app.js"></script>
+  <div id="ansage" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <dialog id="einstellungen" class="dialog" aria-labelledby="einst-titel">
+    <div class="dialog-kopf">
+      <h2 id="einst-titel" data-t="einstellungen">Einstellungen</h2>
+      <button type="button" id="einst-schliessen" class="knopf" data-t="schliessen">Schließen</button>
+    </div>
+    <div class="dialog-inhalt">
+      <p class="leise" data-t="einstellungen_hinweis"></p>
+
+      <fieldset class="wahl" role="radiogroup" aria-describedby="sprache-hinweis">
+        <legend data-t="sprache">Sprache</legend>
+        <div class="wahl-optionen" id="sprache-optionen"></div>
+        <p class="leise" id="sprache-hinweis" data-t="weitere_sprachen_hinweis"></p>
+      </fieldset>
+
+      <fieldset class="wahl" role="radiogroup">
+        <legend data-t="stil">Darstellung</legend>
+        <div class="wahl-optionen">
+          <label class="wahl-option"><input type="radio" name="stil" value="einfach"><span data-t="einfach">Einfach</span></label>
+          <label class="wahl-option"><input type="radio" name="stil" value="ausfuehrlich"><span
+              data-t="ausfuehrlich">Ausführlich</span></label>
+          <label class="wahl-option"><input type="radio" name="stil" value="leicht"><span data-t="leicht">Leichte Sprache</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="wahl" role="radiogroup">
+        <legend data-t="textgroesse">Textgröße</legend>
+        <div class="wahl-optionen">
+          <label class="wahl-option"><input type="radio" name="groesse" value="100"><span class="a-muster a-100">A</span>
+            <span data-t="groesse_100">Normal</span></label>
+          <label class="wahl-option"><input type="radio" name="groesse" value="115"><span class="a-muster a-115">A+</span>
+            <span data-t="groesse_115">Größer</span></label>
+          <label class="wahl-option"><input type="radio" name="groesse" value="130"><span class="a-muster a-130">A++</span>
+            <span data-t="groesse_130">Am größten</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="wahl" role="radiogroup">
+        <legend data-t="farbschema">Farbschema</legend>
+        <div class="wahl-optionen">
+          <label class="wahl-option"><input type="radio" name="farbe" value="system"><span data-t="farbe_system">Wie System</span></label>
+          <label class="wahl-option"><input type="radio" name="farbe" value="hell"><span data-t="farbe_hell">Hell</span></label>
+          <label class="wahl-option"><input type="radio" name="farbe" value="dunkel"><span data-t="farbe_dunkel">Dunkel</span></label>
+          <label class="wahl-option"><input type="radio" name="farbe" value="kontrast"><span
+              data-t="farbe_kontrast">Hoher Kontrast</span></label>
+        </div>
+      </fieldset>
+
+      <div class="wahl">
+        <button type="button" role="switch" id="belege-schalter" class="schalter" aria-checked="false"
+                aria-describedby="belege-hilfe"><span class="schalter-spur" aria-hidden="true"><span
+            class="schalter-punkt"></span></span><span data-t="belege_anzeigen">Belege anzeigen</span></button>
+        <p class="leise" id="belege-hilfe" data-t="belege_hilfe"></p>
+      </div>
+
+      <fieldset class="wahl" role="radiogroup" id="wahl-tempo">
+        <legend data-t="vorlesetempo">Vorlesetempo</legend>
+        <div class="wahl-optionen">
+          <label class="wahl-option"><input type="radio" name="tempo" value="langsam"><span data-t="tempo_langsam">Langsam</span></label>
+          <label class="wahl-option"><input type="radio" name="tempo" value="normal"><span data-t="tempo_normal">Normal</span></label>
+          <label class="wahl-option"><input type="radio" name="tempo" value="schnell"><span data-t="tempo_schnell">Schnell</span></label>
+        </div>
+      </fieldset>
+
+      <section class="wahl" aria-labelledby="grenze-titel">
+        <h3 id="grenze-titel" data-t="grenze_titel">Medizinische Grenze</h3>
+        <p data-t="grenze_hinweis">Der Lotse stellt keine Diagnosen, deutet keine Befunde, bewertet keine gesundheitlichen
+          Risiken und empfiehlt keine Therapien, Medikamente oder Dosierungen. Gesundheitliche Fragen klären Sie mit Ihrer
+          Ärztin oder Ihrem Arzt; telefonische Gesundheitsberatung: 1450.</p>
+        <p class="leise" id="grenze-quelle"></p>
+      </section>
+
+      <section class="wahl" aria-labelledby="modus-titel">
+        <h3 id="modus-titel" data-t="modus">Modus</h3>
+        <p id="modus-erklaerung"></p>
+      </section>
+
+      <section class="wahl" aria-labelledby="tastatur-titel">
+        <h3 id="tastatur-titel" data-t="tastatur_titel">Bedienung mit der Tastatur</h3>
+        <p data-t="tastatur_text"></p>
+      </section>
+    </div>
+  </dialog>
 </body>
 </html>

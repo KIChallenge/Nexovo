@@ -8,7 +8,6 @@ import pytest
 
 from lotse import config, speicher
 from lotse.lotse import Lotse
-from lotse.slots import SLOTS
 
 PFLEGE = "Meine Mutter lebt in Wien, bezieht eine Pension von der PVA und kommt allein nicht mehr zurecht"
 BRIEF = config.REPO_ROOT / "examples" / "entlassungsbrief_synthetisch.txt"
@@ -40,7 +39,10 @@ def _ohne_sensible(antwort: dict) -> dict:
     """Sensible Angaben werden bewusst nicht gespeichert – nach dem Laden fehlen sie wieder im Formular."""
     antwort["angaben"] = [a for a in antwort["angaben"] if not a["sensibel"]]
     for b in antwort["buendel"]:
-        b["fehlende_angaben"] = [x for x in b["fehlende_angaben"] if not SLOTS[x["slot"]].sensibel]
+        b["fehlende_angaben"] = [x for x in b["fehlende_angaben"] if not x["sensibel"]]
+        if b["formular"]:
+            b["formular"]["fehlende_angaben"] = [x for x in b["formular"]["fehlende_angaben"] if not x["sensibel"]]
+    antwort["fehlende_angaben_primaer"] = [x for x in antwort["fehlende_angaben_primaer"] if not x["sensibel"]]
     return antwort
 
 
@@ -128,6 +130,7 @@ def _veraendert(daten: dict, pfad: list, wert) -> dict:
     (["sitzung", "werte"], {"person.lieblingsfarbe": "blau"}),
     (["sitzung", "werte"], {"person.bundesland": "Bayern"}),
     (["sitzung", "stil"], "bunt"),
+    (["sitzung", "herkunft"], {"person.bundesland": {"art": "erfunden"}}),
     (["sitzung", "fallakte", "status"], {"pflegegeld.gibt_es_nicht": "erledigt"}),
     (["sitzung", "fallakte", "status"], {"pflegegeld.antrag_ausfuellen": "fertig"}),
     (["sitzung", "fallakte", "termine"], [{"id": "termin_1", "anlass": "friseur"}]),
@@ -147,3 +150,42 @@ def test_import_mit_neuer_id_und_weitere_sprache_ohne_ki(lotse):
     assert kopie.id == "b" * 32 and kopie.sprache == "en"
     with pytest.raises(speicher.UngueltigeSitzung):
         speicher.aus_dict("kein dict")
+
+
+def test_leichte_sprache_und_geaenderte_angaben_ueberstehen_rundreise(lotse):
+    s = lotse.neue_sitzung(stil="leicht")
+    lotse.nachricht(s, PFLEGE)
+    lotse.angabe(s, "pflege.antragsart", "zuerkennung")
+    lotse.angabe(s, "person.svnr", "1234010180")
+    daten = json.loads(json.dumps(speicher.zu_dict(s)))
+    assert daten["sitzung"]["stil"] == "leicht"
+    assert daten["sitzung"]["herkunft"]["pflege.antragsart"] == {"art": "geaendert"}
+    assert "1234010180" not in json.dumps(daten)
+    kopie = speicher.aus_dict(daten)
+    vorher, nachher = (_ohne_sensible(lotse.aktuell(x).to_dict()) for x in (s, kopie))
+    assert nachher == vorher
+    assert nachher["stil"] == "leicht" and nachher["text"].startswith("Ich habe geändert") and nachher["ansage"]
+    # Umschalten nach dem Laden rendert die gespeicherte Antwort in der anderen Darstellung
+    assert lotse.einstellungen(kopie, stil="einfach").text.startswith("Geändert: Sozialversicherungsnummer.")
+
+
+def test_haken_aelterer_faelle_an_doppelten_unterlagen_bleiben_erhalten(lotse):
+    """Früher standen Katalog- und Formulartext derselben Unterlage nebeneinander (Pflegegeld: unterlage_1 =
+    „Vorhandene Befunde … in Kopie“ aus dem Katalog, unterlage_5 = dieselbe Unterlage laut Formular)."""
+    s = lotse.neue_sitzung()
+    lotse.nachricht(s, PFLEGE)
+    daten = json.loads(json.dumps(speicher.zu_dict(s)))
+    daten["sitzung"]["fallakte"]["status"].update({
+        "pflegegeld.unterlage_1": "erledigt",  # ersetzte Katalog-Unterlage → Haken geht auf die Formular-Unterlage
+        "pflegegeld.unterlage_42": "erledigt",  # Nummer aus einer älteren Zählung → Haken entfällt, kein Abbruch
+    })
+    daten["sitzung"]["fallakte"]["historie"].append({"zeit": "2026-11-01T10:00:00", "schritt_id": "pflegegeld.unterlage_1",
+                                                    "leistung_id": "pflegegeld", "von": "offen", "nach": "erledigt"})
+    kopie = speicher.aus_dict(daten)
+    befunde = kopie.fallakte.schritt("pflegegeld.unterlage_1")
+    assert befunde.id == "pflegegeld.unterlage_5" and befunde.status == "erledigt" and befunde.quelle is not None
+    akte = next(e for e in lotse.aktuell(kopie).fallakte["eintraege"] if e["leistung_id"] == "pflegegeld")
+    assert [u["id"] for u in akte["unterlagen"]] == [f"pflegegeld.unterlage_{n}" for n in range(5, 10)]
+    assert lotse.aktuell(kopie).fallakte["historie"][-1]["text"] == befunde.text["de"]
+    # nach dem Speichern steht der Haken unter der neuen ID
+    assert speicher.zu_dict(kopie)["sitzung"]["fallakte"]["status"]["pflegegeld.unterlage_5"] == "erledigt"

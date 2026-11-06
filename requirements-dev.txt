@@ -1,0 +1,16 @@
+# Entwicklungs- und Prüfwerkzeuge (nicht für den Betrieb nötig): Browser-Tests unter tests/ui/
+# und die Messung tests/ui/messung.py. Installation: .venv/bin/pip install -r requirements-dev.txt
+#
+# Die ui-Tests laufen nur, wenn LOTSE_UI_BROWSER auf eine Chromium-Datei zeigt; sonst werden sie
+# übersprungen. Auf üblichen Systemen genügt `.venv/bin/playwright install chromium` und
+#   export LOTSE_UI_BROWSER=$(.venv/bin/python -c "from playwright.sync_api import sync_playwright as s; p=s().start(); print(p.chromium.executable_path); p.stop()")
+#
+# NixOS (vorinstallierte Playwright-Browser laufen dort nicht): Node, libstdc++ und Chromium aus dem
+# Nix-Store verwenden, z. B.
+#   export PLAYWRIGHT_NODEJS_PATH=/nix/store/<hash>-nodejs-24.x/bin/node
+#   export LD_LIBRARY_PATH=/nix/store/<hash>-gcc-<version>-lib/lib
+#   export LOTSE_UI_BROWSER=/nix/store/<hash>-chromium-<version>/bin/chromium
+#
+# Ausführen: .venv/bin/python -m pytest -q -m ui tests/ui
+playwright==1.64.1
+axe-playwright-python==0.1.8  # bringt axe-core 4.12.1 mit

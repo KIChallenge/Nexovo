@@ -1,13 +1,14 @@
 """Smoke-Tests der Web-API über den FastAPI-TestClient."""
 
 import json
+import re
 
 import pytest
 from fastapi.testclient import TestClient
 
 from lotse import config, speicher
 from lotse.web import app as web
-from lotse.web.app import app
+from lotse.web.app import STATIC, app
 
 PFLEGE = "Meine Mutter ist chronisch krank und kommt allein nicht mehr zurecht"
 BRIEF = config.REPO_ROOT / "examples" / "entlassungsbrief_synthetisch.txt"
@@ -44,6 +45,25 @@ def test_startseite_statische_dateien_und_texte(client):
     assert sprachen["de"]["verfuegbar"] and not sprachen["tr"]["verfuegbar"] and sprachen["ar"]["richtung"] == "rtl"
 
 
+def test_jeder_ui_schluessel_der_oberflaeche_existiert_in_de_und_en(client):
+    """Alle Schlüssel, die die Oberfläche per t("…")/tf("…") oder data-t/data-label nutzt, liegen in texte.UI."""
+    genutzt: dict[str, set[str]] = {}
+    praefixe: set[str] = set()
+    for datei in [*sorted(STATIC.glob("*.js")), STATIC / "index.html"]:
+        quelle = datei.read_text(encoding="utf-8")
+        for m in re.finditer(r"""\b(?:t|tf)\(\s*["'`]([A-Za-z0-9_]+)["'`]""", quelle):
+            genutzt.setdefault(m.group(1), set()).add(datei.name)
+        for m in re.finditer(r"""data-(?:t|label)=["']([A-Za-z0-9_]+)["']""", quelle):
+            genutzt.setdefault(m.group(1), set()).add(datei.name)
+        praefixe |= set(re.findall(r"""\b(?:t|tf)\(\s*`([a-z_]+)\$\{""", quelle))  # t(`box_${…}`)
+    assert len(genutzt) > 50
+    for sp in ("de", "en"):
+        werte = client.get(f"/api/texte?sprache={sp}").json()["texte"]
+        fehlt = {k: sorted(d) for k, d in genutzt.items() if not (isinstance(werte.get(k), str) and werte[k].strip())}
+        assert not fehlt, (sp, fehlt)
+        assert all(any(k.startswith(p) for k in werte) for p in praefixe), (sp, praefixe)
+
+
 def test_weitere_sprachen_ohne_ki_werden_abgelehnt(client):
     assert client.get("/api/texte?sprache=tr").status_code == 400
     assert client.get("/api/texte?sprache=fr").status_code == 400
@@ -62,7 +82,7 @@ def test_ablauf_sitzung_nachricht_upload_formular(client):
     a = client.post(f"/api/sitzung/{sid}/dokument",
                     files={"datei": (BRIEF.name, BRIEF.read_bytes(), "text/plain")}).json()
     reha = next(b for b in a["buendel"] if b["leistung_id"] == "rehabilitation")
-    assert reha["dokument"] and "In Ihrem Dokument steht" in a["text"]
+    assert reha["dokument"] and "ausdrücklich dokumentierte Empfehlungen" in a["text"]
     assert [(d["name"], d["transkribiert"]) for d in a["dokumente"]] == [(BRIEF.name, False)]
 
     pal = next(b for b in a["buendel"] if b["formular"] and b["formular"]["id"] == "PAL080")
@@ -175,3 +195,77 @@ def test_fehlerfaelle(client):
     leer = client.post(f"/api/sitzung/{sid}/nachricht", json={"text": "   "}).json()
     assert leer["text"] and leer["buendel"] == []
     assert client.get("/api/sitzung/0123456789abcdef0123456789abcdef/export").status_code == 404
+
+
+def test_leichte_sprache_und_ansage_ueber_die_api(client):
+    r = client.post("/api/sitzung", json={"sprache": "de", "stil": "leicht"})
+    assert r.status_code == 200 and r.json()["stil"] == "leicht" and r.json()["ansage"]
+    sid = r.json()["sitzung_id"]
+    a = client.post(f"/api/sitzung/{sid}/nachricht", json={"text": PFLEGE}).json()
+    assert a["text"].startswith("Ich habe verstanden.") and "wichtige Hilfen gefunden" in a["ansage"]
+    a = client.post(f"/api/sitzung/{sid}/einstellungen", json={"stil": "einfach"}).json()
+    assert a["stil"] == "einfach" and a["ansage"] == "Einstellungen gespeichert: Deutsch, Einfach."
+    a = client.post(f"/api/sitzung/{sid}/einstellungen", json={"stil": "leicht"}).json()
+    assert a["stil"] == "leicht" and a["ansage"] == "Einstellungen gespeichert: Deutsch, Leichte Sprache."
+    assert client.get(f"/api/sitzung/{sid}").json()["stil"] == "leicht"
+
+
+def test_slots_fuer_die_formulare_der_oberflaeche(client):
+    de = {x["id"]: x for x in client.get("/api/slots").json()}
+    assert de and not any(sid.startswith("termin.") for sid in de)
+    gd = de["person.geburtsdatum"]
+    assert (gd["label"], gd["typ"], gd["muster_hinweis"], gd["sensibel"], gd["optionen"]) == (
+        "Geburtsdatum", "datum", "TT.MM.JJJJ", True, [])
+    assert gd["frage"] and de["person.plz"]["muster_hinweis"] == "4 Ziffern"
+    assert {"wert": "zuerkennung", "label": "Erstantrag (Zuerkennung)"} in de["pflege.antragsart"]["optionen"]
+    en = {x["id"]: x for x in client.get("/api/slots?sprache=en").json()}
+    assert en["person.geburtsdatum"]["muster_hinweis"] == "DD.MM.YYYY"
+    assert en["person.svnr"]["label"] == "Social security number"
+    assert {"wert": "zuerkennung", "label": "first application"} in en["pflege.antragsart"]["optionen"]
+    assert client.get("/api/slots?sprache=tr").status_code == 400  # weitere Sprachen nur im KI-Modus
+    assert client.get("/api/slots?sprache=fr").status_code == 400
+
+
+def test_angabe_setzen_pruefen_loeschen_und_speichern(client, monkeypatch):
+    sid = _sitzung(client)
+    client.post(f"/api/sitzung/{sid}/nachricht", json={"text": PFLEGE})
+    url = f"/api/sitzung/{sid}/angabe"
+    r = client.post(url, json={"slot": "person.bundesland", "wert": "Steiermark"})
+    assert r.status_code == 200
+    a = r.json()
+    land = next(x for x in a["angaben"] if x["slot"] == "person.bundesland")
+    assert (land["wert"], land["wert_roh"], land["herkunft"]) == ("Steiermark", "Steiermark", "von Ihnen geändert")
+    assert a["ansage"].startswith("Gespeichert: Bundesland – Steiermark.")
+    assert a["rueckfrage"] is None or a["rueckfrage"]["slot"] != "person.bundesland"
+    assert all(not b["regionen"] or "Steiermark" in b["regionen"] for b in a["buendel"])
+
+    # ungültig: 400 mit einer Erklärung in der Sprache der Sitzung
+    r = client.post(url, json={"slot": "person.geburtsdatum", "wert": "31.02.1950"})
+    assert r.status_code == 400 and "TT.MM.JJJJ" in r.json()["detail"]
+    assert client.post(url, json={"slot": "termin.datum", "wert": "12.11.2026"}).status_code == 400
+    assert client.post(url, json={"slot": "gibt.es.nicht", "wert": "x"}).status_code == 400
+    assert client.post("/api/sitzung/unbekannt/angabe", json={"slot": "person.ort", "wert": "Graz"}).status_code == 404
+    en = _sitzung(client, sprache="en")
+    r = client.post(f"/api/sitzung/{en}/angabe", json={"slot": "person.plz", "wert": "12"})
+    assert r.status_code == 400 and r.json()["detail"] == "Please check Postcode. Expected: 4 digits."
+
+    # sensibel: maskiert, nie in Antwort, Datei oder Export
+    a = client.post(url, json={"slot": "person.svnr", "wert": "1234 010180"}).json()
+    svnr = next(x for x in a["angaben"] if x["slot"] == "person.svnr")
+    assert svnr["wert"] == "hinterlegt" and svnr["wert_roh"] == "" and "1234010180" not in json.dumps(a)
+    roh = (speicher.ordner() / f"{sid}.json").read_text(encoding="utf-8")
+    assert "1234010180" not in roh and "person.svnr" not in roh
+    assert "1234010180" not in client.get(f"/api/sitzung/{sid}/export").text
+
+    # Neustart: die Änderung bleibt, die sensible Angabe fehlt bewusst
+    monkeypatch.setattr(web, "_sitzungen", type(web._sitzungen)())
+    nachher = {x["slot"]: x for x in client.get(f"/api/sitzung/{sid}").json()["angaben"]}
+    assert nachher["person.bundesland"]["herkunft"] == "von Ihnen geändert" and "person.svnr" not in nachher
+
+    # löschen (null oder "")
+    a = client.post(url, json={"slot": "person.bundesland", "wert": None}).json()
+    assert "person.bundesland" not in {x["slot"] for x in a["angaben"]}
+    assert a["ansage"].startswith("Gelöscht: Bundesland.")
+    client.post(url, json={"slot": "person.ort", "wert": "Graz"})
+    a = client.post(url, json={"slot": "person.ort", "wert": ""}).json()
+    assert "person.ort" not in {x["slot"] for x in a["angaben"]}

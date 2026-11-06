@@ -157,6 +157,26 @@ def test_antwort_ist_kopie_und_aendert_die_vorlage_nicht():
     assert pruefe_anfrage("Ist mein Befund schlimm?").antwort["de"] != "verändert"
 
 
+def test_leichte_grenz_antworten_vollstaendig_regelkonform_und_gleichbedeutend():
+    assert set(grenzen.ANTWORTEN_LEICHT) == KATEGORIEN
+    for kategorie, antwort in grenzen.ANTWORTEN_LEICHT.items():
+        original = grenzen.ANTWORTEN[kategorie]
+        for sprache in ("de", "en"):
+            text = antwort[sprache]
+            assert text.strip() and text != original[sprache], (kategorie, sprache)
+            # Leichte-Sprache-Regeln; Zahlen (1450, Quelle) nur aus der Standardantwort
+            assert katalog.pruefe_leichte_sprache(text, original[sprache], saetze=(2, 10)) == [], (kategorie, sprache)
+            assert pruefe_antwort(text) == [], (kategorie, sprache)
+            assert ("1450" in text) == ("1450" in original[sprache]), (kategorie, sprache)
+        assert "Ärztin" in antwort["de"] or "Arzt" in antwort["de"], kategorie
+        assert "doctor" in antwort["en"], kategorie
+        if "1450" in original["de"]:
+            assert "Quelle: ÖGK-Serviceratgeber 2026, PDF-Seite 42." in antwort["de"]
+            assert "Source: ÖGK service guide 2026, PDF page 42." in antwort["en"]
+    risiko = grenzen.ANTWORTEN_LEICHT["risiko"]
+    assert "Vorsorgeuntersuchung" in risiko["de"] and "preventive check-up" in risiko["en"]
+
+
 # --- Nachkontrolle generierter Antworten ------------------------------------------------------
 
 @pytest.mark.parametrize("text, kategorie", [
@@ -201,11 +221,12 @@ def test_pruefe_antwort_laesst_administrative_texte_durch(text):
 
 
 def test_eigene_grenz_antworten_und_katalogtexte_sind_unbedenklich():
-    for antwort in grenzen.ANTWORTEN.values():
+    for antwort in [*grenzen.ANTWORTEN.values(), *grenzen.ANTWORTEN_LEICHT.values()]:
         assert pruefe_antwort(antwort["de"]) == [] and pruefe_antwort(antwort["en"]) == []
     texte = []
     for l in katalog.alle():
-        texte += [(l.id, f) for f in [l.titel, l.kurz, l.details, l.nutzen, *l.schritte, *l.unterlagen, *l.unterlagen_formular, *l.voraussetzungen,
+        texte += [(l.id, f) for f in [l.titel, l.kurz, l.leicht, l.details, l.nutzen, *l.schritte, *l.unterlagen, *l.unterlagen_formular,
+                                      *l.voraussetzungen,
                                       *(r["stelle"] for r in l.regional.values()), *(e["name"] for e in l.einrichtungen),
                                       *(t for je_wert in l.stelle_nach.values() for t in je_wert.values())]]
     for anlass in katalog.TERMIN_ANLAESSE:

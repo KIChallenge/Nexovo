@@ -148,6 +148,63 @@ def test_honorarordnungen_belegen_mindestens_drei_leistungen():
                 assert re.search(r"gültig ab|Stand", q.titel), q.titel  # Gültigkeit im Titel
 
 
+# --- Leichte Sprache ----------------------------------------------------------------------------
+
+def _belegt(l, sprache: str) -> str:
+    return " ".join([l.kurz[sprache], l.details[sprache], *(t[sprache] for t in l.voraussetzungen + l.schritte)])
+
+
+def test_jede_leistung_hat_leichte_sprache_nach_den_regeln():
+    for l in katalog.alle():
+        for sprache in ("de", "en"):
+            assert katalog.pruefe_leichte_sprache(l.leicht[sprache], _belegt(l, sprache)) == [], (l.id, sprache)
+            assert l.leicht[sprache] != l.kurz[sprache], (l.id, sprache)
+    pg = katalog.leistung("pflegegeld")
+    assert pg.to_dict()["leicht"] == pg.leicht
+
+
+def test_leichte_sprache_behaelt_kernaussagen_und_hinweise():
+    pg = katalog.leistung("pflegegeld").leicht
+    assert "6 Monate" in pg["de"] and "Pension" in pg["de"] and "6 months" in pg["en"] and "pension" in pg["en"]
+    park = katalog.leistung("bewegt_im_park").leicht  # extern belegt: Hinweis bleibt erhalten
+    assert "nicht selbst geprüft" in park["de"] and "not checked" in park["en"]
+    assert all("1450" in t for t in katalog.leistung("gesundheitsberatung_1450").leicht.values())
+    rg = katalog.leistung("rezeptgebuehrenbefreiung").leicht
+    assert "7,55 €" in rg["de"] and "€7.55" in rg["en"]
+
+
+_BELEGT = "Pflegegeld gibt es ab Stufe 1, wenn die Pflege voraussichtlich sechs Monate dauert."
+
+
+@pytest.mark.parametrize("text, fehler", [
+    ("Pflegegeld gibt es jeden Monat.", "Sätze"),
+    ("Eins. Zwei. Drei. Vier. Fünf.", "Sätze"),
+    ("Pflegegeld ist Geld für Menschen, die wegen einer Krankheit lange viel Hilfe und Pflege brauchen. Sie stellen den Antrag.", "Wörter"),
+    ("Sie brauchen z. B. Hilfe. Sie stellen den Antrag.", "Abkürzung"),
+    ("Sie brauchen z.B. Hilfe. Sie stellen den Antrag.", "Abkürzung"),
+    ("Fragen Sie die PVA bzw. die SVS. Sie stellen den Antrag.", "Abkürzung"),
+    ("Es gibt u. a. Geld. Sie stellen den Antrag.", "Abkürzung"),
+    ("Sie brauchen ggf. Hilfe. Sie stellen den Antrag.", "Abkürzung"),
+    ("Alles inkl. Pflege. Sie stellen den Antrag.", "Abkürzung"),
+    ("Es gibt Geld, d. h. Hilfe. Sie stellen den Antrag.", "Abkürzung"),
+    ("Es gibt Geld, Hilfe usw. Sie stellen den Antrag.", "Abkürzung"),
+    ("There is money, e.g. for care. You apply.", "Abkürzung"),
+    ("Die Pflege dauert 12 Monate. Sie stellen den Antrag.", "Zahl"),
+    ("Die Pflege dauert sieben Monate. Sie stellen den Antrag.", "Zahl"),
+    ("Sie stellen den Antrag. Die Stelle hilft", "Satzzeichen"),
+], ids=["ein_satz", "fuenf_saetze", "satz_zu_lang", "z_b", "z_b_ohne_leerzeichen", "bzw", "u_a", "ggf", "inkl", "d_h", "usw", "e_g",
+        "neue_ziffer", "neues_zahlwort", "ohne_satzzeichen"])
+def test_pruefe_leichte_sprache_findet_verstoesse(text, fehler):
+    verstoesse = katalog.pruefe_leichte_sprache(text, _BELEGT)
+    assert any(fehler in v for v in verstoesse), verstoesse
+
+
+def test_pruefe_leichte_sprache_erlaubt_belegte_zahlen_als_ziffer():
+    assert katalog.pruefe_leichte_sprache("Die Pflege dauert mindestens 6 Monate. Pflegegeld gibt es ab Stufe 1.", _BELEGT) == []
+    assert katalog.pruefe_leichte_sprache("Brauchen Sie Hilfe? Dann rufen Sie an!", "") == []
+    assert katalog.pruefe_leichte_sprache("Rufen Sie an.", "", saetze=(1, 2)) == []
+
+
 # --- Pflegegeld: Zuständigkeit, Rückfragen, Rechtsstand ----------------------------------------
 
 def test_pflegegeld_rueckfragen_und_formular():
@@ -409,10 +466,17 @@ _QUELLE_LOKAL = {"art": "serviceratgeber", "titel": "SR", "fundstelle": "PDF-S. 
     lambda l: l["stelle_nach"]["versicherung.pension"]["SVS"].update(kontakt=50808808),
     lambda l: l.pop("unterlagen_formular"),
     lambda l: l.update(unterlagen_formular=[{"de": "nur deutsch"}]),
+    lambda l: l.pop("leicht"),
+    lambda l: l["leicht"].pop("en"),
+    lambda l: l["leicht"].update(de="Pflegegeld gibt es jeden Monat."),  # nur ein Satz
+    lambda l: l["leicht"].update(en="Care allowance is money for care and help that you get every month from the institution. You apply."),
+    lambda l: l["leicht"].update(de="Pflegegeld gibt es z. B. für Pflege. Sie stellen den Antrag."),
+    lambda l: l["leicht"].update(de="Pflegegeld gibt es ab 77 Stunden Pflege. Sie stellen den Antrag."),  # Zahl nicht belegt
 ], ids=["formular", "slot", "sensibler_slot", "ohne_en", "region", "ohne_quelle", "extern_bei_lokal", "slot_option", "antragsschritt",
         "ohne_stichworte", "stichwort_gross", "nutzen_ohne_quelle", "termin_anlass", "formular_region", "regional_land", "regional_ohne_quelle",
         "einrichtung_extern_ohne_url", "lokal_mit_url", "stelle_nach_beleg", "kontakt_leer", "kontakt_kein_text", "ohne_unterlagen_formular",
-        "unterlagen_formular_ohne_en"])
+        "unterlagen_formular_ohne_en", "ohne_leicht", "leicht_ohne_en", "leicht_ein_satz", "leicht_satz_zu_lang", "leicht_abkuerzung",
+        "leicht_neue_zahl"])
 def test_validierung_lehnt_fehlerhafte_eintraege_ab(aenderung):
     assert _roh()["leistungen"][0]["id"] == "pflegegeld"
     with pytest.raises(KatalogFehler):

@@ -71,6 +71,8 @@ def zu_dict(s: Sitzung) -> dict:
             "dok_leistungen": list(s.dok_leistungen),
             "offene_frage": s.offene_frage,
             "fragen_gestellt": s.fragen_gestellt,
+            "naechster_genannt": s.naechster_genannt,
+            "abschluss_gemeldet": s.abschluss_gemeldet,
             "uebersprungen": sorted(s.uebersprungen),
             "dokumente": [dict(d) for d in s.dokumente],
             "termin_entwurf": dict(s.termin_entwurf) if s.termin_entwurf else None,
@@ -92,12 +94,15 @@ def _inhalt_zu_dict(inhalt: Inhalt | None) -> dict | None:
         return None
     return {
         "art": inhalt.art,
-        "absaetze": [{"text": dict(a.text), "nur_ausfuehrlich": a.nur_ausfuehrlich} for a in inhalt.absaetze],
+        "absaetze": [{"text": dict(a.text), "nur_ausfuehrlich": a.nur_ausfuehrlich,
+                      "leicht": dict(a.leicht) if a.leicht else None} for a in inhalt.absaetze],
         "quellen": [q.to_dict() for q in inhalt.quellen],
         "fakten": [dict(f) for f in inhalt.fakten],
         # Freitext der Nutzerin bzw. des Nutzers nie speichern/exportieren (kann SVNR, IBAN o. Ä. enthalten)
         "frage": "",
         "ki_verstanden": inhalt.ki_verstanden,
+        "ansage": [dict(text) for _, text in inhalt.ansage],
+        "ansage_naechster": dict(inhalt.ansage_naechster) if inhalt.ansage_naechster else None,
     }
 
 
@@ -220,12 +225,18 @@ def _inhalt_aus_dict(roh: object) -> Inhalt | None:
     """Letzte Antwort (nur zum Neu-Rendern); bei jedem Fehler None statt Abbruch."""
     try:
         d = _objekt(roh, "letzte")
+
+        def zweisprachig(wert: object, wo: str) -> dict[str, str]:
+            return {sp: _text(_objekt(wert, wo)[sp], wo) for sp in SPRACHEN}
+
         absaetze = []
         for a in _liste(d["absaetze"], "letzte.absaetze"):
-            text = {sp: _text(a["text"][sp], "letzte") for sp in SPRACHEN}
-            absaetze.append(Absatz(text, bool(a.get("nur_ausfuehrlich"))))
+            leicht = a.get("leicht")
+            absaetze.append(Absatz(zweisprachig(a["text"], "letzte"), bool(a.get("nur_ausfuehrlich")),
+                                   None if leicht is None else zweisprachig(leicht, "letzte.leicht")))
         fakten = [{"n": _ganzzahl(f["n"], "fakt", 1), "text": _text(f["text"], "fakt"),
                    "quelle": _text(f["quelle"], "fakt")} for f in _liste(d.get("fakten", []), "fakten")]
+        naechster = d.get("ansage_naechster")
         return Inhalt(
             art=_text(d.get("art", "fall"), "art"),
             absaetze=absaetze,
@@ -233,6 +244,8 @@ def _inhalt_aus_dict(roh: object) -> Inhalt | None:
             fakten=fakten,
             frage=_text(d.get("frage", ""), "frage"),
             ki_verstanden=bool(d.get("ki_verstanden")),
+            ansage=[("", zweisprachig(x, "letzte.ansage")) for x in _liste(d.get("ansage", []), "letzte.ansage")],
+            ansage_naechster=None if naechster is None else zweisprachig(naechster, "letzte.ansage_naechster"),
         )
     except (UngueltigeSitzung, KeyError, TypeError, AttributeError):
         return None
@@ -273,10 +286,10 @@ def _aus_dict(daten: object, neue_id: str | None) -> Sitzung:
     herkunft: dict[str, dict] = {}
     for k, h in _objekt(d.get("herkunft", {}), "herkunft").items():
         h = _objekt(h, f"herkunft.{k}")
-        if k not in werte or h.get("art") not in ("dialog", "dokument", "ort"):
+        if k not in werte or h.get("art") not in ("dialog", "geaendert", "dokument", "ort"):
             raise _fehler(f"herkunft.{k}: ungültig")
-        if h["art"] == "dialog":
-            herkunft[k] = {"art": "dialog"}
+        if h["art"] in ("dialog", "geaendert"):
+            herkunft[k] = {"art": h["art"]}
         elif h["art"] == "ort":
             herkunft[k] = {"art": "ort", "ort": _text(h.get("ort", ""), "herkunft", leer=False)[:100]}
         else:
@@ -341,13 +354,17 @@ def _aus_dict(daten: object, neue_id: str | None) -> Sitzung:
     termine = [_termin(x, "fallakte.termine") for x in _liste(fa.get("termine", []), "fallakte.termine")]
     if len({t.id for t in termine}) != len(termine):
         raise _fehler("fallakte.termine: doppelte IDs")
+    naechster_genannt = d.get("naechster_genannt")
+    if naechster_genannt is not None:
+        naechster_genannt = _text(naechster_genannt, "naechster_genannt")[:200]
 
     s = Sitzung(
         id=sid, sprache=sprache, stil=stil, werte=werte, herkunft=herkunft, szenarien=list(szenarien),
         fokus=fokus, dok_empfehlungen=dok_empfehlungen, dok_leistungen=dok_leistungen, offene_frage=offene_frage,
         fragen_gestellt=min(_ganzzahl(d.get("fragen_gestellt", 0), "fragen_gestellt"), MAX_RUECKFRAGEN),
         uebersprungen=uebersprungen, dokumente=dokumente, termin_entwurf=_entwurf(d.get("termin_entwurf")),
-        impfungen=impfungen, medikamente=medikamente,
+        impfungen=impfungen, medikamente=medikamente, naechster_genannt=naechster_genannt,
+        abschluss_gemeldet=bool(d.get("abschluss_gemeldet", False)),
     )
     for t in termine:
         s.fallakte.termine[t.id] = t

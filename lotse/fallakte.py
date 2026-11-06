@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -15,6 +16,15 @@ ANTRAG_KETTE = ("antrag_ausfuellen", "antrag_unterschreiben", "antrag_einreichen
 # Terminkette: angefragt → eingetragen (vereinbart) → wahrgenommen.
 TERMIN_KETTE = ("anfragen", "eintragen", "wahrnehmen")
 TERMIN_STATUS = ("vorbereitet", "vereinbart", "erledigt")
+
+# Unterlagen, die nur in bestimmten Fällen nötig sind („Nur bei …“, „Ohne …“, „…, falls vorhanden“, „(bei …)“)
+_BEDINGT = re.compile(r"^(nur|bei|ohne|falls|wenn|je nach)\b|, falls vorhanden\b|\((bei|nur|falls|wenn) ",
+                      re.IGNORECASE)
+
+
+def bedingt(text_de: str) -> bool:
+    """Ist die Unterlage nur nötig, wenn ein bestimmter Fall zutrifft?"""
+    return _BEDINGT.search(text_de.strip()) is not None
 
 
 @dataclass
@@ -31,7 +41,7 @@ class Schritt:
         return self.id.split(".", 1)[1]
 
     def to_dict(self, sprache: str) -> dict:
-        return {
+        d = {
             "id": self.id,
             "schritt_id": self.kurz_id,
             "text": self.text.get(sprache) or self.text.get("de", ""),
@@ -39,6 +49,9 @@ class Schritt:
             "status": self.status,
             "quelle": self.quelle.to_dict() if self.quelle else None,
         }
+        if self.art == "unterlage":
+            d["bedingt"] = bedingt(self.text.get("de", ""))
+        return d
 
 
 @dataclass
@@ -85,6 +98,8 @@ class Fallakte:
     eintraege: dict[str, Eintrag] = field(default_factory=dict)
     historie: list[dict] = field(default_factory=list)
     termine: dict[str, Termin] = field(default_factory=dict)
+    # ersetzte Unterlagen → Unterlage, die sie vertritt (gespeicherte Haken älterer Fälle bleiben gültig)
+    aliase: dict[str, str] = field(default_factory=dict)
 
     def ergaenze(
         self,
@@ -92,8 +107,11 @@ class Fallakte:
         titel: dict[str, str],
         schritte: list[dict],
         unterlagen: list[tuple[dict[str, str], Quelle | None]],
+        nummern: list[int] | None = None,
     ) -> Eintrag:
-        """Legt eine Leistung an bzw. ergänzt fehlende Schritte/Unterlagen (idempotent)."""
+        """Legt eine Leistung an bzw. ergänzt fehlende Schritte/Unterlagen (idempotent). `nummern` gibt jeder
+        Unterlage eine feste Nummer (stabile IDs, gleich in welcher Reihenfolge sie dazukommen); ohne sie wird
+        fortlaufend nummeriert."""
         eintrag = self.eintraege.get(leistung_id)
         if eintrag is None:
             eintrag = self.eintraege[leistung_id] = Eintrag(leistung_id, dict(titel))
@@ -105,16 +123,41 @@ class Fallakte:
                     Schritt(f"{leistung_id}.{s['id']}", leistung_id, {"de": s["de"], "en": s["en"]})
                 )
         texte = {_norm(u.text["de"]) for u in eintrag.unterlagen}
-        for text, quelle in unterlagen:
-            if _norm(text["de"]) in texte:
+        ids = {u.id for u in eintrag.unterlagen}
+        for i, (text, quelle) in enumerate(unterlagen):
+            if nummern is not None:
+                nr = nummern[i]
+            else:  # fortlaufende Nummer auch nach entfernten Unterlagen eindeutig
+                nr = max((int(u.kurz_id.removeprefix("unterlage_")) for u in eintrag.unterlagen), default=0) + 1
+            uid = f"{leistung_id}.unterlage_{nr}"
+            if _norm(text["de"]) in texte or uid in ids:
                 continue
             texte.add(_norm(text["de"]))
-            # fortlaufende Nummer auch nach entfernten Unterlagen eindeutig
-            nr = max((int(u.kurz_id.removeprefix("unterlage_")) for u in eintrag.unterlagen), default=0) + 1
-            eintrag.unterlagen.append(
-                Schritt(f"{leistung_id}.unterlage_{nr}", leistung_id, dict(text), art="unterlage", quelle=quelle)
-            )
+            ids.add(uid)
+            eintrag.unterlagen.append(Schritt(uid, leistung_id, dict(text), art="unterlage", quelle=quelle))
+        if nummern is not None:
+            eintrag.unterlagen.sort(key=lambda u: int(u.kurz_id.removeprefix("unterlage_")))
         return eintrag
+
+    def ersetze_unterlagen(self, leistung_id: str, ersetzungen: dict[str, str]) -> None:
+        """Unterlagen, die eine andere inhaltlich doppelt (`kurz_id` → `kurz_id`), entfernen; ihr Status geht auf die
+        vertretende Unterlage über, solange diese noch offen ist. Die alten IDs bleiben als Alias erreichbar.
+        Die Aliase der Leistung entsprechen danach genau `ersetzungen`."""
+        praefix = f"{leistung_id}."
+        self.aliase = {a: z for a, z in self.aliase.items() if not a.startswith(praefix)}
+        eintrag = self.eintraege.get(leistung_id)
+        for alt, neu in ersetzungen.items():
+            alt_id, neu_id = praefix + alt, praefix + neu
+            self.aliase[alt_id] = neu_id
+            if eintrag is None:
+                continue
+            alte = next((u for u in eintrag.unterlagen if u.id == alt_id), None)
+            ziel = next((u for u in eintrag.unterlagen if u.id == neu_id), None)
+            if alte is None or ziel is None:
+                continue
+            if ziel.status == "offen":
+                ziel.status = alte.status
+            eintrag.unterlagen.remove(alte)
 
     def entferne_offene_unterlagen(self, leistung_id: str, texte: list[dict[str, str]]) -> None:
         """Unterlagen mit diesen Texten entfernen, solange sie noch offen sind (z. B. Formular gilt nicht mehr)."""
@@ -165,6 +208,7 @@ class Fallakte:
     # -- Status ----------------------------------------------------------------------------------------------
 
     def schritt(self, schritt_id: str) -> Schritt:
+        schritt_id = self.aliase.get(schritt_id, schritt_id)
         lid = schritt_id.split(".", 1)[0]
         eintrag = self.eintraege.get(lid)
         if eintrag:

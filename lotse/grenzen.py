@@ -2,7 +2,8 @@
 
 Der Lotse stellt keine Diagnosen, interpretiert keine Befunde, bewertet keine Risiken und gibt keine
 Therapie-, Medikamenten- oder Dosierungsempfehlungen. Administrative Fragen (Antrag, Stelle, Kosten,
-Bewilligung) bleiben erlaubt – auch wenn sie medizinische Wörter enthalten.
+Bewilligung) bleiben erlaubt – auch wenn sie medizinische Wörter enthalten. `ANTWORTEN_LEICHT` sagt dasselbe wie
+`ANTWORTEN` in Leichter Sprache (Darstellung „leicht“).
 """
 
 from __future__ import annotations
@@ -70,6 +71,61 @@ ANTWORTEN: dict[str, dict[str, str]] = {
               f"Wenden Sie sich an {_ARZT_DE} oder an Ihre Apotheke. {_1450_DE}",
         "en": "Please do not change, stop or dose medicines without consulting a doctor – I cannot and must not advise on this. "
               f"Contact {_ARZT_EN} or your pharmacy. {_1450_EN}",
+    },
+}
+
+_1450_LEICHT_DE = ("Haben Sie gerade akute Beschwerden? Dann können Sie die Gesundheitsberatung 1450 anrufen. Die Beratung hilft rund um die Uhr. "
+                   "Quelle: ÖGK-Serviceratgeber 2026, PDF-Seite 42.")
+_1450_LEICHT_EN = ("Do you have acute symptoms right now? Then you can call the health advice line 1450. It helps around the clock. "
+                   "Source: ÖGK service guide 2026, PDF page 42.")
+
+# Gleiche Aussagen wie ANTWORTEN in Leichter Sprache: kurze Hauptsätze, keine Abkürzungen, keine zusätzlichen Inhalte oder Zahlen.
+ANTWORTEN_LEICHT: dict[str, dict[str, str]] = {
+    "diagnose": {
+        "de": "Ich kann und darf keine Diagnose stellen. Das kann nur eine Ärztin oder ein Arzt nach einer Untersuchung. "
+              f"{_1450_LEICHT_DE} Gern bereite ich mit Ihnen einen Arzttermin vor. Oder ich suche mit Ihnen die passende Stelle.",
+        "en": "I cannot and must not make a diagnosis. Only a doctor can do that, after an examination. "
+              f"{_1450_LEICHT_EN} I am happy to help you prepare a doctor's appointment. Or I can help you find the right place to go.",
+    },
+    "befund": {
+        "de": "Ich deute keine Befunde und keine Messwerte. Bitte sprechen Sie darüber mit Ihrer Ärztin oder Ihrem Arzt. "
+              "Manchmal steht eine Empfehlung wörtlich im Dokument. Zum Beispiel: „Rehabilitation empfohlen“. "
+              "Diese Empfehlung zeige ich Ihnen wörtlich mit der Seite. Ich zeige Ihnen auch die nächsten Schritte: Antrag, zuständige Stelle, Unterlagen.",
+        "en": "I do not interpret medical findings or test values. Please talk about them with your doctor. "
+              "Sometimes a recommendation is written word for word in the document. For example: \"rehabilitation recommended\". "
+              "I can show you this recommendation with the page number. I can also show you the next steps: application, responsible office, documents.",
+    },
+    "risiko": {
+        "de": "Ich darf Ihr persönliches Risiko für Krankheiten nicht einschätzen. Darüber sprechen Sie bitte mit Ihrer Ärztin oder Ihrem Arzt. "
+              "Ich erkläre Ihnen aber die offiziellen Vorsorgeangebote der Sozialversicherung. "
+              "Dazu gehören die kostenlose Vorsorgeuntersuchung und Programme zur Früherkennung. Ich nenne dazu Quellen, aber ich bewerte nichts persönlich. "
+              "Krankheiten in Ihrer Familie schreiben Sie dort in den Fragebogen.",
+        "en": "I must not assess your personal risk of illness. Please talk about it with your doctor. "
+              "But I can explain the official prevention offers of the social insurance. "
+              "These include the free preventive check-up and screening programmes. I give sources, but no personal assessment. "
+              "You can note family illnesses in the check-up questionnaire.",
+    },
+    "therapie": {
+        "de": "Ist eine Behandlung, Operation oder Reha für Sie medizinisch nötig? Das entscheidet Ihre Ärztin oder Ihr Arzt. "
+              "Steht eine Maßnahme schon als Empfehlung in einem ärztlichen Dokument? Dann helfe ich Ihnen gern weiter. "
+              "Ich zeige Ihnen den nötigen Antrag und die zuständige Stelle. Ich nenne Ihnen auch die nötigen Unterlagen.",
+        "en": "Is a treatment, operation or rehabilitation medically necessary for you? Your doctor decides this. "
+              "Is a measure already recommended in a medical document? Then I am glad to help. "
+              "I show you the application you need and the responsible office. I also tell you which documents you need.",
+    },
+    "medikament": {
+        "de": "Ich kann Medikamente nicht empfehlen und nicht auswählen. Bitte fragen Sie Ihre Ärztin, Ihren Arzt oder Ihre Apotheke. "
+              "Gern helfe ich bei Fragen zur Verwaltung. Zum Beispiel: Braucht ein bestimmtes Medikament eine Bewilligung laut Erstattungskodex? "
+              "Ich helfe auch bei Fragen zur Rezeptgebühr und zur Befreiung.",
+        "en": "I cannot recommend or choose medicines. Please ask your doctor or pharmacy. "
+              "I am happy to help with the paperwork. For example: does a certain medicine need approval under the reimbursement code? "
+              "I can also help with the prescription charge and exemptions.",
+    },
+    "dosis": {
+        "de": "Bitte ändern oder beenden Sie Medikamente nicht ohne ärztlichen Rat. Auch für die Dosis, also die Menge, brauchen Sie ärztlichen Rat. "
+              f"Dazu kann und darf ich nichts sagen. Fragen Sie Ihre Ärztin, Ihren Arzt oder Ihre Apotheke. {_1450_LEICHT_DE}",
+        "en": "Please do not change or stop medicines without asking a doctor. The same applies to the dose, that is the amount. "
+              f"I cannot and must not advise on this. Ask your doctor or your pharmacy. {_1450_LEICHT_EN}",
     },
 }
 

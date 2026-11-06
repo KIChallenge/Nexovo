@@ -221,11 +221,14 @@ def transkribiere(inhalt: bytes, mime: str) -> str:
 
 def _formuliere_system(sprache: str, stil: str) -> str:
     sprache_txt = "Englisch" if sprache == "en" else "Deutsch"
-    stil_txt = (
-        "Höchstens 8 Sätze; nenne auch Voraussetzungen und Fundstellen, soweit sie in den Fakten stehen."
-        if stil == "ausfuehrlich"
-        else "Höchstens 4 kurze Sätze in einfacher Sprache."
-    )
+    stil_txt = {
+        "ausfuehrlich": "Höchstens 8 Sätze; nenne auch Voraussetzungen und Fundstellen, soweit sie in den Fakten "
+                        "stehen.",
+        "leicht": "Leichte Sprache: 2 bis 5 sehr kurze Hauptsätze. Jeder Satz hat höchstens 12 Wörter und genau "
+                  "eine Aussage. Keine Nebensätze (kein „wenn“, „weil“, „dass“, „der/die/das“ als Relativpronomen), "
+                  "kein Passiv, keine Abkürzungen wie „z. B.“; erkläre Fachwörter mit einem eigenen kurzen Satz. "
+                  "Setze die Quellennummer an das Ende jedes Satzes.",
+    }.get(stil, "Höchstens 4 kurze Sätze in einfacher Sprache.")
     return (
         "Du bist der SV KI-Lotse, ein Wegweiser durch Leistungen der österreichischen Sozialversicherung.\n"
         "Regeln:\n"
@@ -245,6 +248,16 @@ def _formuliere_system(sprache: str, stil: str) -> str:
     )
 
 
+_LEICHT_MAX_WOERTER = 15  # Toleranz über den 12 Wörtern der Vorgabe; längere Sätze sind keine Leichte Sprache
+
+
+def leichte_sprache_verstoesse(text: str) -> list[str]:
+    """Sätze eines generierten Texts, die für Leichte Sprache zu lang sind (Quellenmarken zählen nicht mit)."""
+    saetze = [s for s in re.split(r"(?<=[.!?])\s+", _ZITAT.sub("", text)) if s.strip()]
+    zu_lang = [s for s in saetze if len(s.split()) > _LEICHT_MAX_WOERTER]
+    return [f"Satz zu lang für Leichte Sprache ({len(zu_lang)}×)"] if zu_lang else []
+
+
 def formuliere(fakten: list[dict], sprache: str, stil: str, frage: str = "") -> str:
     """Antworttext aus nummerierten Fakten `[{n, text, quelle}]`; "" → regelbasierten Text verwenden."""
     if not fakten:
@@ -253,7 +266,7 @@ def formuliere(fakten: list[dict], sprache: str, stil: str, frage: str = "") -> 
     roh = _chat(_formuliere_system(sprache, stil), nutzer, 1200)
     if not roh:
         return ""
-    verstoesse = pruefe_ausgabe(roh, fakten, frage)
+    verstoesse = pruefe_ausgabe(roh, fakten, frage) + (leichte_sprache_verstoesse(roh) if stil == "leicht" else [])
     if verstoesse:
         log.info("KI-Text verworfen: %s", "; ".join(verstoesse))
         return ""
@@ -300,7 +313,13 @@ _cache: dict[str, dict[str, str]] = {}  # Sprache → {englischer Text (mit Plat
 _cache_sperre = threading.Lock()
 
 
-def _uebersetz_system(sprache: str) -> str:
+_LEICHT_SCHLUESSEL = "leicht\u241f"  # Cache-Schlüssel für Übersetzungen in Leichter Sprache (eigene Regeln)
+
+
+def _uebersetz_system(sprache: str, leicht: bool = False) -> str:
+    stil = ("- Leichte Sprache: kurze Sätze mit je einer Aussage, höchstens 12 Wörter, keine Nebensätze, keine "
+            "Abkürzungen; die Sätze der Vorlage nicht zusammenziehen.\n" if leicht
+            else "- Einfache, höfliche Sprache.\n")
     return (
         "Du übersetzt Texte eines Wegweisers durch die österreichische Sozialversicherung aus dem Englischen ins "
         f"{_SPRACHNAMEN[sprache]}. Antworte nur mit einem JSON-Objekt {{\"texte\": [...]}} mit genau so vielen "
@@ -311,7 +330,8 @@ def _uebersetz_system(sprache: str) -> str:
         "schreiben. Keine Zahlen hinzufügen (z. B. „around the clock“ nicht als „24 Stunden“).\n"
         "- Namen von Einrichtungen, Gesetzen, Formularen und Abkürzungen (z. B. ÖGK, PVA, SVS, BVAEB, FSW, ASVG, "
         "e-card, PAL 080) nicht übersetzen.\n"
-        "- Einfache, höfliche Sprache. Nichts hinzufügen, nichts weglassen, keine medizinische Bewertung.\n"
+        f"{stil}"
+        "- Nichts hinzufügen, nichts weglassen, keine medizinische Bewertung.\n"
         "- Leere Texte bleiben leer. Nur Text, kein Markdown."
     )
 
@@ -374,8 +394,8 @@ def pruefe_uebersetzung(quelle: str, ziel: str) -> bool:
     return _ziffern(rest_q) == _ziffern(rest_z)
 
 
-def _uebersetze_block(texte: list[str], sprache: str) -> list[str | None]:
-    roh = _chat(_uebersetz_system(sprache), json.dumps({"texte": texte}, ensure_ascii=False),
+def _uebersetze_block(texte: list[str], sprache: str, leicht: bool = False) -> list[str | None]:
+    roh = _chat(_uebersetz_system(sprache, leicht), json.dumps({"texte": texte}, ensure_ascii=False),
                 max(1000, 120 * len(texte) + sum(len(t) for t in texte)), json_modus=True,
                 timeout=_UEBERSETZ_TIMEOUT_S)
     try:
@@ -387,27 +407,31 @@ def _uebersetze_block(texte: list[str], sprache: str) -> list[str | None]:
     return [z if isinstance(z, str) and pruefe_uebersetzung(q, z) else None for q, z in zip(texte, liste)]
 
 
-def uebersetze(texte: list[str], sprache: str) -> list[str | None]:
+def uebersetze(texte: list[str], sprache: str, stil: str = "einfach") -> list[str | None]:
     """Englische Texte → weitere Sprache (models.WEITERE_SPRACHEN). Je Text die Übersetzung oder None, wenn das
     Modell fehlt, ausfällt oder die Prüfung (Zitate, [n], Zahlen) scheitert. Ergebnisse werden im Speicher und
-    unter `CACHE_DIR/uebersetzungen/` zwischengespeichert; nur Unbekanntes geht ans Modell."""
+    unter `CACHE_DIR/uebersetzungen/` zwischengespeichert; nur Unbekanntes geht ans Modell. Bei `stil="leicht"`
+    gelten die Regeln der Leichten Sprache, darum liegen diese Übersetzungen unter eigenem Schlüssel."""
     if sprache not in WEITERE_SPRACHEN:
         raise ValueError(f"Keine weitere Sprache: {sprache}")
+    leicht = stil == "leicht"
+    praefix = _LEICHT_SCHLUESSEL if leicht else ""
     geschuetzt = [_schuetze(t) for t in texte]
     with _cache_sperre:
         cache = dict(_cache_fuer(sprache))
-    offen = list(dict.fromkeys(g for g, _ in geschuetzt if g.strip() and g not in cache))
+    offen = list(dict.fromkeys(g for g, _ in geschuetzt if g.strip() and praefix + g not in cache))
     if offen and aktiv():
         neu: dict[str, str] = {}
         for _ in range(2):  # zweiter Durchgang nur für Texte, deren Übersetzung die Prüfung nicht bestand
             bloecke = [offen[i:i + _UEBERSETZ_BLOCK] for i in range(0, len(offen), _UEBERSETZ_BLOCK)]
             with ThreadPoolExecutor(max_workers=min(4, len(bloecke))) as pool:
-                ergebnisse = list(pool.map(lambda b: _uebersetze_block(b, sprache), bloecke))
+                ergebnisse = list(pool.map(lambda b: _uebersetze_block(b, sprache, leicht), bloecke))
             neu.update({q: z for b, e in zip(bloecke, ergebnisse) for q, z in zip(b, e) if z is not None})
             offen = [q for q in offen if q not in neu]
             if not offen or not neu:  # alles da – oder das Modell liefert gar nichts (dann kein zweiter Versuch)
                 break
         if neu:
+            neu = {praefix + q: z for q, z in neu.items()}
             with _cache_sperre:
                 gesamt = _cache_fuer(sprache)
                 gesamt.update(neu)
@@ -419,8 +443,8 @@ def uebersetze(texte: list[str], sprache: str) -> list[str | None]:
     for (g, zitate), original in zip(geschuetzt, texte):
         if not g.strip():
             ergebnis.append(original)
-        elif g in cache:
-            ergebnis.append(_stelle_her(cache[g], zitate))
+        elif praefix + g in cache:
+            ergebnis.append(_stelle_her(cache[praefix + g], zitate))
         else:
             ergebnis.append(None)
     return ergebnis
