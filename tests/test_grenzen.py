@@ -34,6 +34,26 @@ BLOCKIERT = [
     # Notwendigkeitsfrage mit zusammengesetztem Krankheitswort (Use-Case-Grenzbeispiel)
     ("Brauche ich wegen meiner Krebserkrankung wirklich eine Reha?", "therapie"),
     ("Ist wegen meiner Herzerkrankung eine Kur notwendig?", "therapie"),
+    # Österreichischer Dialekt (Regelmodus ohne KI)
+    ("Is des wos Schlimmes?", "diagnose"),
+    ("Wos kennt des sei?", "diagnose"),
+    ("Is des gfährlich?", "diagnose"),
+    ("Wos hob i?", "diagnose"),
+    ("Hob i vielleicht Zucker?", "diagnose"),
+    ("Is des normal, dass ma so schwindlig is?", "diagnose"),
+    ("Muass i do wos nehma?", "medikament"),
+    ("Mei Blutdruck is 160 zu 100, muass i wos nehma?", "medikament"),
+    ("Wos soi i gegen de Schmerzen nehma?", "medikament"),
+    ("Soi i de Tabletten weglassen?", "dosis"),
+    ("Kann i de Tablettn absetzn?", "dosis"),
+    ("Wia vü Tablettn derf i am Tog nehma?", "dosis"),
+    ("Is a Reha bei mia übahaupt sinnvoll?", "therapie"),
+    ("Brauch i wirklich a OP?", "therapie"),
+    ("Soi i mi operiern lassen?", "therapie"),
+    ("Bin i jetzt aa gfährdet?", "risiko"),
+    ("Kriag i des aa, wos mei Papa ghabt hot?", "risiko"),
+    ("Is mei Wert z'hoch?", "befund"),
+    ("Wos hoaßt mei Blutbild?", "befund"),
 ]
 
 ERLAUBT = [
@@ -70,6 +90,26 @@ ERLAUBT = [
     "Wegen meiner Krebserkrankung muss ich zur Bestrahlung – wer zahlt die Fahrt?",
     "Wegen meiner Erkrankung brauche ich Hilfe zu Hause – welche Angebote gibt es?",
     "Wegen meiner Erkrankung brauche ich einen Antrag für die Reha – wo bekomme ich den?",
+    # Dialekt, administrativ – darf nicht blockiert werden
+    "Mama schafft's daheim nimma allein, was tun?",
+    "Mei Oma kummt nimma zurecht",
+    "Bin grad aus'm Spital raus, was muss i jetzt alles erledigen?",
+    "Mei Bua is jetzt 3, wos gibt's do fia Angebote?",
+    "I mecht wos fia mei Gsundheit tuan",
+    "Muass i wos mitnehma zum Termin?",
+    "Wos kennt des kostn?",
+    "Is des wos Schlimmes, wenn i den Antrag z'spät abgib?",
+    "Wer zoit ma de Fahrt zur Bestrahlung?",
+    "Wo muass i den Antrag fia de Reha hischickn?",
+    "Soi i de Unterlagen glei mitschickn?",
+    "Is a Reha-Antrag bei da SVS kompliziert?",
+    "Kriag i des aa, wenn mei Mama in Wien wohnt?",
+    "Is des normal, dass ma so lang auf an Termin wartet?",
+    "Wos kost a Heimhilfe, wenn i ane nimm?",
+    "Brauch i fia de Reha a Überweisung?",
+    "Wos hob i jetzt zu tuan?",
+    "Muass i fia de Tabletten a Rezeptgebühr zoin?",
+    "Is mei Antrag scho bewilligt?",
 ]
 
 
@@ -163,8 +203,17 @@ def test_pruefe_antwort_laesst_administrative_texte_durch(text):
 def test_eigene_grenz_antworten_und_katalogtexte_sind_unbedenklich():
     for antwort in grenzen.ANTWORTEN.values():
         assert pruefe_antwort(antwort["de"]) == [] and pruefe_antwort(antwort["en"]) == []
+    texte = []
     for l in katalog.alle():
-        for feld in [l.titel, l.kurz, l.details, *l.schritte, *l.unterlagen, *l.voraussetzungen]:
-            for sprache in ("de", "en"):
-                assert pruefe_antwort(feld[sprache]) == [], (l.id, sprache)
-                assert pruefe_anfrage(feld[sprache]).erlaubt, (l.id, sprache)
+        texte += [(l.id, f) for f in [l.titel, l.kurz, l.details, l.nutzen, *l.schritte, *l.unterlagen, *l.unterlagen_formular, *l.voraussetzungen,
+                                      *(r["stelle"] for r in l.regional.values()), *(e["name"] for e in l.einrichtungen),
+                                      *(t for je_wert in l.stelle_nach.values() for t in je_wert.values())]]
+    for anlass in katalog.TERMIN_ANLAESSE:
+        info = katalog.termin_info(anlass)
+        texte += [(anlass, f) for f in [info.wo, info.beschwerden_hinweis, *info.hinweise, *(s["name"] for s in info.suche)]]
+    for wo, feld in texte:
+        for sprache in ("de", "en"):
+            if not feld[sprache]:
+                continue
+            assert pruefe_antwort(feld[sprache]) == [], (wo, sprache)
+            assert pruefe_anfrage(feld[sprache]).erlaubt, (wo, sprache)

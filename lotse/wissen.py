@@ -17,10 +17,11 @@ from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 
-from lotse import config, ekodex as eko, pdfquellen, recht
+from lotse import config, ekodex as eko, katalog, pdfquellen, recht
 from lotse.models import Quelle, Treffer
 from lotse.recht import Norm, kuerze
-from lotse.suche import Analysator, Index, ausschnitt, baue_vokabular, stuecke
+from lotse.slots import SLOTS
+from lotse.suche import Analysator, Index, abdeckung_detail, ausschnitt, baue_vokabular, stuecke, woerter
 
 log = logging.getLogger(__name__)
 
@@ -40,6 +41,14 @@ _DOKART_GEWICHT = {
     "DO": 0.5, "GO": 0.5, "AnhGO": 0.5, "PO": 0.5, "Weisung": 0.5, "Abrechnungsregeln": 0.5, "PauschBetr": 0.5,
     "IntR": 0.5, "MusterR": 0.6, "DSV": 0.6, "SVAbk": 0.7, "Handbuch": 0.7, "V Eur": 0.8, "E Eur": 0.8,
 }
+# Relevanz für Wissensantworten (kalibriert an den 20 Bürgerfragen und themenfremden Sätzen, siehe Tests):
+# zitiert wird nur, was die Frage zu ≥ 50 % abdeckt, absolut ≥ 10,5 Punkte erreicht und ≥ 50 % des besten Treffers
+# – und nur, wenn ein abgedeckter Begriff zum Fachwortschatz gehört.
+RELEVANZ_ABDECKUNG = 0.5
+RELEVANZ_SCORE = 10.5
+RELEVANZ_RELATIV = 0.5
+_KERNGESETZE = frozenset({"asvg", "bpgg", "gsvg", "bsvg", "bkuvg", "kbgg", "flag", "alvg"})
+_FACHWORT: dict[int, frozenset[str]] = {}  # je Wissensbasis-Instanz, nicht im Pickle (hängt vom Katalog ab)
 
 # "Die Beträge, die für das Kalenderjahr 2026 an die Stelle der im § 5 Abs. 1 BPGG genannten Beträge treten"
 _ANPASSUNG = re.compile(
@@ -205,9 +214,54 @@ class Wissensbasis:
 
     def suche(self, frage: str, k: int = 5, arten: set[str] | None = None) -> list[Treffer]:
         """Top-k-Belege (je Norm bzw. PDF-Seite höchstens einer) aus Recht und PDFs; `arten` filtert die Quellenart."""
+        gewichte, rangliste = self._rangliste(frage, k, arten)
+        return [self._treffer(d, p, gewichte) for d, p in rangliste]
+
+    def relevante(self, frage: str, k: int = 3, kandidaten: int = 5) -> list[Treffer]:
+        """Belege, die die Frage tatsächlich abdecken (Schwellen siehe RELEVANZ_*); leer, wenn nichts Belastbares.
+
+        Mindestens ein abgedeckter Begriff muss zum Fachwortschatz der Sozialversicherung gehören (siehe
+        `fachwortschatz`), sonst ist ein Treffer nur zufällig wortgleich („Wer gewinnt die Wahl?“). Die geltende
+        Anpassungsverordnung gilt per Rechtsstand-Regel als relevant (sie nennt Beträge, nicht das Stichwort).
+        """
+        gewichte, rangliste = self._rangliste(frage, kandidaten)
+        fachwort = self.fachwortschatz()
+        passend = []
+        for d, p in rangliste:
+            if p < RELEVANZ_SCORE:
+                continue
+            if self.doks[d].norm in self._anpassung_normen:
+                passend.append((d, p))
+                continue
+            anteil, gedeckt = abdeckung_detail(self.index, frage, self._suchtext(d))
+            if anteil >= RELEVANZ_ABDECKUNG and gedeckt & fachwort:
+                passend.append((d, p))
+        if passend:
+            passend = [(d, p) for d, p in passend if p >= RELEVANZ_RELATIV * passend[0][1]]
+        return [self._treffer(d, p, gewichte) for d, p in passend[:k]]
+
+    def fachwortschatz(self) -> frozenset[str]:
+        """Wortstämme der Sozialversicherung: Leistungstitel des Katalogs (de/en), Bezeichnungen der Angaben und
+        Überschriften der Paragraphen in den Kerngesetzen (ASVG, BPGG, GSVG, BSVG, B-KUVG, KBGG, FLAG, AlVG)."""
+        if (fertig := _FACHWORT.get(id(self))) is not None:
+            return fertig
+        a = self.index.analysator
+        texte = [t for l in katalog.alle() for t in (l.titel["de"], l.titel["en"])]
+        texte += [s.label["de"] for s in SLOTS.values()]
+        texte += [n.ueberschrift for n in self.normen
+                  if n.typ == "PARA" and not n.aufgehoben
+                  and {recht.schluessel(n.kuerzel), recht.schluessel(n.abkuerzung)} & _KERNGESETZE]
+        wortschatz = frozenset(a.stamm(w) for text in texte for w in woerter(text))
+        _FACHWORT[id(self)] = wortschatz
+        return wortschatz
+
+    def _rangliste(
+        self, frage: str, k: int, arten: set[str] | None = None
+    ) -> tuple[dict[str, float], list[tuple[int, float]]]:
+        """Anfragegewichte und die besten k (Stück, Score) – je Belegeinheit eines, ohne Duplikate."""
         gewichte = self.index.analysator.anfrage(frage)
         if not gewichte or k <= 0:
-            return []
+            return gewichte, []
         # bestes Stück je Belegeinheit
         beste: dict[tuple, tuple[float, int]] = {}
         for d, p in self.index.bewerte(gewichte).items():
@@ -219,7 +273,16 @@ class Wissensbasis:
                 beste[dok.einheit] = (p, d)
         self._rechtsstand(frage, gewichte, beste)
         reihenfolge = sorted(beste, key=lambda e: (-beste[e][0], beste[e][1]))
-        return [self._treffer(beste[e][1], beste[e][0], gewichte) for e in self._ohne_duplikate(reihenfolge, k)]
+        return gewichte, [(beste[e][1], beste[e][0]) for e in self._ohne_duplikate(reihenfolge, k)]
+
+    def _suchtext(self, d: int) -> str:
+        """Kopf und Rumpf eines Suchstücks wie im Index (Gesetz, Überschrift bzw. Dokumenttitel plus Text)."""
+        dok = self.doks[d]
+        if dok.norm >= 0:
+            n = self.normen[dok.norm]
+            kopf = f"{n.abkuerzung or n.kuerzel} {n.gesetz} {n.ueberschrift} {n.kopf_bei(dok.bis)}"
+            return f"{kopf}\n{n.text[dok.von:dok.bis]}"
+        return f"{pdfquellen.info(dok.datei).titel}\n{self.pdfs[dok.datei][dok.seite - 1][dok.von:dok.bis]}"
 
     def _rechtsstand(self, frage: str, gewichte: dict[str, float], beste: dict[tuple, tuple[float, int]]) -> None:
         """Rechtsstand-Regel: die Anpassungsverordnung des Zieljahres schlägt die Grundnorm, ältere fallen zurück."""

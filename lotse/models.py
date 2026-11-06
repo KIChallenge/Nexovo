@@ -17,6 +17,15 @@ THEMEN: dict[str, str] = {
     "fahrtkosten": "Fahrtkosten/Transport zu Behandlungen",
     "rezeptgebuehrenbefreiung": "Rezeptgebührenbefreiung",
     "pflege_zu_hause": "Pflege und Betreuung zu Hause",
+    "kontrolltermine": "Nachsorge- und Kontrolltermine",
+}
+
+# Zusätzliche Antwortsprachen (nur im KI-Modus). Oberfläche Deutsch/Englisch, Belege bleiben im Original.
+WEITERE_SPRACHEN: dict[str, str] = {
+    "tr": "Türkçe",
+    "bs": "Bosanski / Hrvatski / Srpski",
+    "uk": "Українська",
+    "ar": "العربية",
 }
 
 # Formular-IDs (Registry in lotse/data/formulare/<ID>.json).

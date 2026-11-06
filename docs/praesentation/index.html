@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SV KI-Lotse – Team Nexovo</title>
+<style>
+  :root { --gruen: #00704a; --gruen-hell: #e6f2ec; --text: #1d2a24; --grau: #5b6b63; --warn: #fff4d6; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #1d2a24; font-family: "Segoe UI", "Noto Sans", system-ui, sans-serif; color: var(--text); }
+  .folie { width: 100vw; height: 100vh; display: none; padding: 4.5vh 6vw; background: #fff; position: relative; overflow: hidden; }
+  .folie.aktiv { display: flex; flex-direction: column; }
+  .folie::after { content: attr(data-nr); position: absolute; right: 3vw; bottom: 2.5vh; color: var(--grau); font-size: 1.6vh; }
+  .folie::before { content: "SV KI-Lotse · Team Nexovo · KI Challenge 2026"; position: absolute; left: 6vw; bottom: 2.5vh; color: var(--grau); font-size: 1.6vh; }
+  h1 { font-size: 6.4vh; margin: 0 0 1.5vh; color: var(--gruen); line-height: 1.1; }
+  h2 { font-size: 4.6vh; margin: 0 0 3vh; color: var(--gruen); border-bottom: .6vh solid var(--gruen-hell); padding-bottom: 1.2vh; }
+  p, li { font-size: 2.7vh; line-height: 1.45; }
+  ul { margin: 0; padding-left: 1.2em; }
+  li { margin: .7vh 0; }
+  .unter { font-size: 3vh; color: var(--grau); margin: 0 0 4vh; }
+  .zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; flex: 1; min-height: 0; }
+  .drei { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4vw; }
+  .karte { background: var(--gruen-hell); border-radius: 1.4vh; padding: 2.4vh 1.6vw; }
+  .karte h3 { margin: 0 0 1vh; font-size: 2.9vh; color: var(--gruen); }
+  .karte p { font-size: 2.3vh; margin: 0; }
+  .gross { font-size: 9vh; font-weight: 700; color: var(--gruen); line-height: 1; }
+  .kette { display: flex; flex-wrap: wrap; gap: 1vh .8vw; align-items: center; margin: 2vh 0 3vh; }
+  .kette span { background: var(--gruen); color: #fff; border-radius: 3vh; padding: 1vh 1.4vw; font-size: 2.4vh; }
+  .kette b { color: var(--gruen); font-size: 2.6vh; }
+  .hinweis { background: var(--warn); border-left: .8vh solid #c79100; padding: 1.6vh 1.4vw; border-radius: .8vh; font-size: 2.4vh; }
+  img.bild { max-width: 100%; max-height: 62vh; border: 1px solid #cfd8d3; border-radius: 1vh; box-shadow: 0 .6vh 2vh rgba(0,0,0,.15); align-self: start; }
+  .titel { justify-content: center; background: linear-gradient(135deg, #fff 55%, var(--gruen-hell)); }
+  .zitat { font-style: italic; color: var(--grau); }
+  table { border-collapse: collapse; font-size: 2.4vh; width: 100%; }
+  td, th { text-align: left; padding: .8vh 1vw; border-bottom: 1px solid #dfe7e3; }
+  th { color: var(--gruen); }
+  .nav { position: fixed; right: 1.5vw; top: 1.5vh; color: #8aa; font-size: 1.4vh; z-index: 2; }
+  @media print {
+    @page { size: 1600px 900px; margin: 0; }
+    html, body { background: #fff; }
+    .folie { display: flex !important; flex-direction: column; width: 1600px; height: 900px; page-break-after: always; break-after: page; }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="nav">← → Folien · F Vollbild</div>
+
+<section class="folie titel aktiv">
+  <h1>SV KI-Lotse</h1>
+  <p class="unter">Vom ersten Satz zum vorausgefüllten Antrag – mit Quelle für jede Aussage.</p>
+  <p><strong>Team Nexovo</strong> · KI Challenge 2026 · Use Case 1</p>
+</section>
+
+<section class="folie">
+  <h2>Das Problem</h2>
+  <div class="zwei">
+    <div>
+      <p>Nach einem Spitalsaufenthalt stehen im Entlassungsbrief der SV-Box:</p>
+      <ul>
+        <li>Rehabilitationsantrag vorbereiten</li>
+        <li>Pflegegeldanspruch prüfen</li>
+        <li>Mobile Hauskrankenpflege organisieren</li>
+        <li>Fahrten zu Behandlungsterminen klären</li>
+        <li>Rezeptgebührenbefreiung prüfen</li>
+      </ul>
+    </div>
+    <div>
+      <p class="gross">5 · 4 · 4</p>
+      <p>5 Aufgaben, 4 Stellen, 4 Formulare – verteilt auf PVA, ÖGK, FSW und Ärztin.</p>
+      <p class="zitat">„Meine Mutter braucht jetzt Hilfe, was muss ich denn da machen?“</p>
+    </div>
+  </div>
+</section>
+
+<section class="folie">
+  <h2>Die Lösung: ein Lotse statt eines Chatbots</h2>
+  <div class="kette">
+    <span>Situation oder Foto</span><b>→</b><span>passende Leistungen</span><b>→</b><span>zuständige Stelle</span><b>→</b>
+    <span>Originalformular vorausgefüllt</span><b>→</b><span>Unterlagen</span><b>→</b><span>Termin</span><b>→</b><span>Fallakte mit Status</span>
+  </div>
+  <div class="zwei">
+    <img class="bild" src="img/fallakte.png" alt="Fallakte mit Leistungen, zuständiger Stelle und Formular">
+    <ul>
+      <li>Fragt nur, was den nächsten Schritt ändert – Pflegefall: 4 Fragen bis zum Antrag</li>
+      <li>Liest Entlassungsbriefe und Fotos – übernimmt nur ausdrücklich dokumentierte Empfehlungen, wörtlich mit Seite</li>
+      <li>Füllt die echten PDF-Formulare (PAL080, KUR1, ÖGK, FSW) – Unterschrift und ärztlicher Teil bleiben frei</li>
+      <li>Termin vorbereiten: Anlass, Nähe, Tageszeit → Anfrage-Text und Kalendereintrag</li>
+      <li>Versteht Dialekt und spricht 6 Sprachen, einfach oder ausführlich</li>
+    </ul>
+  </div>
+</section>
+
+<section class="folie">
+  <h2>Was ihn besonders macht</h2>
+  <div class="drei">
+    <div class="karte"><h3>Geltendes Recht</h3><p>Pflegegeld Stufe 3 2026: <strong>592,60 €</strong> aus der Anpassungsverordnung BGBl. II Nr. 263/2025 – nicht die 451,80 € aus § 5 BPGG, die eine reine Ähnlichkeitssuche liefert.</p></div>
+    <div class="karte"><h3>Zitieren statt deuten</h3><p>„In Ihrem Dokument steht: ‚Rehabilitationsantrag vorbereiten‘ (S. 7)“ – keine Diagnose, keine Interpretation.</p></div>
+    <div class="karte"><h3>Originalformulare</h3><p>Stammdaten aus dem Brief landen direkt in den AcroForm-Feldern der echten Anträge.</p></div>
+    <div class="karte"><h3>Daten verknüpft</h3><p>Rechtstexte, Serviceratgeber, Formulare, Honorarordnungen und Erstattungskodex in einer Antwort – mit Fundstelle und Rechtsstand.</p></div>
+    <div class="karte"><h3>Für alle</h3><p>„Mama schafft's daheim nimma allein“ oder Türkisch – der Lotse versteht es und antwortet in der gewählten Sprache.</p></div>
+    <div class="karte"><h3>Weiterverfolgen</h3><p>Fallakte mit Schritten, Status und nächstem Schritt; speichern, später fortsetzen.</p></div>
+  </div>
+</section>
+
+<section class="folie">
+  <h2>Transparent und verantwortungsvoll</h2>
+  <div class="zwei">
+    <ul>
+      <li><strong>Belegpflicht:</strong> jede Aussage mit Quelle, Fundstelle und Stand – oder „extern – nicht lokal geprüft“</li>
+      <li><strong>Medizinische Grenze zweistufig:</strong> Regeln vor jeder Verarbeitung, im KI-Modus zusätzlich Modellprüfung (Dialekt, andere Sprachen)</li>
+      <li><strong>Ausgabeprüfung:</strong> Modelltexte nur mit gültigen Zitaten, ohne unbelegte Zahlen – sonst regelbasierte Antwort</li>
+      <li><strong>Ehrlicher Modus:</strong> Badge „KI“ nur, wenn das Modell wirklich beteiligt war</li>
+      <li><strong>Daten:</strong> nur synthetische bzw. fiktive Demo-Daten; keine Schlüssel im Repo</li>
+    </ul>
+    <div>
+      <img class="bild" src="img/grenze.png" alt="Ablehnung einer medizinischen Frage mit Verweis an Ärztin oder Arzt">
+    </div>
+  </div>
+</section>
+
+<section class="folie">
+  <h2>Methodik und Qualität</h2>
+  <table>
+    <tr><th>Baustein</th><th>Umsetzung</th><th>Nachweis</th></tr>
+    <tr><td>Wissensbasis</td><td>14.244 SozDok-Rechtstexte + PDF-Seiten, lokaler BM25-Index</td><td>20/20 Sollquellen in den Top 5</td></tr>
+    <tr><td>Leistungskatalog</td><td>46 Leistungen in 5 Lebenslagen, 327 Belege, 9 Bundesländer</td><td>jedes lokale Zitat wörtlich auf der genannten Seite geprüft</td></tr>
+    <tr><td>Dokumente</td><td>PDF, Text und Foto (KI-Abschrift)</td><td>alle 5 Aufgaben des Entlassungsbriefs erkannt</td></tr>
+    <tr><td>Grenze</td><td>Regeln + Modellprüfung</td><td>0 Fehlalarme bei Verwaltungsfragen im Testset</td></tr>
+    <tr><td>Software</td><td>Python, FastAPI, Container, offline lauffähig</td><td>625 automatisierte Tests, Python 3.12 und 3.14</td></tr>
+  </table>
+</section>
+
+<section class="folie">
+  <h2>Nutzen und Time-to-Impact</h2>
+  <div class="zwei">
+    <div>
+      <h3>Für Versicherte und Angehörige</h3>
+      <ul>
+        <li>Von „Was muss ich tun?“ zum unterschriftsreifen Antrag</li>
+        <li>Weniger Wege, weniger doppelte Angaben</li>
+        <li>Verständlich: einfache Sprache, Dialekt, 6 Sprachen</li>
+      </ul>
+      <h3>Für die Träger</h3>
+      <ul>
+        <li>Vollständigere Anträge mit passenden Unterlagen</li>
+        <li>Weniger Rückfragen und Fehlleitungen</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Sofort einsetzbar</h3>
+      <ul>
+        <li>Läuft heute als Container – mit oder ohne KI-Modell</li>
+        <li>Inhalte als prüfbare Daten (JSON mit Belegen), erweiterbar durch Fachleute</li>
+      </ul>
+      <h3>Nächste Schritte</h3>
+      <ul>
+        <li>Digitale Einreichung mit Signatur, Anbindung an Terminservices</li>
+        <li>Weitere Formulare und Landesangebote, Usability-Test mit Versicherten</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="folie">
+  <h2>Grenzen – offen benannt</h2>
+  <ul>
+    <li>Keine echte Terminbuchung oder Antragseinreichung: Der Lotse bereitet vor, die Person entscheidet und unterschreibt.</li>
+    <li>Regionale Angebote außerhalb Wiens über offizielle Landesseiten verlinkt (extern markiert), nicht lokal geprüft.</li>
+    <li>Modellausgaben schwanken – deshalb Prüfung nach jeder Ausgabe und regelbasierte Rückfallebene.</li>
+    <li>Spracheingabe nur in Browsern mit Web-Speech-Unterstützung (z. B. Chrome).</li>
+  </ul>
+  <p class="hinweis">Der Lotse stellt keine Diagnosen, deutet keine Befunde, bewertet keine Risiken und empfiehlt keine Therapien oder Medikamente.</p>
+</section>
+
+<section class="folie titel">
+  <h1>Danke!</h1>
+  <p class="unter">Live-Demo: Entlassungsbrief → Fallakte → Antrag</p>
+  <p>Code, Doku und Tests: <strong>github.com/KIChallenge/Nexovo</strong></p>
+  <p class="unter">Demo-Video (94 s): <code>docs/praesentation/demo.mp4</code></p>
+</section>
+
+<script>
+  const folien = [...document.querySelectorAll('.folie')];
+  folien.forEach((f, i) => f.dataset.nr = `${i + 1} / ${folien.length}`);
+  let aktuell = Math.max(0, Math.min(folien.length - 1, parseInt(location.hash.slice(1) || '1', 10) - 1));
+  function zeige(i) {
+    aktuell = Math.max(0, Math.min(folien.length - 1, i));
+    folien.forEach((f, j) => f.classList.toggle('aktiv', j === aktuell));
+    history.replaceState(null, '', '#' + (aktuell + 1));
+  }
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'PageDown', ' '].includes(e.key)) zeige(aktuell + 1);
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) zeige(aktuell - 1);
+    if (e.key === 'Home') zeige(0);
+    if (e.key === 'End') zeige(folien.length - 1);
+    if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+  });
+  document.addEventListener('click', (e) => { if (e.clientX > innerWidth / 2) zeige(aktuell + 1); else zeige(aktuell - 1); });
+  zeige(aktuell);
+</script>
+</body>
+</html>

@@ -119,6 +119,23 @@ SLOTS: dict[str, Slot] = {s.id: s for s in [
        "Auf wen lautet das Konto?", "Who is the account holder?"),
     _s("kind.alter", "Alter des Kindes", "Child's age",
        "Wie alt ist das Kind (in Jahren)?", "How old is the child (in years)?", typ="zahl", muster=r"\d{1,2}"),
+    # Terminvorbereitung (Use Case 3.3: Hintergrund, Nähe, Tageszeit)
+    _s("termin.anlass", "Anlass des Termins", "Reason for the appointment",
+       "Worum geht es beim Termin – Vorsorge, Kontrolle, Impfung, Beschwerden, Zahnarzt, Kinderarzt oder Beratung?",
+       "What is the appointment for – check-up, follow-up, vaccination, complaints, dentist, paediatrician or advice?",
+       typ="auswahl", optionen=("vorsorge", "kontrolle", "impfung", "beschwerden", "zahn", "kind", "beratung")),
+    _s("termin.ort", "Gewünschter Ort", "Preferred location",
+       "Soll der Termin möglichst in Ihrer Nähe sein – in welchem Ort oder Bezirk?",
+       "Should the appointment be close to you – in which town or district?"),
+    _s("termin.zeit", "Bevorzugte Tageszeit", "Preferred time of day",
+       "Welche Zeiten passen Ihnen – vormittags oder nachmittags?",
+       "Which times suit you – mornings or afternoons?",
+       typ="auswahl", optionen=("vormittags", "nachmittags", "egal")),
+    _s("termin.datum", "Termindatum", "Appointment date",
+       "An welchem Tag ist der vereinbarte Termin (TT.MM.JJJJ)?", "On which day is the booked appointment (DD.MM.YYYY)?",
+       typ="datum", muster=_DATUM),
+    _s("termin.uhrzeit", "Uhrzeit", "Time",
+       "Um wie viel Uhr (HH:MM)?", "At what time (HH:MM)?", muster=r"([01]\d|2[0-3]):[0-5]\d"),
 ]}
 
 

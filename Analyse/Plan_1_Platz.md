@@ -121,7 +121,7 @@ Finale: dieselbe Geschichte in 3 Teilen (Ansatz, Funktionen, Nutzen) plus Grenze
 - Repo-Zugang: erledigt (SSH-Push funktioniert).
 - Externe Webquellen: laut Use Case erlaubt („Weitere mögliche Quellen zur Identifikation von Leistungsangeboten“). Bedingung laut Teilnahmeinfo S. 3: Nutzungsbedingungen beachten; nur Inhalte mit Veröffentlichungsrechten ins Repo übernehmen.
 - Zuständigkeit für Pflegegeld hängt vom Pensionsträger ab (PVA, SVS, BVAEB). Im Demofall muss der Lotse dazu nachfragen.
-- Layout- und OCR-Qualität der PDFs wurde nicht visuell geprüft. Mögliche Widersprüche bei Identitätsangaben zwischen den Befunden: nicht prüfbar.
+- Layout der PDFs: geprüft (alle Befund- und Formularseiten gerendert). Die Befunde sind laut Dokument bzw. Name („Testpatient“) fiktiv; Details in `Analyse/Gegenpruefung.md`.
 
 ## 10. Stand der Planabnahme
 
@@ -129,4 +129,4 @@ Finale: dieselbe Geschichte in 3 Teilen (Ansatz, Funktionen, Nutzen) plus Grenze
 - [x] Alle Aussagen zu Wettbewerb, Use Case, API, Rechtstexten, Erstattungskodex, Katalogen und Formularen gegen die Originale geprüft (`Analyse/Gegenpruefung.md`).
 - [x] Pflichtanforderungen R1–R13 mit messbarem Abnahmefall.
 - [ ] Finaljury-Gewichtung: nicht belegbar.
-- [ ] Visuelle Prüfung von Layout und OCR: nicht durchgeführt.
+- [x] Visuelle Prüfung von Layout und Textebene: alle Formular- und Befundseiten gerendert geprüft (06.11.).

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +22,9 @@
         <span id="lbl-sprache" class="schalter-label" data-t="sprache">Sprache</span>
         <button type="button" data-sprache="de" aria-pressed="true" lang="de">DE</button>
         <button type="button" data-sprache="en" aria-pressed="false" lang="en">EN</button>
+        <label for="sprache-weitere" class="sr-only" data-t="weitere_sprachen">Weitere Sprachen</label>
+        <select id="sprache-weitere" class="sprache-weitere" aria-describedby="sprache-weitere-hilfe"></select>
+        <span id="sprache-weitere-hilfe" class="sr-only" data-t="weitere_sprachen_hinweis"></span>
       </div>
       <div class="schalter" role="group" aria-labelledby="lbl-stil">
         <span id="lbl-stil" class="schalter-label" data-t="stil">Darstellung</span>
@@ -29,23 +32,19 @@
         <button type="button" data-stil="ausfuehrlich" aria-pressed="false" data-t="ausfuehrlich">Ausführlich</button>
       </div>
       <span id="modus" class="badge badge-modus" role="status">regelbasiert</span>
-      <label class="knopf knopf-sekundaer" for="datei" id="datei-label">
-        <span data-t="hochladen">Dokument hochladen</span>
-      </label>
-      <input type="file" id="datei" class="sr-only" accept=".pdf,.txt,application/pdf,text/plain"
-             aria-describedby="datei-hilfe">
-      <span id="datei-hilfe" class="sr-only" data-t="hochladen_hilfe"></span>
       <button type="button" id="neu" class="knopf knopf-sekundaer" data-t="neuer_fall">Neuer Fall</button>
     </div>
   </header>
 
-  <nav class="leiste" aria-label="Beispiele">
+  <nav class="leiste" aria-labelledby="lbl-beispiele">
     <div class="leiste-gruppe" role="group" aria-labelledby="lbl-beispiele">
       <span id="lbl-beispiele" class="leiste-label" data-t="beispiele">Beispiele</span>
       <button type="button" class="chip" data-szenario="pflege" data-t="szenario_pflege">Pflege</button>
       <button type="button" class="chip" data-szenario="gesundheit" data-t="szenario_gesundheit">Gesundheit</button>
       <button type="button" class="chip" data-szenario="entlassung" data-t="szenario_entlassung">Nach dem Spital</button>
       <button type="button" class="chip" data-szenario="kind" data-t="szenario_kind">Kind</button>
+      <button type="button" class="chip" data-szenario="unterstuetzung" data-t="szenario_unterstuetzung">Unterstützung</button>
+      <button type="button" class="chip" data-szenario="termin" data-t="szenario_termin">Arzttermin</button>
     </div>
     <div class="leiste-gruppe" role="group" aria-labelledby="lbl-demo" id="demo-gruppe" hidden>
       <span id="lbl-demo" class="leiste-label" data-t="demo_dokumente">Demo-Dokumente</span>
@@ -70,19 +69,58 @@
       <form id="eingabe-form" class="eingabe">
         <label for="eingabe" data-t="chat_label">Ihre Nachricht</label>
         <div class="eingabe-zeile">
-          <textarea id="eingabe" rows="2" maxlength="2000" required></textarea>
+          <textarea id="eingabe" rows="2" maxlength="2000" required dir="auto"></textarea>
+          <button type="button" id="mikro" class="knopf knopf-sekundaer knopf-mikro" aria-pressed="false" hidden>
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="2" width="6" height="12" rx="3"></rect>
+              <path d="M5 10v1a7 7 0 0 0 14 0v-1"></path>
+              <path d="M12 18v4"></path>
+            </svg>
+            <span id="mikro-text" class="sr-only">Spracheingabe starten</span>
+          </button>
           <button type="submit" class="knopf" data-t="senden">Senden</button>
         </div>
+        <div class="eingabe-extras">
+          <label class="knopf knopf-sekundaer knopf-klein datei-knopf" for="datei">
+            <span data-t="hochladen">Dokument hochladen</span>
+          </label>
+          <input type="file" id="datei" class="sr-only"
+                 accept=".pdf,.txt,.jpg,.jpeg,.png,.webp,application/pdf,text/plain,image/*"
+                 aria-describedby="datei-hilfe">
+          <label class="knopf knopf-sekundaer knopf-klein datei-knopf" for="foto">
+            <span data-t="foto">Foto aufnehmen</span>
+          </label>
+          <input type="file" id="foto" class="sr-only" accept="image/*" capture="environment"
+                 aria-describedby="datei-hilfe">
+          <span id="datei-hilfe" class="leise datei-hilfe" data-t="hochladen_hilfe"></span>
+        </div>
+        <p id="mikro-status" class="mikro-status" role="status" aria-live="polite"></p>
       </form>
     </section>
 
     <section class="akte" aria-labelledby="akte-titel">
-      <h2 id="akte-titel" data-t="fallakte_titel">Ihre Fallakte</h2>
+      <div class="akte-kopf">
+        <h2 id="akte-titel" data-t="fallakte_titel">Ihre Fallakte</h2>
+        <div class="akte-aktionen">
+          <a id="fall-speichern" class="knopf knopf-sekundaer knopf-klein" download data-t="fall_speichern">Fall speichern</a>
+          <label class="knopf knopf-sekundaer knopf-klein datei-knopf" for="fall-datei">
+            <span data-t="fall_laden">Fall laden</span>
+          </label>
+          <input type="file" id="fall-datei" class="sr-only" accept=".json,application/json"
+                 aria-describedby="fall-datei-hilfe">
+          <span id="fall-datei-hilfe" class="sr-only" data-t="fall_laden_hilfe"></span>
+        </div>
+      </div>
+      <div id="uebersicht" class="uebersicht" hidden></div>
       <div id="naechster" class="naechster" hidden></div>
       <div id="angaben" class="angaben" hidden></div>
       <p id="akte-leer" class="akte-leer" data-t="fallakte_leer">Noch keine Leistungen. Beschreiben Sie Ihre Situation
         oder laden Sie ein Dokument hoch.</p>
+      <div id="termine" class="termine"></div>
+      <div id="dokumente" class="dok-panels"></div>
       <div id="karten" class="karten"></div>
+      <div id="historie" class="historie" hidden></div>
     </section>
   </main>
 

@@ -89,8 +89,8 @@ Status: **bestätigt** · **korrigiert** (die Aussage war falsch oder ungenau) �
 | KUR1 mit Onkologie-Kategorie | Treffer „Onkolog“ vorhanden | bestätigt |
 | Seitenzahlen (7/2/3/3/1 Befunde; 8/2/2/2/13/2/2 Formulare) | Neu gezählt; alle Seiten enthalten Text, kein reiner Scan | bestätigt |
 | Der Entlassungsbefund dokumentiert administrative Empfehlungen | Ausdrücklich genannt: Rehabilitationsantrag vorbereiten, Pflegegeldanspruch prüfen, mobile Hauskrankenpflege organisieren, Transport bzw. Fahrten zu Bestrahlungsterminen klären, Rezeptgebührenbefreiung. Der Befund hält selbst fest: „Ein Anspruch ist nicht automatisch durch die Krebserkrankung gegeben“. Entlassungsdatum im Oktober 2026 | neu: Ein konstruierter Komplettfall, der zu PAL080, KUR1, Fahrtkosten und FSW passt |
-| Identitätsdaten widersprechen sich zwischen den Befunden | Ein Hash-Vergleich der Feldwerte ließ keine belastbare Aussage zu; nur der Entlassungsbefund enthält Datumsangaben im Format TT.MM.JJJJ | **nicht prüfbar** |
-| Layout- und OCR-Qualität | Ohne Renderer nicht visuell geprüft | **nicht prüfbar** |
+| Identitätsdaten widersprechen sich zwischen den Befunden | Nachgeprüft am 06.11.: Die Befunde sind **ausdrücklich fiktiv**. Der Entlassungsbefund: „Alle personenbezogenen Angaben und medizinischen Daten in diesem Dokument sind frei erfunden und ausschließlich für die KI-Challenge 2026 bestimmt“. Die vier anderen Befunde laufen auf eine Person namens „Testpatient“. Es sind also zwei verschiedene erfundene Personen, kein Widerspruch | **geklärt** |
+| Layout- und OCR-Qualität | Nachgeprüft am 06.11.: Alle 16 Befundseiten mit pypdfium2 gerendert und angesehen. Alle haben eine Textebene, keine reinen Scans. Der Entlassungsbefund ist ein Textdokument mit Tabellen (Medikation S. 3, Aufgaben S. 7). Röntgen- und Diagnostikbefunde sowie der Impfpass haben ELGA-Layout; beim Impfpass sind die Einträge nach Krankheit gruppiert (Impfstoff, Datum, Charge). Die Formulare wurden schon zuvor gerendert geprüft | **geprüft** |
 
 ## 9. Folgen für den Plan
 

@@ -95,6 +95,14 @@ _LABOR_ALLG = r"(befund\w*|ergebnis\w*|\w*wert|\w*werte)"
 _LABOR_DE = rf"({_LABOR_SPEZ}|{_LABOR_ALLG})"
 _BEWERTUNG = (r"(gut|schlecht|normal|schlimm|bedenklich|gefährlich|auffällig|unauffällig|in ordnung|ok|okay|zu hoch|zu niedrig|erhöht"
               r"|besorgniserregend)")
+# Österreichische Umgangssprache/Dialekt (regelbasierte Rückfallebene, z. B. „Is des wos Schlimmes?“, „Muass i do wos nehma?“)
+_ICH_DIA = r"(i|ma|mia|mir|ich)"
+_SOLL_DIA = r"(soi|sui|soll|sollt|sollat|muass|muaß|muss|derf|darf|kann|kon|ko)"
+_MEDI_DIA = (r"(tablett\w*|pill\w*|pulverl|medikament\w*|medizin|tropf\w*|spritz\w*|insulin|kapsl\w*"
+             r"|\w+(?<!hilfs)(?<!verkehrs)(?<!lebens)(?<!haushalts)(?<!förder)mittel)")
+_NEHMA = r"(nehma|nehman|nemma|einnehma|schlucka|schluckn)"
+_DES = r"(des|das|dös|es)"
+_SYMPTOM_DIA = r"(schmerz\w*|schwindl\w*|fieber|husten|übel\w*|ausschlag|knotn|knoten|weh|herzrasen|atemnot|blut\w*)"
 
 _REGELN: list[tuple[str, list[str]]] = [
     ("dosis", [
@@ -117,6 +125,10 @@ _REGELN: list[tuple[str, list[str]]] = [
         r"\b(stop|quit|stopping|quitting)\s+taking\b",
         rf"\b(can|should|may)\s+i\s+(stop|quit|pause|skip)\b[^.?!]{{0,30}}\b{_MEDI_EN}\b",
         r"\b(come|wean)\s+off\b",
+        # Dialekt
+        rf"\b{_SOLL_DIA}\s+{_ICH_DIA}\b[^.?!]{{0,30}}\b{_MEDI_DIA}\b[^.?!]{{0,20}}\b(weglossn|weglossen|weglassen|absetzn|absetzen|aufhörn|halbiern|halbieren|verdoppln|verdoppeln)\b",
+        rf"\b{_MEDI_DIA}\b[^.?!]{{0,30}}\b(absetzn|weglossn|weglossen|aufhörn|halbiern|verdoppln|reduziern)\b",
+        r"\b(wia|wie)\s?(vü|vui|vüh|viel|viele)\b[^.?!]{0,30}\b(tablett\w*|kapsl\w*|tropf\w*|mg|milligramm|ml|hüb\w*)\b",
     ]),
     ("medikament", [
         rf"\bwelche[snrm]?\s+{_MEDI_DE}\b[^.?!]{{0,40}}\b(soll|sollte|kann|könnte|darf|empfehlen|empfiehlst|hilft|helfen|wirkt|wirken|nehmen|einnehmen)\b",
@@ -136,6 +148,9 @@ _REGELN: list[tuple[str, list[str]]] = [
         r"\b(can|may|should)\s+i\s+take\s+\w+\s+(with|together with|and)\s+(?!me\b)\w+",
         r"\binteractions?\b",
         r"\bis\s+\w+\s+(stronger|more effective)\s+than\b",
+        # Dialekt
+        rf"\b{_SOLL_DIA}\s+{_ICH_DIA}\b[^.?!]{{0,25}}\b(wos|was|epas|eppas|etwas|irgendwos)\b[^.?!]{{0,25}}\b{_NEHMA}\b",
+        rf"\b(wos|was)\s+{_SOLL_DIA}\s+{_ICH_DIA}\b[^.?!]{{0,30}}\b(gegen|geg'n|bei|fia|für)\b[^.?!]{{0,40}}\b{_NEHMA}\b",
     ]),
     ("therapie", [
         rf"\b(brauche|benötige|bräuchte|braucht|benötigt)\s+{_PERSON_DE}\s+(wirklich\s+|überhaupt\s+|denn\s+|noch\s+|unbedingt\s+|eigentlich\s+)?(eine?n?\s+)?{_THERAPIE_DE}\b(?!-)",
@@ -154,6 +169,10 @@ _REGELN: list[tuple[str, list[str]]] = [
         rf"\b(because of|due to|given)\s+(my|his|her)\s+(diagnosis|condition|illness|results?)\b[^.?!]{{0,40}}\b(need|{_THERAPIE_EN})\b",
         rf"\bwhich\s+(treatment|therapy)\b[^.?!]{{0,30}}\b(best|better|right|should)\b",
         rf"\bis\s+(a\s+|an\s+)?{_THERAPIE_EN}\s+(really\s+)?(necessary|needed|advisable|a good idea)\b",
+        # Dialekt
+        rf"~\b(is|ist)\s+(a|ane|eine?|de|die|des)?\s*{_THERAPIE_DE}\b(?!-)[^.?!]{{0,40}}\b(sinnvoll|nötig|notwendig|gscheit|ratsam|angebracht)\b",
+        rf"\b(brauch|brauchat|bräucht|bräuchat)\s+{_ICH_DIA}\s+(wirklich|übahaupt|überhaupt|eh|echt|denn|unbedingt)\s+(a|an|ane|eine?n?)?\s*{_THERAPIE_DE}\b(?!-)",
+        rf"\b(soi|sui|soll|sollt)\s+{_ICH_DIA}\s+(mi|mich)\s+(operiern|operieren|bestrahln|bestrahlen|behandeln|behandln)\s+lassen\b",
     ]),
     ("risiko", [
         r"\b(mein|meine|meinem|meinen|sein|seine|ihr|ihre)\s+(persönliche[sn]?\s+|individuelle[sn]?\s+|eigene[sn]?\s+)?\w*risiko\b",
@@ -169,6 +188,9 @@ _REGELN: list[tuple[str, list[str]]] = [
         r"\b(chance|odds|likelihood|probability)\s+(of|that)\s+(me\s+|i\s+|my\s+\w+\s+)?(getting|developing|get|develop|will)\b",
         rf"\bwill\s+(i|he|she)\s+(also\s+)?(get|develop)\s+(\w+\s+)?{_KRANKHEIT_EN}\b",
         r"\bis\s+\w+(\s+cancer)?\s+(hereditary|inherited|genetic)\b",
+        # Dialekt
+        rf"\b(bin|is|san)\s+{_ICH_DIA}\s+(jetzt\s+|dadurch\s+|deswegn\s+|deshalb\s+)?(aa\s+|auch\s+)?(gfährdet|gefährdet|vorbelastet)\b",
+        rf"\b(kriag|kriang|griag|krieg|bekumm|bekomm)\s+{_ICH_DIA}\s+{_DES}\s+(aa|auch)\b[^.?!]{{0,40}}\b(vererbt|erblich|ghabt|gehabt|g'habt|hatte)\b",
     ]),
     ("befund", [
         rf"\bwas\s+(bedeutet|bedeuten|heißt|heisst|sagt|sagen)\b[^.?!]{{0,60}}\b{_LABOR_SPEZ}\b",
@@ -181,6 +203,10 @@ _REGELN: list[tuple[str, list[str]]] = [
         r"\bis\s+(my|this|the)\s+(\w+\s+){0,2}(results?|values?|levels?|findings?|scan|x-ray|reading)\s+(normal|bad|good|ok|okay|dangerous|worrying|too high|too low|high|low)\b",
         r"\b(interpret|explain|analy[sz]e|read)\s+(my|the|this|these)\s+(\w+\s+){0,2}(results?|findings?|report|scan|x-ray|mri|blood test|lab\w*|values?)\b",
         r"\bis\s+(it|this|that)\s+(benign|malignant|cancer|a tumou?r|serious|dangerous)\b",
+        # Dialekt
+        rf"\b(is|ist)\s+(mei|mein|meine|der|da|de|die|des|dös)\s+(\w+\s+)?{_LABOR_SPEZ}\s+(\w+\s+)?({_BEWERTUNG}|z'hoch|z'niedrig|z hoch|z niedrig|guat)\b",
+        rf"~\b(is|ist)\s+(mei|mein|meine|der|da|de|die|des|dös)\s+(\w+\s+)?{_LABOR_ALLG}\s+(\w+\s+)?({_BEWERTUNG}|z'hoch|z'niedrig|z hoch|z niedrig|guat)\b",
+        rf"\b(wos|was)\s+(hoaßt|hoast|haßt|bedeut|bedeutet)\b[^.?!]{{0,60}}\b{_LABOR_SPEZ}\b",
     ]),
     ("diagnose", [
         r"\bwas\s+(habe|hab|hat)\s+(ich|er|sie)(\s+denn|\s+wohl|\s+bloß|\s+nur)?\s*(\?|$)",
@@ -200,6 +226,13 @@ _REGELN: list[tuple[str, list[str]]] = [
         r"\bis\s+(this|it)\s+(a\s+)?(sign|symptom)\s+of\b",
         rf"\bcould\s+(it|this)\s+be\s+(a\s+|an\s+)?(\w+\s+)?{_KRANKHEIT_EN}\b",
         r"\b(pain|fever|cough|dizz\w*|nausea|rash|lump|headache)\b[^?]{0,80}\bwhat\s+(is|could)\s+(it|this|that)\b",
+        # Dialekt
+        rf"~\b(is|ist)\s+{_DES}\s+(wos|was|epas|eppas|etwas)\s+(schlimm\w*|gfährlich\w*|gefährlich\w*|bedenklich\w*|ernst\w*)",
+        rf"~\b(is|ist)\s+{_DES}\s+(gfährlich|gefährlich|schlimm|bedenklich|harmlos)\s*(\?|$)",
+        rf"\b(wos|was)\s+(kennt|kennat|kanntat|kunnt|könnt|könnte)\s+{_DES}\s+(denn\s+|leicht\s+|wohl\s+|bloß\s+)?(sei|sein)\b",
+        r"\b(wos|was)\s+(hob|hot)\s+(i|er|sie|ea|mei\s+\w+)(\s+denn|\s+wohl|\s+bloß|\s+nur|\s+do)?\s*(\?|$)",
+        rf"\b(hob|hot|hätt)\s+(i|er|sie|ea|mei\s+\w+)\s+(vielleicht\s+|wohl\s+|eh\s+|leicht\s+|eventuell\s+)?(a\s+|an\s+|ane\s+|eine?n?\s+)?{_KRANKHEIT_DE}\b",
+        rf"\b(is|ist)\s+{_DES}\s+(normal|schlimm|gfährlich|gefährlich),?\s+(dass|wenn)\b[^?]{{0,60}}\b{_SYMPTOM_DIA}",
     ]),
 ]
 # Muster mit „~“ sind schwach: Sie greifen nicht, wenn die Frage erkennbar administrativ ist.

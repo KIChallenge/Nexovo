@@ -1,0 +1,83 @@
+Elektronischer Impfpass
+Synthetisches Beispiel für den SV KI-Lotsen. Person, Ordinationen und alle Einträge sind frei erfunden.
+vom 4. November 2026 um 10:15 Uhr | Version: 6
+Person:
+Johanna Beispiel (W)
+geb. 12. April 1941
+e-Impfpass
+Einträge
+COVID-19
+14. Okt. 2026
+Impfstoff: Comirnaty JN.1 Injektionsdispersion
+Ch.-Nr.: FIK0001
+Impfsetting: Ordination
+Impfdatum: 14. Oktober 2026
+Eingetragen am: 14. Oktober 2026 um 10:20 Uhr
+Auffrischung
+Impfort: Musterplatz 1
+1140 Wien
+Med. verantwortl. Person: Dr. Maria Muster (fiktiv)
+2. Okt. 2025
+Impfstoff: Comirnaty LP.8.1 Injektionsdispersion
+Ch.-Nr.: FIK0002
+Impfsetting: Ordination
+Impfdatum: 2. Oktober 2025
+Eingetragen am: 2. Oktober 2025 um 11:05 Uhr
+Auffrischung
+Impfort: Musterplatz 1
+1140 Wien
+Med. verantwortl. Person: Dr. Maria Muster (fiktiv)
+Influenza ('echte Grippe')
+14. Okt. 2026
+Impfstoff: Fluad Tetra Injektionssuspension
+Ch.-Nr.: FIK0003
+Impfsetting: Ordination
+Impfprogramm: Öffentliches Impfprogramm Influenza
+Impfdatum: 14. Oktober 2026
+Eingetragen am: 14. Oktober 2026 um 10:22 Uhr
+Auffrischung
+Impfort: Musterplatz 1
+1140 Wien
+Med. verantwortl. Person: Dr. Maria Muster (fiktiv)
+6. Nov. 2025
+Impfstoff: Fluad Tetra Injektionssuspension
+Ch.-Nr.: FIK0004
+Impfsetting: Ordination
+Impfdatum: 6. November 2025
+Eingetragen am: 6. November 2025 um 09:40 Uhr
+Auffrischung
+Impfort: Musterplatz 1
+1140 Wien
+Med. verantwortl. Person: Dr. Maria Muster (fiktiv)
+Pneumokokken
+20. März 2024
+Impfstoff: Prevenar 20 Injektionssuspension
+Ch.-Nr.: FIK0005
+Impfdatum: 20. März 2024
+Eingetragen am: 20. März 2024 um 14:10 Uhr
+Dosis 1
+Impfort: Musterplatz 1
+1140 Wien
+Med. verantwortl. Person: Dr. Maria Muster (fiktiv)
+Herpes Zoster
+11. Jan. 2024
+Impfstoff: Shingrix Pulver und Suspension
+Ch.-Nr.: FIK0006
+Impfdatum: 11. Jänner 2024
+Eingetragen am: 11. Jänner 2024 um 15:30 Uhr
+Dosis 1
+15. Mai 2024
+Impfstoff: Shingrix Pulver und Suspension
+Ch.-Nr.: FIK0007
+Impfdatum: 15. Mai 2024
+Eingetragen am: 15. Mai 2024 um 15:45 Uhr
+Dosis 2
+Diphtherie, Tetanus, Pertussis, Poliomyelitis
+3. Sep. 2019
+Impfstoff: Boostrix Polio Injektionssuspension
+Ch.-Nr.: FIK0008
+Impfdatum: 3. September 2019
+Eingetragen am: 3. September 2019 um 08:55 Uhr
+Auffrischung
+PDF-Erstellung
+Seite 1 von 1

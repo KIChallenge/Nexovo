@@ -1,0 +1,17 @@
+# Nicht ins Image: Geheimnisse, lokale Daten mit Personenbezug, Entwicklungsartefakte
+.env
+.env.*
+!.env.example
+.git
+.venv*
+.cache
+.pytest_cache
+**/__pycache__
+Befunde
+*.docx
+/*.pdf
+Analyse/Dokumenteninventar.csv
+*.kate-swp
+*.swp
+*~
+mazure.txt

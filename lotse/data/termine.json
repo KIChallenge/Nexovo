@@ -1,0 +1,1007 @@
+{
+ "stand": "2026-11-06",
+ "hinweis": {
+  "de": "Terminvorbereitung des SV KI-Lotsen: wohin, was mitnehmen, wo suchen – jede Aussage mit Beleg, keine medizinische Einschätzung. Externe Seiten abgerufen am 06.11.2026.",
+  "en": "Appointment preparation of the SV KI-Lotse: where to go, what to bring, where to search – every statement sourced, no medical assessment. External pages retrieved on 06.11.2026."
+ },
+ "anlaesse": {
+  "vorsorge": {
+   "wo": {
+    "de": "Meist bei Ihrer Hausärztin oder Ihrem Hausarzt; die Vorsorgeuntersuchung gibt es auch in vielen Gesundheitseinrichtungen der Sozialversicherung und bei manchen Fachärzt:innen für Innere Medizin oder Lungenheilkunde.",
+    "en": "Usually at your GP; the preventive check-up is also offered in many social insurance health facilities and by some specialists in internal medicine or pulmonology."
+   },
+   "wo_quellen": [
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 12",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Ihre erste Ansprechperson ist meist die Hausärztin oder der Hausarzt. Die Vorsorgeuntersuchung gibt es auch in vielen Gesundheitseinrichtungen der Sozialversicherung.",
+     "stand": "2026-01-01",
+     "url": ""
+    },
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 12",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Auch manche Fachärztinnen und -ärzte für Innere Medizin bzw. für Lungenheilkunde bieten Vorsorgeuntersuchungen an.",
+     "stand": "2026-01-01",
+     "url": ""
+    }
+   ],
+   "hinweise": [
+    {
+     "de": "e-card mitnehmen – bei Vertragsärzt:innen übernimmt die Kasse die Behandlung ohne Zuzahlung.",
+     "en": "Bring your e-card – at contract doctors the insurer covers the treatment without co-payment.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 18",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder Zuweisungsschein vorlegen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Zu Beginn füllen Sie einen Fragebogen aus, z. B. zu Vorerkrankungen, erblicher Vorbelastung, Bewegung und Alkoholkonsum.",
+     "en": "At the start you fill in a questionnaire, e.g. on previous illnesses, family history, exercise and alcohol.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 12",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Zuerst füllen Sie einen Fragebogen zu unterschiedlichen Themen aus (z.B. zu eigenen Vorerkrankungen, erblicher Vorbelastung, Bewegung, Alkoholkonsum).",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Für die Mammografie im Früherkennungsprogramm brauchen Sie keine Überweisung – Termin direkt bei einer Radiologin oder einem Radiologen.",
+     "en": "For the screening mammogram you need no referral – book directly with a radiologist.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 13",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Nach der Terminvereinbarung bei einer Radiologin oder einem Radiologen können Frauen mit ihrer e-card zur Untersuchung gehen – eine ärztliche Überweisung ist nicht notwendig.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    }
+   ],
+   "suche": [
+    "oegk_vu_suche",
+    "oegk_gesundheitszentren",
+    "frueh_erkennen",
+    "aek_bgld",
+    "aek_ktn",
+    "aek_noe",
+    "aek_ooe",
+    "aek_sbg",
+    "aek_stmk",
+    "aek_tirol",
+    "aek_vbg",
+    "aek_wien",
+    "oeak_arztsuche"
+   ]
+  },
+  "kontrolle": {
+   "wo": {
+    "de": "Bei der Stelle, die im Entlassungsbrief bzw. Befund ausdrücklich genannt ist – z. B. Hausärztin oder Hausarzt, Fachärztin oder Facharzt oder eine Spitalsambulanz (Vertragseinrichtung).",
+    "en": "With the provider explicitly named in the discharge letter or report – e.g. your GP, a specialist or a hospital outpatient clinic (contract facility)."
+   },
+   "wo_quellen": [
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 18",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Vertragseinrichtungen (z.B. Spitalsambulanzen)",
+     "stand": "2026-01-01",
+     "url": ""
+    },
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 18",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder Zuweisungsschein vorlegen.",
+     "stand": "2026-01-01",
+     "url": ""
+    }
+   ],
+   "hinweise": [
+    {
+     "de": "e-card mitnehmen; beim Facharzt oder in der Ambulanz kann ein Überweisungs- bzw. Zuweisungsschein nötig sein.",
+     "en": "Bring your e-card; a specialist or outpatient clinic may require a referral.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 18",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder Zuweisungsschein vorlegen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Entlassungsbrief und vorhandene Befunde mitnehmen; über ELGA können behandelnde Ärztinnen und Ärzte Entlassungsberichte zusätzlich einsehen.",
+     "en": "Bring the discharge letter and existing findings; treating doctors can also view discharge reports via ELGA.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 44",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Behandelnde Ärztinnen und Ärzte, Spitäler, Apotheken oder Pflegeeinrichtungen sind dank ELGA in der Lage, rasch und unkompliziert Vorbefunde, Entlassungsberichte oder aktuell eingenommene Medikamente von Versicherten einzusehen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Können Sie nicht gehen: Transport mit ärztlicher Transportanweisung zur nächstgelegenen geeigneten Vertragsärztin bzw. zum nächstgelegenen geeigneten Vertragsarzt.",
+     "en": "If you cannot walk: transport with a doctor's transport order to the nearest suitable contract doctor.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 32",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Zur ambulanten Behandlung zur nächstgelegenen geeigneten Vertragsärztin bzw. zum nächstgelegenen geeigneten Vertragsarzt",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    }
+   ],
+   "suche": [
+    "oegk_vertragspartner",
+    "aek_bgld",
+    "aek_ktn",
+    "aek_noe",
+    "aek_ooe",
+    "aek_sbg",
+    "aek_stmk",
+    "aek_tirol",
+    "aek_vbg",
+    "aek_wien",
+    "oeak_arztsuche"
+   ]
+  },
+  "impfung": {
+   "wo": {
+    "de": "Bei Ihrer Ärztin oder Ihrem Arzt; Impftermine können Sie auch in der Meine ÖGK-App buchen.",
+    "en": "At your doctor's; you can also book vaccination appointments in the Meine ÖGK app."
+   },
+   "wo_quellen": [
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 17",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Wenden Sie sich für Impfungen an Ihre Ärztin bzw. Ihren Arzt.",
+     "stand": "2026-01-01",
+     "url": ""
+    },
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 43",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Impftermine buchen",
+     "stand": "2026-01-01",
+     "url": ""
+    }
+   ],
+   "hinweise": [
+    {
+     "de": "Für Kinder gibt es ein umfangreiches kostenloses Impfangebot.",
+     "en": "There is an extensive free vaccination programme for children.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 17",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Für Kinder gibt es ein umfangreiches kostenloses Impfangebot.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Für die Zeckenimpfung (FSME) gibt es einen Kostenzuschuss.",
+     "en": "There is a cost subsidy for the tick-borne encephalitis (TBE) vaccination.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 17",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Für Zeckenimpfungen (FSME) können Sie einen Kostenzuschuss erhalten.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Ihre Impfungen sehen Sie im e-Impfpass über das ELGA-Portal (www.gesundheit.gv.at).",
+     "en": "You can see your vaccinations in the e-vaccination pass via the ELGA portal (www.gesundheit.gv.at).",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 44",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Man kann seine Impfungen über das ELGA-Portal (Zugang auf www.gesundheit.gv.at) einsehen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    }
+   ],
+   "suche": [
+    "meine_oegk_app",
+    "oegk_impfen",
+    "oegk_vertragspartner",
+    "aek_bgld",
+    "aek_ktn",
+    "aek_noe",
+    "aek_ooe",
+    "aek_sbg",
+    "aek_stmk",
+    "aek_tirol",
+    "aek_vbg",
+    "aek_wien"
+   ]
+  },
+  "beschwerden": {
+   "wo": {
+    "de": "Im Krankheitsfall haben Sie freie Arztwahl – meist ist Ihre Hausärztin oder Ihr Hausarzt die erste Anlaufstelle. Wenn Sie unsicher sind, wohin: die telefonische Gesundheitsberatung 1450 sagt Ihnen, welche Stelle passt – von der niedergelassenen Ärztin bis zur Spitalsambulanz.",
+    "en": "If you are ill you can choose your doctor freely – usually your GP is the first point of contact. If you are unsure where to go: the health advice line 1450 tells you which service fits – from a local doctor to a hospital outpatient clinic."
+   },
+   "wo_quellen": [
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 18",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Im Erkrankungsfall haben Sie grundsätzlich freie Arztwahl. Ärztliche Hilfe können Sie durch Vertragsärztinnen und Vertragsärzte oder Wahlärztinnen und Wahlärzte in Anspruch nehmen.",
+     "stand": "2026-01-01",
+     "url": ""
+    },
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 12",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Ihre erste Ansprechperson ist meist die Hausärztin oder der Hausarzt. Die Vorsorgeuntersuchung gibt es auch in vielen Gesundheitseinrichtungen der Sozialversicherung.",
+     "stand": "2026-01-01",
+     "url": ""
+    },
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 42",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Die Empfehlungen reichen von Tipps zur Selbstbehandlung über die Konsultation einer niedergelassenen (Fach-)Ärztin oder eines niedergelassenen (Fach-)Arztes bis hin zum Besuch einer Spitalsambulanz.",
+     "stand": "2026-01-01",
+     "url": ""
+    }
+   ],
+   "hinweise": [
+    {
+     "de": "e-card mitnehmen.",
+     "en": "Bring your e-card.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 18",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder Zuweisungsschein vorlegen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Bei akuten Problemen verständigt die Gesundheitsberatung 1450 den Rettungsdienst.",
+     "en": "For acute problems the health advice line 1450 alerts the emergency services.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 42",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Bei akuten Problemen wird der Rettungsdienst verständigt.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    }
+   ],
+   "suche": [
+    "gesundheitsberatung_1450",
+    "oegk_vertragspartner",
+    "aek_bgld",
+    "aek_ktn",
+    "aek_noe",
+    "aek_ooe",
+    "aek_sbg",
+    "aek_stmk",
+    "aek_tirol",
+    "aek_vbg",
+    "aek_wien",
+    "oeak_arztsuche"
+   ]
+  },
+  "zahn": {
+   "wo": {
+    "de": "Bei einer Vertragszahnärztin bzw. einem Vertragszahnarzt oder in einem Zahngesundheitszentrum der ÖGK.",
+    "en": "At a contract dentist or in an ÖGK dental health centre."
+   },
+   "wo_quellen": [
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 39",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "In den Zahngesundheitszentren der ÖGK sowie bei den Vertragszahnbehandlerinnen und Vertragszahnbehandlern werden folgende Leistungen angeboten:",
+     "stand": "2026-01-01",
+     "url": ""
+    }
+   ],
+   "hinweise": [
+    {
+     "de": "e-card mitnehmen – viele Leistungen sind damit kostenlos, bei manchen gibt es einen Patientenanteil.",
+     "en": "Bring your e-card – many services are free with it, some have a patient share.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 39",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Diese sind nach Vorlage der e-card kostenlos. Bei manchen Leistungen ist jedoch ein Patientenanteil vorgesehen oder es sind bestimmte Voraussetzungen zu erfüllen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Kinder und Jugendliche von 10 bis 18 Jahren: Mundhygiene einmal pro Jahr auf Kassenkosten.",
+     "en": "Children and young people aged 10 to 18: oral hygiene once a year paid by the insurer.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 41",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Für Versicherte und mitversicherte Angehörige zwischen dem vollendeten 10. Lebensjahr und dem vollendeten 18. Lebensjahr übernimmt die ÖGK einmal pro Jahr (im Abstand von mindestens zwölf Monaten) die Kosten für Mundhygiene.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Bei Wahlzahnärzt:innen (z. B. für eine Zahnspange) vorher einen Kostenvoranschlag einholen.",
+     "en": "At non-contract dentists (e.g. for braces) get a cost estimate first.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 40",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Die ÖGK empfiehlt ihren Versicherten, einen Kostenvoranschlag einzuholen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    }
+   ],
+   "suche": [
+    "oegk_zahngesundheitszentren",
+    "oegk_vertragspartner",
+    "zahnaerztekammer"
+   ]
+  },
+  "kind": {
+   "wo": {
+    "de": "Kinderärztin bzw. Kinderarzt oder Hausärztin bzw. Hausarzt mit Kassenvertrag; die Eltern-Kind-Pass-Untersuchungen gibt es bei Vertragsärzt:innen und Vertragseinrichtungen, Kinderheilkunde auch in ÖGK-Gesundheitszentren.",
+    "en": "Paediatrician or GP with a health insurance contract; parent-child pass examinations are available from contract doctors and contract facilities, paediatrics also in ÖGK health centres."
+   },
+   "wo_quellen": [
+    {
+     "art": "extern",
+     "titel": "BVAEB – inForm. Die Leistungsübersicht der BVAEB (Broschüre)",
+     "fundstelle": "PDF-S. 28, abgerufen am 06.11.2026",
+     "datei": "",
+     "zitat": "Die im Eltern-Kind-Pass vorgesehenen Untersuchungen können Sie und Ihr Kind bei Vertragsärztinnen und Vertragsärzten sowie in Vertragseinrichtungen in Anspruch nehmen. Legen Sie dort bitte Ihre e-card vor.",
+     "stand": "",
+     "url": "https://www.bvaeb.at/cdscontent/load?contentid=10008.753897"
+    },
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 46",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Kinderheilkunde",
+     "stand": "2026-01-01",
+     "url": ""
+    }
+   ],
+   "hinweise": [
+    {
+     "de": "e-card des Kindes mitnehmen.",
+     "en": "Bring the child's e-card.",
+     "quelle": {
+      "art": "extern",
+      "titel": "BVAEB – inForm. Die Leistungsübersicht der BVAEB (Broschüre)",
+      "fundstelle": "PDF-S. 28, abgerufen am 06.11.2026",
+      "datei": "",
+      "zitat": "Die im Eltern-Kind-Pass vorgesehenen Untersuchungen können Sie und Ihr Kind bei Vertragsärztinnen und Vertragsärzten sowie in Vertragseinrichtungen in Anspruch nehmen. Legen Sie dort bitte Ihre e-card vor.",
+      "stand": "",
+      "url": "https://www.bvaeb.at/cdscontent/load?contentid=10008.753897"
+     }
+    },
+    {
+     "de": "Eltern-Kind-Pass-Untersuchungen rechtzeitig machen und nachweisen – sonst wird das Kinderbetreuungsgeld gekürzt.",
+     "en": "Have the parent-child pass examinations done and documented on time – otherwise childcare allowance is reduced.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 38",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Werden die zehn vorgeschriebenen Eltern-Kind-Pass-Untersuchungen nicht rechtzeitig durchgeführt bzw. nachgewiesen, wird der Anspruch auf Kinderbetreuungsgeld je Elternteil um 1.300,00 Euro (plus 650,00 Euro für jedes weitere Mehrlingskind) gekürzt.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    }
+   ],
+   "suche": [
+    "oegk_vertragspartner",
+    "oegk_gesundheitszentren",
+    "aek_bgld",
+    "aek_ktn",
+    "aek_noe",
+    "aek_ooe",
+    "aek_sbg",
+    "aek_stmk",
+    "aek_tirol",
+    "aek_vbg",
+    "aek_wien",
+    "oeak_arztsuche"
+   ]
+  },
+  "beratung": {
+   "wo": {
+    "de": "Für Fragen zur Krankenversicherung: Kundenservice Ihres Trägers – bei der ÖGK mit Wunschtermin online (www.oegk.at/termin), bei der SVS unter svs.at/termin, bei der BVAEB über das Service-Center 050405. Für Familien- und Schuldenfragen: die geförderten Beratungsstellen.",
+    "en": "For health insurance questions: the customer service of your insurer – ÖGK with online appointments (www.oegk.at/termin), SVS at svs.at/termin, BVAEB via the service centre 050405. For family and debt issues: the publicly funded counselling centres."
+   },
+   "wo_quellen": [
+    {
+     "art": "serviceratgeber",
+     "titel": "ÖGK – Leistungen und Services 2026",
+     "fundstelle": "PDF-S. 42",
+     "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+     "zitat": "Wählen Sie auf der Seite www.oegk.at/termin einfach Ihren Wunschtermin für Ihr Anliegen aus.",
+     "stand": "2026-01-01",
+     "url": ""
+    },
+    {
+     "art": "extern",
+     "titel": "SVS – Krankenversicherung im Überblick (Broschüre, Werte 2026)",
+     "fundstelle": "PDF-S. 77, abgerufen am 06.11.2026",
+     "datei": "",
+     "zitat": "Vereinbaren Sie vor einer persönlichen Beratung im SVS Kundencenter oder bei einem Beratungstag jedenfalls einen Termin unter svs.at/termin bzw. unter 050 808 808.",
+     "stand": "",
+     "url": "https://www.svs.at/cdscontent/load?contentid=10008.763556"
+    },
+    {
+     "art": "extern",
+     "titel": "BVAEB – inForm. Die Leistungsübersicht der BVAEB (Broschüre)",
+     "fundstelle": "PDF-S. 3, abgerufen am 06.11.2026",
+     "datei": "",
+     "zitat": "Das Service-Center der BVAEB erreichen Sie unter der österreichweit einheitlichen Telefonnummer 050405.",
+     "stand": "",
+     "url": "https://www.bvaeb.at/cdscontent/load?contentid=10008.753897"
+    },
+    {
+     "art": "extern",
+     "titel": "Bundeskanzleramt – Familienberatung, FAQs",
+     "fundstelle": "abgerufen am 06.11.2026",
+     "datei": "",
+     "zitat": "Geförderte Familienberatungsstellen sind in allen Bezirken Österreichs vorhanden.",
+     "stand": "",
+     "url": "https://www.familienberatung.gv.at/faq.html"
+    },
+    {
+     "art": "extern",
+     "titel": "Webportal der staatlich anerkannten Schuldenberatungen",
+     "fundstelle": "abgerufen am 06.11.2026",
+     "datei": "",
+     "zitat": "Wir beraten im öffentlichen Auftrag. Kostenlos, umfassend, österreichweit.",
+     "stand": "",
+     "url": "https://www.schuldenberatung.at/"
+    }
+   ],
+   "hinweise": [
+    {
+     "de": "ÖGK-Termine gibt es u. a. zu e-card mit Foto, Krankenstand, Mitversicherung, Rezeptgebührenbefreiung sowie Schwangerschaft und Geburt.",
+     "en": "ÖGK appointments are available for e-card with photo, sick leave, co-insurance, prescription charge exemption, and pregnancy and birth, among others.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 42",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Diese Möglichkeit besteht für das Thema e-card mit Foto sowie für leistungsrechtliche Fragen zum Krankenstand, zur Mitversicherung, zur Rezeptgebührenbefreiung oder zu Schwangerschaft und Geburt.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Mit Termin vermeiden Sie Wartezeiten.",
+     "en": "With an appointment you avoid waiting times.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 42",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Allfällige Wartezeiten werden vermieden, Ihre Beraterin bzw. Ihr Berater steht Ihnen sofort zur Verfügung.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    },
+    {
+     "de": "Bei der ersten Online-Buchung legen Sie einmalig ein Kundenprofil an.",
+     "en": "For your first online booking you create a customer profile once.",
+     "quelle": {
+      "art": "serviceratgeber",
+      "titel": "ÖGK – Leistungen und Services 2026",
+      "fundstelle": "PDF-S. 42",
+      "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+      "zitat": "Bei der ersten Buchung eines Termins müssen Sie einmalig ein Kundenprofil anlegen.",
+      "stand": "2026-01-01",
+      "url": ""
+     }
+    }
+   ],
+   "suche": [
+    "oegk_termin",
+    "svs_termin",
+    "bvaeb_kontakt",
+    "familienberatung_suche",
+    "schuldenberatung"
+   ]
+  }
+ },
+ "suche": {
+  "aek_bgld": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Burgenland",
+    "en": "Doctor search: Ärztekammer Burgenland"
+   },
+   "url": "https://www.aekbgld.at/arztsuche",
+   "regionen": [
+    "Burgenland"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_ktn": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Kärnten",
+    "en": "Doctor search: Ärztekammer Kärnten"
+   },
+   "url": "https://www.aekktn.at/arztsuche",
+   "regionen": [
+    "Kärnten"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_noe": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Niederösterreich",
+    "en": "Doctor search: Ärztekammer Niederösterreich"
+   },
+   "url": "https://www.arztnoe.at/arztsuche",
+   "regionen": [
+    "Niederösterreich"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_ooe": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Oberösterreich",
+    "en": "Doctor search: Ärztekammer Oberösterreich"
+   },
+   "url": "https://arztsuche.aeksbg.at/finder/search/land/OO",
+   "regionen": [
+    "Oberösterreich"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_sbg": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Salzburg",
+    "en": "Doctor search: Ärztekammer Salzburg"
+   },
+   "url": "https://arztsuche.aeksbg.at/finder/search/land/SA",
+   "regionen": [
+    "Salzburg"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_stmk": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Steiermark",
+    "en": "Doctor search: Ärztekammer Steiermark"
+   },
+   "url": "https://www.aekstmk.or.at/cms/cms.php?pageName=46",
+   "regionen": [
+    "Steiermark"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_tirol": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Tirol",
+    "en": "Doctor search: Ärztekammer Tirol"
+   },
+   "url": "https://www.aektirol.at/arztsuche",
+   "regionen": [
+    "Tirol"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_vbg": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Vorarlberg (medicus-online)",
+    "en": "Doctor search: Ärztekammer Vorarlberg (medicus-online)"
+   },
+   "url": "https://www.medicus-online.at",
+   "regionen": [
+    "Vorarlberg"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "aek_wien": {
+   "name": {
+    "de": "Arztsuche: Ärztekammer Wien (praxisplan.at)",
+    "en": "Doctor search: Ärztekammer Wien (praxisplan.at)"
+   },
+   "url": "https://praxisplan.at/",
+   "regionen": [
+    "Wien"
+   ],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "oeak_arztsuche": {
+   "name": {
+    "de": "Österreichische Ärztekammer – Arztsuche nach Bundesland",
+    "en": "Austrian Medical Chamber – doctor search by federal state"
+   },
+   "url": "https://www.aerztekammer.at/arztsuche",
+   "regionen": [],
+   "quelle": {
+    "art": "extern",
+    "titel": "Österreichische Ärztekammer – Arztsuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wählen Sie jenes Bundesland, in welchem Sie nach einer Ärztin / einem Arzt suchen möchten",
+    "stand": "",
+    "url": "https://www.aerztekammer.at/arztsuche"
+   }
+  },
+  "oegk_vertragspartner": {
+   "name": {
+    "de": "ÖGK-Vertragspartnersuche (Ärzt:innen mit Kassenvertrag)",
+    "en": "ÖGK contract partner search (doctors with health insurance contract)"
+   },
+   "url": "https://www.oegk.at/vaso/",
+   "regionen": [],
+   "quelle": {
+    "art": "extern",
+    "titel": "ÖGK – Vertragspartnersuche",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Vertragspartnersuche der ÖGK - Ärzt*innen & Apotheken finden",
+    "stand": "",
+    "url": "https://www.oegk.at/vaso/"
+   }
+  },
+  "oegk_vu_suche": {
+   "name": {
+    "de": "ÖGK-Vertragspartnersuche: Vorsorgeuntersuchung (Gesundheitscheck)",
+    "en": "ÖGK contract partner search: preventive check-up"
+   },
+   "url": "https://www.oegk.at/vaso/?prevention=GESUNDHEITSCHECK",
+   "regionen": [],
+   "quelle": {
+    "art": "extern",
+    "titel": "ÖGK – Vertragspartnersuche (Filter Gesundheitscheck)",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Vertragspartnersuche der ÖGK - Ärzt*innen & Apotheken finden",
+    "stand": "",
+    "url": "https://www.oegk.at/vaso/?prevention=GESUNDHEITSCHECK"
+   }
+  },
+  "oegk_gesundheitszentren": {
+   "name": {
+    "de": "ÖGK-Gesundheitszentren (Wien, Linz, Klagenfurt, Graz)",
+    "en": "ÖGK health centres (Vienna, Linz, Klagenfurt, Graz)"
+   },
+   "url": "https://www.oegk.at/gz",
+   "regionen": [
+    "Wien",
+    "Oberösterreich",
+    "Kärnten",
+    "Steiermark"
+   ],
+   "quelle": {
+    "art": "serviceratgeber",
+    "titel": "ÖGK – Leistungen und Services 2026",
+    "fundstelle": "PDF-S. 45",
+    "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+    "zitat": "In den 7 Gesundheitszentren in Wien, Linz, Klagenfurt und Graz arbeiten Expertinnen und Experten aus vielen verschiedenen Fachrichtungen unter einem Dach zusammen.",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  },
+  "frueh_erkennen": {
+   "name": {
+    "de": "Brustkrebs-Früherkennung: Liste der Mammografie-Standorte",
+    "en": "Breast cancer screening: list of mammography sites"
+   },
+   "url": "https://www.frueh-erkennen.at",
+   "regionen": [],
+   "quelle": {
+    "art": "serviceratgeber",
+    "titel": "ÖGK – Leistungen und Services 2026",
+    "fundstelle": "PDF-S. 13",
+    "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+    "zitat": "Die Liste der Mammografie-Standorte finden Sie auf www.frueh-erkennen.at.",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  },
+  "oegk_zahngesundheitszentren": {
+   "name": {
+    "de": "ÖGK-Zahngesundheitszentren",
+    "en": "ÖGK dental health centres"
+   },
+   "url": "https://www.oegk.at/zgz",
+   "regionen": [],
+   "quelle": {
+    "art": "serviceratgeber",
+    "titel": "ÖGK – Leistungen und Services 2026",
+    "fundstelle": "PDF-S. 45",
+    "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+    "zitat": "Die 61 Zahngesundheitszentren bieten österreichweit modernste Zahnmedizin an und sind technisch bestens ausgestattet.",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  },
+  "zahnaerztekammer": {
+   "name": {
+    "de": "Österreichische Zahnärztekammer",
+    "en": "Austrian Dental Chamber"
+   },
+   "url": "https://www.zahnaerztekammer.at",
+   "regionen": [],
+   "quelle": {
+    "art": "honorarordnung",
+    "titel": "Österreichische Zahnärztekammer – Honorarordnungen & Honorartarife (gültig ab 1. Jänner 2026)",
+    "fundstelle": "PDF-S. 46",
+    "datei": "Leistungskataloge/Zahnärzte Honorarordnung_2026_aktuellste_Version_MAI_070526.pdf",
+    "zitat": "1010 Wien, Kohlmarkt 11/6 Tel.: 05 05 11 - 0 E-Mail: office@zahnaerztekammer.at Internet: www.zahnaerztekammer.at",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  },
+  "meine_oegk_app": {
+   "name": {
+    "de": "Meine ÖGK (App und Website): Impftermine buchen, Ärzt:innen finden",
+    "en": "Meine ÖGK (app and website): book vaccinations, find doctors"
+   },
+   "url": "https://www.meineoegk.at",
+   "regionen": [],
+   "quelle": {
+    "art": "serviceratgeber",
+    "titel": "ÖGK – Leistungen und Services 2026",
+    "fundstelle": "PDF-S. 43",
+    "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+    "zitat": "Impftermine buchen",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  },
+  "oegk_impfen": {
+   "name": {
+    "de": "ÖGK-Informationen zu Impfungen",
+    "en": "ÖGK information on vaccinations"
+   },
+   "url": "https://www.oegk.at/impfen",
+   "regionen": [],
+   "quelle": {
+    "art": "serviceratgeber",
+    "titel": "ÖGK – Leistungen und Services 2026",
+    "fundstelle": "PDF-S. 17",
+    "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+    "zitat": "Mehr informationen unter www.oegk.at/impfen",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  },
+  "oegk_termin": {
+   "name": {
+    "de": "ÖGK-Wunschtermin in der Kundenservicestelle",
+    "en": "ÖGK appointment at a customer service centre"
+   },
+   "url": "https://www.oegk.at/termin",
+   "regionen": [],
+   "quelle": {
+    "art": "serviceratgeber",
+    "titel": "ÖGK – Leistungen und Services 2026",
+    "fundstelle": "PDF-S. 42",
+    "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+    "zitat": "Wählen Sie auf der Seite www.oegk.at/termin einfach Ihren Wunschtermin für Ihr Anliegen aus.",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  },
+  "svs_termin": {
+   "name": {
+    "de": "SVS-Beratungstermin vereinbaren",
+    "en": "Book an SVS advice appointment"
+   },
+   "url": "https://www.svs.at/termin",
+   "regionen": [],
+   "quelle": {
+    "art": "extern",
+    "titel": "SVS – Krankenversicherung im Überblick (Broschüre, Werte 2026)",
+    "fundstelle": "PDF-S. 77, abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Vereinbaren Sie vor einer persönlichen Beratung im SVS Kundencenter oder bei einem Beratungstag jedenfalls einen Termin unter svs.at/termin bzw. unter 050 808 808.",
+    "stand": "",
+    "url": "https://www.svs.at/cdscontent/load?contentid=10008.763556"
+   }
+  },
+  "bvaeb_kontakt": {
+   "name": {
+    "de": "BVAEB-Kundenservicestellen und Service-Center",
+    "en": "BVAEB customer service centres and service centre"
+   },
+   "url": "https://www.bvaeb.at/kontakt",
+   "regionen": [],
+   "quelle": {
+    "art": "extern",
+    "titel": "BVAEB – inForm. Die Leistungsübersicht der BVAEB (Broschüre)",
+    "fundstelle": "PDF-S. 3, abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Das Service-Center der BVAEB erreichen Sie unter der österreichweit einheitlichen Telefonnummer 050405.",
+    "stand": "",
+    "url": "https://www.bvaeb.at/cdscontent/load?contentid=10008.753897"
+   }
+  },
+  "familienberatung_suche": {
+   "name": {
+    "de": "Familienberatung: Beratungsstellen-Suche",
+    "en": "Family counselling: search for centres"
+   },
+   "url": "https://www.familienberatung.gv.at/beratungsstellen/",
+   "regionen": [],
+   "quelle": {
+    "art": "extern",
+    "titel": "Bundeskanzleramt – Familienberatung, FAQs",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Geförderte Familienberatungsstellen sind in allen Bezirken Österreichs vorhanden.",
+    "stand": "",
+    "url": "https://www.familienberatung.gv.at/faq.html"
+   }
+  },
+  "schuldenberatung": {
+   "name": {
+    "de": "Staatlich anerkannte Schuldenberatungen",
+    "en": "State-recognised debt counselling"
+   },
+   "url": "https://www.schuldenberatung.at/",
+   "regionen": [],
+   "quelle": {
+    "art": "extern",
+    "titel": "Webportal der staatlich anerkannten Schuldenberatungen",
+    "fundstelle": "abgerufen am 06.11.2026",
+    "datei": "",
+    "zitat": "Wir beraten im öffentlichen Auftrag. Kostenlos, umfassend, österreichweit.",
+    "stand": "",
+    "url": "https://www.schuldenberatung.at/"
+   }
+  },
+  "gesundheitsberatung_1450": {
+   "name": {
+    "de": "Gesundheitsberatung 1450 (Telefon und Website)",
+    "en": "Health advice line 1450 (phone and website)"
+   },
+   "url": "https://www.1450.at",
+   "regionen": [],
+   "quelle": {
+    "art": "serviceratgeber",
+    "titel": "ÖGK – Leistungen und Services 2026",
+    "fundstelle": "PDF-S. 42",
+    "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+    "zitat": "Wenn’s weh tut! 1450. Weitere Informationen erhalten Sie auch unter www.oegk.at oder www.1450.at.",
+    "stand": "2026-01-01",
+    "url": ""
+   }
+  }
+ },
+ "beschwerden_hinweis": {
+  "de": "Der Lotse beurteilt keine Beschwerden. Wenn Sie unsicher sind, wohin Sie sich wenden sollen: telefonische Gesundheitsberatung 1450 anrufen – ohne Vorwahl, rund um die Uhr.",
+  "en": "The navigator does not assess symptoms. If you are unsure where to turn: call the health advice line 1450 – no area code, around the clock.",
+  "quelle": {
+   "art": "serviceratgeber",
+   "titel": "ÖGK – Leistungen und Services 2026",
+   "fundstelle": "PDF-S. 42",
+   "datei": "Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf",
+   "zitat": "Rufen Sie die Nummer 1450 ohne Vorwahl über das Handy oder Festnetz – an 365 Tagen im Jahr, zu jeder Tages- und Nachtzeit.",
+   "stand": "2026-01-01",
+   "url": ""
+  }
+ }
+}

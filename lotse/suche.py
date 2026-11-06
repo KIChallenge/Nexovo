@@ -77,6 +77,8 @@ _EN_DE: dict[str, str] = {
     "vaccination": "impfung",
     "vaccinations": "impfungen",
     "hospital": "krankenhaus",
+    "quit smoking": "rauchfrei tabak",
+    "birth": "geburt",
     "discharge": "entlassung",
     "application": "antrag",
     "apply": "antrag",
@@ -236,6 +238,69 @@ def baue_vokabular(texte: list[str]) -> dict[str, int]:
     for text in texte:
         df.update(set(woerter(text)))
     return dict(df)
+
+
+# Relevanzprüfung: Wörter, die keine Themeninformation tragen (nur für `abdeckung`, nicht für den Index)
+_FUELLWOERTER = frozenset(
+    """
+    funktioniert funktionieren geht gehen erhalte erhalten kriegen bekommt warum wieso weshalb wann genau eigentlich
+    regelt regeln steht stehen sagt sagen heißt bedeutet gilt gelten dir dich
+    help get got give does did done much many more most also just only very really still about any some
+    before after there here would could should doing know tell explain mean means
+    """.split()
+)
+# Wörter, die im Korpus fehlen oder höchstens in ABDECKUNG_SELTEN_DF Stücken stehen, deuten auf ein Thema außerhalb
+# der Quellen („Bahnhof“, „Apfelstrudel“): Sie zählen mit diesem Gewicht und gelten als nicht gedeckt.
+ABDECKUNG_UNBEKANNT = 6.0
+ABDECKUNG_SELTEN_DF = 2
+
+
+def abdeckung(index: Index, frage: str, text: str) -> float:
+    """Anteil der Inhaltswörter einer Frage (idf-gewichtet), die ein Text abdeckt (0–1); siehe `abdeckung_detail`."""
+    return abdeckung_detail(index, frage, text)[0]
+
+
+def abdeckung_detail(index: Index, frage: str, text: str) -> tuple[float, set[str]]:
+    """Abdeckung (0–1) und die Terme der gedeckten Einheiten.
+
+    Einheiten sind englische Begriffe laut `_EN_DE` und die übrigen Inhaltswörter (samt Synonymen). Eine Einheit
+    gilt als gedeckt, wenn der Text ihren Stamm, ein Synonym oder – bei Komposita – Teile davon enthält (anteilig).
+    Personenbezug („meine Mutter“), Füllwörter und Zahlen zählen nicht.
+    """
+    a = index.analysator
+    terme = set(a.terme(text))
+    roh = _WORT.findall(frage.lower())
+    person = {w for v, w in zip(roh, roh[1:]) if v in _BEZUG}
+    einheiten: list[tuple[set[str], set[str]]] = []
+    rest = frage
+    for m in _EN_MUSTER.finditer(frage):
+        alternativen = set(a.terme(_EN_DE[m.group(1).lower()])) | {a.stamm(w) for w in woerter(m.group(1))}
+        einheiten.append((alternativen, set()))
+        rest = rest.replace(m.group(0), " ")
+    for w in dict.fromkeys(woerter(rest)):
+        if w in person or w in _FUELLWOERTER or w.isdigit():
+            continue
+        alternativen = {a.stamm(w)}
+        if w in _DE_SYNONYME:
+            alternativen |= set(a.terme(_DE_SYNONYME[w]))
+        einheiten.append((alternativen, {a.stamm(t) for t in a.zerlege(w)}))
+    gesamt = gedeckt = 0.0
+    gedeckte_terme: set[str] = set()
+    for alternativen, teile in einheiten:
+        bekannt = [t for t in alternativen if index.df(t) > ABDECKUNG_SELTEN_DF]
+        teile_bekannt = [t for t in teile if index.df(t) > ABDECKUNG_SELTEN_DF]
+        if not bekannt and not teile_bekannt:
+            gesamt += ABDECKUNG_UNBEKANNT
+            continue
+        gewicht = max(index.idf(t) for t in bekannt or teile_bekannt)
+        gesamt += gewicht
+        if terme.intersection(bekannt):
+            gedeckt += gewicht
+            gedeckte_terme |= alternativen
+        elif treffer := terme.intersection(teile_bekannt):
+            gedeckt += gewicht * len(treffer) / len(teile_bekannt)
+            gedeckte_terme |= treffer | alternativen
+    return (gedeckt / gesamt if gesamt else 0.0), gedeckte_terme
 
 
 class Index:

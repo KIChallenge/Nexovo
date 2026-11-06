@@ -1,8 +1,9 @@
-"""Lotse-Engine: Grenzprüfung, Situationserkennung, Rückfragen, Leistungsbündel, Dokumente, Fallakte.
+"""Lotse-Engine: Grenzprüfung, Situationserkennung, Rückfragen, Leistungsbündel, Termine, Dokumente, Fallakte.
 
-Ablauf je Nachricht: Grenze → Status-Befehl → Rückfrage-Antwort → Sonderfragen (Pflegegeldbetrag,
-Erstattungskodex) → Szenario → Wissensfrage. Alle Texte entstehen zweisprachig, damit Sprache und
-Darstellung nachträglich umgeschaltet werden können.
+Ablauf je Nachricht: Grenze → Status-Befehl → Termin gemeldet → offene Terminfrage → Statusfrage → Terminwunsch →
+Rückfrage-Antwort → Sonderfragen (Pflegegeldbetrag, Erstattungskodex) → Szenario → Wissensfrage. Alle Texte
+entstehen zweisprachig (de/en), damit Sprache und Darstellung nachträglich umgeschaltet werden können; weitere
+Sprachen übersetzt im KI-Modus das Modell aus dem Englischen (geprüft, mit Rückfall auf Englisch).
 """
 
 from __future__ import annotations
@@ -12,16 +13,19 @@ import threading
 import uuid
 from collections.abc import Callable
 from dataclasses import asdict, dataclass, field
-from datetime import date
+from datetime import date, datetime
 from functools import partial
 
 from lotse import dokument, formulare, grenzen, katalog, llm, texte, wissen
-from lotse.fallakte import Fallakte
-from lotse.models import FORMULARE, Empfehlung, Grenzentscheidung, Quelle
+from lotse.fallakte import TERMIN_KETTE, Fallakte, Termin, ics
+from lotse.models import FORMULARE, WEITERE_SPRACHEN, Empfehlung, Grenzentscheidung, Quelle, Treffer
 from lotse.slots import SLOTS
 from lotse.texte import SPRACHEN, STILE, beide, t
 
 MAX_RUECKFRAGEN = 5  # je erkanntem Anliegen
+PRIMAER = 3  # so viele Bündel nennt der Chat; der Rest steht als „weitere Angebote“ in der Fallakte
+PASSEND_MIN = 2.5  # Stichwort-Score, ab dem eine Leistung ohne erkanntes Szenario angeboten wird
+TERMIN_SLOTS = ("termin.anlass", "termin.ort", "termin.zeit")
 
 
 # ---------------------------------------------------------------------------
@@ -38,7 +42,7 @@ class Absatz:
 class Inhalt:
     """Sprachneutraler Inhalt einer Antwort; wird je Sprache/Darstellung gerendert."""
 
-    art: str = "fall"  # start | fall | wissen | grenze | status | fehler
+    art: str = "fall"  # start | fall | wissen | grenze | status | termin | fehler
     absaetze: list[Absatz] = field(default_factory=list)
     quellen: list[Quelle] = field(default_factory=list)
     grenze: Grenzentscheidung | None = None
@@ -56,6 +60,12 @@ class Inhalt:
                 Absatz({sp: "\n".join(z[sp] for z in zeilen) for sp in SPRACHEN}, nur_ausfuehrlich)
             )
 
+    def marke(self, q: Quelle) -> str:
+        """Quelle aufnehmen (einmal) und ihre Nummer als „[n]“ liefern."""
+        if q not in self.quellen:
+            self.quellen.append(q)
+        return f"[{self.quellen.index(q) + 1}]"
+
 
 @dataclass
 class Sitzung:
@@ -66,12 +76,17 @@ class Sitzung:
     herkunft: dict[str, dict] = field(default_factory=dict)  # slot → {"art": dialog|dokument, "dokument", "seite"}
     szenarien: list[str] = field(default_factory=list)  # neueste zuerst
     leistungen: list[str] = field(default_factory=list)  # aktuelles Bündel
+    fokus: list[str] = field(default_factory=list)  # Leistungen zur letzten konkreten Frage (stehen zuerst)
     dok_empfehlungen: dict[str, list[Empfehlung]] = field(default_factory=dict)
+    dok_leistungen: list[str] = field(default_factory=list)  # aus Dokumenten ohne Empfehlung (z. B. Impfungen)
     offene_frage: str | None = None
     fragen_gestellt: int = 0
     uebersprungen: set[str] = field(default_factory=set)
-    dokumente: list[dict] = field(default_factory=list)  # {"name", "seiten"}
+    dokumente: list[dict] = field(default_factory=list)  # {"name", "seiten", "transkribiert"}
     fallakte: Fallakte = field(default_factory=Fallakte)
+    termin_entwurf: dict | None = None  # {"anlass", "ort", "zeit", "leistung"}; None = noch nicht gefragt
+    impfungen: list[dict] = field(default_factory=list)  # {"impfung", "datum", "seite", "dokument"}
+    medikamente: list[dict] = field(default_factory=list)  # {"name_dokument", "seite", "dokument", "pzn"}
     verlauf: list[dict] = field(default_factory=list)
     letzte: Inhalt | None = None
     sperre: threading.Lock = field(default_factory=threading.Lock, repr=False, compare=False)
@@ -92,6 +107,12 @@ class Antwort:
     szenarien: list[dict]
     angaben: list[dict]
     dokumente: list[dict]
+    richtung: str = "ltr"
+    weitere_anzahl: int = 0
+    termine: list[dict] = field(default_factory=list)
+    impfungen: list[dict] = field(default_factory=list)
+    medikamente: list[dict] = field(default_factory=list)
+    status_uebersicht: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -121,11 +142,33 @@ _BUNDESLAND_NAMEN = {
     "Burgenland": ("burgenland",),
 }
 _BUNDESLAND_KURZ = {"Niederösterreich": ("noe",), "Oberösterreich": ("ooe",)}
+# Landeshauptstädte und große Städte → Bundesland (Geografie, kein Sachinhalt); nur wenn das Bundesland noch fehlt
+_STAEDTE = {
+    "Steiermark": ("Graz", "Leoben", "Kapfenberg", "Bruck an der Mur", "Weiz", "Knittelfeld"),
+    "Oberösterreich": ("Linz", "Wels", "Steyr", "Leonding", "Traun", "Vöcklabruck", "Braunau"),
+    "Salzburg": ("Hallein", "Saalfelden", "Bischofshofen"),
+    "Tirol": ("Innsbruck", "Kufstein", "Lienz", "Schwaz", "Telfs", "Wörgl"),
+    "Kärnten": ("Klagenfurt", "Villach", "Wolfsberg", "Spittal an der Drau", "St. Veit an der Glan"),
+    "Niederösterreich": ("St. Pölten", "St Pölten", "Sankt Pölten", "Wiener Neustadt", "Krems", "Amstetten",
+                         "Mödling", "Klosterneuburg", "Tulln", "Schwechat"),
+    "Burgenland": ("Eisenstadt", "Oberwart", "Neusiedl am See", "Mattersburg"),
+    "Vorarlberg": ("Bregenz", "Dornbirn", "Feldkirch", "Bludenz", "Hohenems", "Lustenau"),
+}
+
+
+def _stadt(f: str) -> tuple[str, str] | None:
+    """(Bundesland, genannte Stadt) aus gefaltetem Text, wenn genau eine Stadt passt."""
+    funde = {(land, stadt) for land, staedte in _STAEDTE.items() for stadt in staedte
+             if re.search(rf"\b{re.escape(_falte(stadt))}\b", f)}
+    return funde.pop() if len(funde) == 1 else None
+
 
 _UEBERSPRINGEN = re.compile(
     r"weiss (ich )?nicht|keine ahnung|unbekannt|ueberspring|spaeter|\bskip\b|don'?t know|do not know|"
     r"not sure|unsure|no idea|\blater\b"
 )
+_EGAL = re.compile(r"\begal\b|\bflexibel\b|\bbeliebig\b|\bany\b|\banywhere\b|doesn'?t matter|no preference|flexible")
+_JA_NEIN = re.compile(r"^(ja|jo|jawohl|gerne?|bitte|yes|yep|sure|nein|na|no|nope)\b[\s,.!]*(bitte|please)?[\s.!]*$")
 
 _ZAHLWORTE = {
     "eins": 1, "ein": 1, "eine": 1, "einem": 1, "zwei": 2, "drei": 3, "vier": 4, "fuenf": 5, "sechs": 6,
@@ -203,7 +246,78 @@ def _auswahl(slot_id: str, f: str) -> str | None:
             return "stationaer"
         if _treffer(r"nicht angegeben|not stated|keine angabe", f):
             return "nicht_angegeben"
+        return None
+    if slot_id == "termin.anlass":
+        for wert, muster in _TERMIN_ANLASS:
+            if _treffer(muster, f):
+                return wert
+        return None
+    if slot_id == "termin.zeit":
+        if _treffer(r"vormittag|morgens|in der frueh|\bfrueh\b|morning|before noon", f):
+            return "vormittags"
+        if _treffer(r"nachmittag|abends|afternoon|evening", f):
+            return "nachmittags"
+        if _EGAL.search(f) or _treffer(r"beides|jederzeit|immer|either|both|any ?time", f):
+            return "egal"
     return None
+
+
+# Anlass eines Termins aus freiem Text (Reihenfolge = Vorrang)
+_TERMIN_ANLASS = (
+    ("zahn", r"zahn|dentist|dental|teeth|tooth"),
+    ("impfung", r"impf|vaccin|\bjab\b|booster"),
+    ("kind", r"kinderarzt|kinderaerzt|paediat|pediat|\bkind|\bbaby|\bchild"),
+    ("kontrolle", r"kontroll|nachsorge|nachuntersuch|follow-?up|check on my results|befundbesprech"),
+    ("vorsorge", r"vorsorge|gesundenunters|check-?up|screening|praevent|prevent|mammograf|koloskop"),
+    ("beschwerden", r"beschwerd|schmerz|\bweh\b|tut weh|\bkrank\b|fieber|husten|symptom|complaint|\bpain|\bsick\b|"
+                    r"\bill\b|unwell|fever|cough"),
+    ("beratung", r"berat|advice|consult|counsel"),
+)
+
+_TERMIN_WORT = re.compile(
+    r"\b(?:arzt|zahnarzt|fach(?:arzt|aerzt\w*)|kinderarzt|haus(?:arzt|aerztin)|kontroll|vorsorge|impf|untersuchungs|"
+    r"nachsorge)?termin\w*|\bappointment"
+)
+_TERMIN_WUNSCH = re.compile(
+    r"moechte|brauche|braucht|\bwill\b|wuensche|haett?e gerne?|suche|vereinbar|ausmach|bekomm|kriegen|organisier|"
+    r"vorbereit|buchen|\bneed|\bwant|would like|like to|\bbook|\bmake\b|schedule|arrange|\bget\b|prepare|looking for|"
+    r"help me"
+)
+# Fahrt, Kosten oder Zuschuss zu einem Termin sind ein Leistungsthema, keine Terminvorbereitung
+_TERMIN_KOSTEN = re.compile(r"fahrt|transport|taxi|kosten|zahlt|bezahl|zuschuss|\bpay|\bcost|\bride\b|refund")
+_TERMIN_ERLEDIGT = re.compile(
+    r"wahrgenommen|\bwar (heute |gestern |schon )?(beim|bei der|dort|da)\b|erledigt|hinter mir|attended|\bdone\b|"
+    r"\bwent\b|\bwas at\b|had my"
+)
+# Uhrzeit in absteigender Genauigkeit: „10:30“ / „10.30 Uhr“, dann „um 10“, dann „14 Uhr“ / „3 pm“
+_UHRZEIT = (
+    re.compile(r"\b([01]?\d|2[0-3])[:.]([0-5]\d)\s*(uhr|h|am|pm)?\b"),
+    re.compile(r"\b(?:um|at|gegen)\s+([01]?\d|2[0-3])()\s*(uhr|h|am|pm|o'?clock)?\b"),
+    re.compile(r"\b([01]?\d|2[0-3])()\s*(uhr|am|pm)\b"),
+)
+_DATUM_MUSTER = re.compile(
+    r"\d{1,2}\.\s?\d{1,2}\.\s?\d{4}|\d{4}-\d{1,2}-\d{1,2}|\d{1,2}/\d{1,2}/\d{4}|\b\d{1,2}\.\s?\d{1,2}\."
+)
+
+# Sach- und Vergleichsfragen zu Leistungen des Katalogs („Was ist der Unterschied zwischen Kur und Reha?“)
+_VERGLEICH = re.compile(r"unterschied|vergleich|\boder\b|\bvs\b|versus|difference|compare|\bor\b")
+_DEFINITION = re.compile(
+    r"^(was|wie) (ist|sind|bedeutet|bedeuten|heisst|funktioniert)\b|^what (is|are|does)\b|^(erklaer|explain)"
+)
+
+_STATUS_FRAGE = re.compile(
+    r"\bwie weit\b|was ist (denn )?(noch |jetzt )?offen|\bnoch offen\b|was fehlt( denn)? noch|"
+    r"was (muss|soll) ich (denn )?noch\b|wo stehe? ich|\bstand (meine|meiner|meines|des|der|von)\b|"
+    r"\bstatus (meine|meiner|meines|des|der|von)\b|ueberblick (ueber )?meine|"
+    r"what('s| is) (still )?(open|left|pending|missing)|\bstill (open|to do|pending)\b|\bhow far\b|"
+    r"where do i stand|status of my|my progress|what do i still"
+)
+
+
+def _termin_wunsch(f: str) -> bool:
+    if not _TERMIN_WORT.search(f) or _TERMIN_KOSTEN.search(f):
+        return False
+    return bool(_TERMIN_WUNSCH.search(f)) or len(f.split()) <= 4
 
 
 def _datum(text: str) -> str | None:
@@ -222,6 +336,36 @@ def _datum(text: str) -> str | None:
             return None
         return f"{d.day:02d}.{d.month:02d}.{d.year:04d}"
     return None
+
+
+def _termin_datum(text: str, heute: date | None = None) -> str | None:
+    """Datum eines gemeldeten Termins; „12.11.“ ohne Jahr = nächster solcher Tag."""
+    if d := _datum(text):
+        return d
+    m = re.search(r"\b(\d{1,2})\.\s?(\d{1,2})\.(?!\s?\d)", text)
+    if not m:
+        return None
+    heute = heute or date.today()
+    for jahr in (heute.year, heute.year + 1):
+        try:
+            d = date(jahr, int(m.group(2)), int(m.group(1)))
+        except ValueError:
+            return None
+        if d >= heute:
+            return f"{d.day:02d}.{d.month:02d}.{d.year:04d}"
+    return None
+
+
+def _uhrzeit(text: str) -> str:
+    """Uhrzeit HH:MM aus freiem Text (Datumsangaben werden vorher entfernt); "" wenn keine."""
+    rest = _DATUM_MUSTER.sub(" ", text.casefold())
+    m = next((m for muster in _UHRZEIT if (m := muster.search(rest))), None)
+    if not m:
+        return ""
+    stunde, minute, zusatz = int(m.group(1)), int(m.group(2) or 0), m.group(3)
+    if zusatz == "pm" and stunde < 12:
+        stunde += 12
+    return f"{stunde:02d}:{minute:02d}"
 
 
 def _zahl(f: str) -> str | None:
@@ -252,6 +396,8 @@ def normalisiere(slot_id: str, text: str) -> str | None:
         wert = _datum(roh)
     elif slot.typ == "zahl":
         wert = _zahl(_falte(roh))
+    elif slot_id == "termin.uhrzeit":
+        wert = _uhrzeit(roh) or None
     else:
         wert = " ".join(roh.split())
     return wert if wert is not None and slot.gueltig(wert) else None
@@ -338,6 +484,11 @@ def _kuerzen(text: str, max_len: int = 300) -> str:
     return text[: max_len - 1].rsplit(" ", 1)[0] + " …"
 
 
+def _basis(sprache: str) -> str:
+    """Sprache der Textbausteine: de/en direkt, weitere Sprachen werden aus dem Englischen übersetzt."""
+    return sprache if sprache in SPRACHEN else "en"
+
+
 # ---------------------------------------------------------------------------
 # Engine
 # ---------------------------------------------------------------------------
@@ -365,6 +516,12 @@ class Lotse:
         s.sprache, s.stil = sprache, stil
         return self._antwort(s, s.letzte or Inhalt(art="start"))
 
+    def wiederhergestellt(self, s: Sitzung) -> Antwort:
+        """Antwort nach Import bzw. Laden eines Falls: Stand der Fallakte."""
+        inhalt = self._status(s, "")
+        inhalt.absaetze.insert(0, Absatz(beide("wiederhergestellt")))
+        return self._antwort(s, inhalt)
+
     # -- Nachricht ----------------------------------------------------------
 
     def nachricht(self, s: Sitzung, text: str) -> Antwort:
@@ -375,9 +532,14 @@ class Lotse:
             return self._antwort(s, inhalt)
         s.verlauf.append({"rolle": "nutzer", "text": text})
 
+        f = _falte(text)
         entscheidung = grenzen.pruefe_anfrage(text)
         durch_ki = False
-        if entscheidung.erlaubt and llm.aktiv():
+        # Erkannte Terminwünsche und Antworten auf Terminfragen sind organisatorisch („eine Impfung“, „Beschwerden“);
+        # die Regeln der ersten Stufe gelten trotzdem.
+        termin_kontext = "?" not in text and (_termin_wunsch(f) or (
+            s.offene_frage in TERMIN_SLOTS and normalisiere(s.offene_frage, text) is not None))
+        if entscheidung.erlaubt and llm.aktiv() and not termin_kontext:
             # Zweite Stufe für Formulierungen, die die Regeln nicht kennen (Dialekt, andere Sprachen)
             entscheidung = grenzen.ablehnung(llm.grenzkategorie(text))
             durch_ki = not entscheidung.erlaubt
@@ -389,13 +551,25 @@ class Lotse:
         if schritt_id := self._statusbefehl(s, text):
             return self.setze_status(s, schritt_id, "erledigt")
 
-        f = _falte(text)
+        if (antwort := self._termin_meldung(s, text, f)) is not None:
+            return antwort
+        if s.offene_frage in TERMIN_SLOTS and (antwort := self._termin_antwort(s, text, f)) is not None:
+            return antwort
+        if _STATUS_FRAGE.search(f):
+            return self._antwort(s, self._status(s, text))
+        if _termin_wunsch(f):
+            return self._antwort(s, self._termin_start(s, _auswahl("termin.anlass", f)))
+        if (leistungsfrage := self._leistungsfrage(text, f)) is not None:
+            return self._antwort(s, leistungsfrage)
+
         szenarien = list(katalog.erkenne_szenarien(text))
         spezial = self._spezialfrage(f, text)
         inhalt = Inhalt(art="fall")
         geantwortet = False
 
         extrahiert = extrahiere(text, szenarien or s.szenarien)
+        if extrahiert.get("anliegen.fuer_wen") == "angehoerige" and katalog.vorsorge_hinweise(text):
+            del extrahiert["anliegen.fuer_wen"]  # „Mein Vater hatte Darmkrebs“: Vorsorge für die fragende Person
         neu_genannt = any(s.werte.get(k) != v for k, v in extrahiert.items())
 
         if s.offene_frage and not spezial:
@@ -409,6 +583,13 @@ class Lotse:
                     s.offene_frage = None
                     inhalt.neu("uebersprungen")
                     geantwortet = True
+            if wert is None and not geantwortet and slot_id == "person.bundesland" \
+                    and self._bundesland_aus_ort(s, f, inhalt):
+                s.offene_frage = None  # „Graz“ beantwortet die Frage nach dem Bundesland
+                geantwortet = True
+            if wert is None and not geantwortet and SLOTS[slot_id].typ == "auswahl" and llm.aktiv():
+                wert = llm.verstehe(text, s.sprache)["slots"].get(slot_id)  # Antwort in anderer Sprache
+                inhalt.ki_verstanden = wert is not None
             if wert is not None:
                 self._setze_wert(s, slot_id, wert, inhalt)
                 s.offene_frage = None
@@ -417,25 +598,68 @@ class Lotse:
                 return self._frage_erneut(s, slot_id)
 
         neu_erkannt = self._uebernimm(s, extrahiert, inhalt)
+        neu_erkannt = self._bundesland_aus_ort(s, f, inhalt) or neu_erkannt
 
         if spezial:
             return self._antwort(s, self._mit_quelldaten(spezial))
 
+        suchtext = ""
         if not szenarien and not geantwortet and not neu_erkannt and llm.aktiv():
             ki = llm.verstehe(text, s.sprache)
-            szenarien = ki["szenarien"]
-            neu_erkannt = self._uebernimm(s, ki["slots"], inhalt)
-            inhalt.ki_verstanden = bool(szenarien or neu_erkannt)
+            if ki.get("art") == "termin":
+                # Termin mit Datum in anderer Sprache gemeldet („Randevum 20.11.2026 saat 09:15“) → eintragen
+                if _termin_datum(text) and (antwort := self._termin_meldung(s, text, f, termin_erkannt=True)):
+                    antwort.modus = "ki"
+                    return antwort
+                inhalt = self._termin_start(s, ki["slots"].get("termin.anlass"))
+                inhalt.ki_verstanden = True
+                return self._antwort(s, inhalt)
+            if ki.get("art") == "status":
+                inhalt = self._status(s, text)
+                inhalt.ki_verstanden = True
+                return self._antwort(s, inhalt)
+            suchtext = ki.get("suche", "")
+            if ki.get("art") == "frage" and suchtext:
+                # Sachfrage, z. B. auf Türkisch: Sonderfragen und Suche über die deutschen Stichworte;
+                # genannte Werte („Stufe 3“) sind Teil der Frage, keine Angabe zur Person
+                if spezial := self._spezialfrage(_falte(suchtext), suchtext):
+                    inhalt = self._mit_quelldaten(spezial)
+                    inhalt.ki_verstanden = True
+                    return self._antwort(s, inhalt)
+                inhalt.ki_verstanden = True
+            else:
+                szenarien = ki["szenarien"]
+                slots = {k: v for k, v in ki["slots"].items() if k not in TERMIN_SLOTS}
+                neu_erkannt = self._uebernimm(s, slots, inhalt)
+                inhalt.ki_verstanden = bool(szenarien or neu_erkannt or suchtext)
 
         if szenarien:
+            s.fokus = self._fokus(text)
             self._neue_szenarien(s, szenarien)
-            return self._antwort(s, self._fall(s, inhalt, neue_szenarien=szenarien))
+            return self._antwort(s, self._fall(s, inhalt, neue_szenarien=szenarien,
+                                               vorsorge=katalog.vorsorge_hinweise(text)))
         if geantwortet or (neu_erkannt and s.szenarien):
             return self._antwort(s, self._fall(s, inhalt))
         if neu_erkannt:
             inhalt.neu("wissen_tipp", beispiel={sp: texte.BEISPIELE["pflege"][sp] for sp in SPRACHEN})
             return self._antwort(s, inhalt)
-        return self._antwort(s, self._mit_quelldaten(lambda: self._wissen(text)))
+
+        try:
+            treffer = self._relevante(text, suchtext)
+        except FileNotFoundError:
+            fehlt = Inhalt(art="wissen")
+            fehlt.neu("quellen_fehlen")
+            return self._antwort(s, fehlt)
+        passend = [l for l, p in katalog.passende_leistungen(f"{text} {suchtext}".strip()) if p >= PASSEND_MIN]
+        if not treffer and passend:
+            # Keine belastbare Fundstelle, aber eine konkret passende Leistung: als Anliegen anbieten
+            s.fokus = [l.id for l in passend]
+            neue = [passend[0].szenarien[0]]
+            self._neue_szenarien(s, neue)
+            return self._antwort(s, self._fall(s, inhalt, neue_szenarien=neue))
+        wissen_inhalt = self._wissen(text, treffer)
+        wissen_inhalt.ki_verstanden = inhalt.ki_verstanden
+        return self._antwort(s, wissen_inhalt)
 
     @staticmethod
     def _mit_quelldaten(erzeuge) -> Inhalt:
@@ -452,6 +676,10 @@ class Lotse:
     def dokument(self, s: Sitzung, name: str, inhalt_bytes: bytes) -> Antwort:
         try:
             dok = dokument.lade_dokument(name, inhalt_bytes)
+        except dokument.BildNichtLesbar as e:
+            fehler = Inhalt(art="fehler")
+            fehler.neu(f"bild_{e.grund}" if e.grund in ("ki_inaktiv", "format", "unlesbar") else "dokument_fehler")
+            return self._antwort(s, fehler)
         except ValueError:
             dok = None
         if dok is None or not any(seite.strip() for seite in dok.seiten):
@@ -460,14 +688,18 @@ class Lotse:
             return self._antwort(s, fehler)
         empfehlungen = dokument.empfehlungen(dok)
         stammdaten = dokument.stammdaten(dok)
-        s.dokumente.append({"name": dok.name, "seiten": len(dok.seiten)})
+        impfungen = dokument.impfeintraege(dok)
+        medikamente = dokument.medikamente(dok)
+        s.dokumente.append({"name": dok.name, "seiten": len(dok.seiten), "transkribiert": dok.transkribiert})
         s.verlauf.append({"rolle": "nutzer", "text": f"[{dok.name}]"})
 
-        inhalt = Inhalt(art="fall")
+        inhalt = Inhalt(art="fall", ki_verstanden=dok.transkribiert)
         n = len(dok.seiten)
         inhalt.neu("dokument_gelesen", name=dok.name, seiten={
             "de": f"{n} Seite" if n == 1 else f"{n} Seiten", "en": f"{n} page" if n == 1 else f"{n} pages",
         })
+        if dok.transkribiert:
+            inhalt.neu("dokument_transkribiert")
         zeilen = []
         for e in empfehlungen:
             if not _katalog_hat(e.thema):
@@ -476,12 +708,18 @@ class Lotse:
             if all(x.zitat != e.zitat for x in liste):
                 liste.append(e)
             zeilen.append(beide("dokument_steht", zitat=e.zitat, seite=e.seite))
-            if e.quelle not in inhalt.quellen:
-                inhalt.quellen.append(e.quelle)
+            inhalt.marke(e.quelle)
         if zeilen:
             inhalt.zeilen(zeilen)
-        else:
+        elif not impfungen:
             inhalt.neu("dokument_keine_empfehlung")
+        if any(e.thema == "kontrolltermine" for e in empfehlungen) and _katalog_hat("kontrolltermine"):
+            inhalt.neu("termin_angebot")
+
+        if impfungen:
+            self._impfungen_uebernehmen(s, dok, impfungen, inhalt)
+        if medikamente:
+            self._medikamente_uebernehmen(s, dok, medikamente, inhalt)
 
         uebernommen: list[str] = []
         for sd in stammdaten:
@@ -494,11 +732,13 @@ class Lotse:
             s.herkunft[sd.slot] = {"art": "dokument", "dokument": dok.name, "seite": sd.seite}
             if sd.slot not in uebernommen:
                 uebernommen.append(sd.slot)
-            # Wien ist Gemeinde und Bundesland zugleich
-            if sd.slot == "person.ort" and _falte(sd.wert) == "wien" and "person.bundesland" not in s.werte:
-                s.werte["person.bundesland"] = "Wien"
-                s.herkunft["person.bundesland"] = {"art": "dokument", "dokument": dok.name, "seite": sd.seite}
-                uebernommen.append("person.bundesland")
+            # Wien ist Gemeinde und Bundesland zugleich; große Städte ergeben ihr Bundesland
+            if sd.slot == "person.ort" and "person.bundesland" not in s.werte:
+                land = "Wien" if _falte(sd.wert) == "wien" else (_stadt(_falte(sd.wert)) or (None,))[0]
+                if land:
+                    s.werte["person.bundesland"] = land
+                    s.herkunft["person.bundesland"] = {"art": "dokument", "dokument": dok.name, "seite": sd.seite}
+                    uebernommen.append("person.bundesland")
         if uebernommen:
             inhalt.neu("dokument_stammdaten", labels={
                 sp: ", ".join(texte.slot_label(x, sp) for x in uebernommen) for sp in SPRACHEN
@@ -506,10 +746,52 @@ class Lotse:
         if s.offene_frage in s.werte:
             s.offene_frage = None
 
-        neue = ["entlassung"] if s.dok_empfehlungen else []
+        neue = ["entlassung"] if empfehlungen and s.dok_empfehlungen else []
         if neue:
+            s.fokus = []  # Empfehlungen aus dem Dokument stehen jetzt vorn
             self._neue_szenarien(s, neue)
         return self._antwort(s, self._fall(s, inhalt, neue_szenarien=neue))
+
+    def _impfungen_uebernehmen(self, s: Sitzung, dok, impfungen: list, inhalt: Inhalt) -> None:
+        """Dokumentierte Impfeinträge wörtlich auflisten – ohne Bewertung, ohne „fällig“."""
+        vorhanden = {(i["impfung"], i["datum"], i["dokument"]) for i in s.impfungen}
+        for e in impfungen:
+            if (e.impfung, e.datum, dok.name) not in vorhanden:
+                s.impfungen.append({"impfung": e.impfung, "datum": e.datum, "seite": e.seite, "dokument": dok.name})
+        impfpass = re.search(r"impf(pass|ausweis|nachweis|karte|buch|dokumentation|zertifikat)",
+                             f"{dok.name} {' '.join(dok.seiten)[:3000]}", re.IGNORECASE)
+        inhalt.neu("impfungen_einleitung_impfpass" if impfpass else "impfungen_einleitung")
+        inhalt.zeilen([beide("impfung_zeile", impfung=e.impfung, datum=e.datum, seite=e.seite) for e in impfungen])
+        inhalt.neu("impfungen_arzt")
+        if _katalog_hat("impfungen") and "impfungen" not in s.dok_leistungen:
+            s.dok_leistungen.append("impfungen")
+
+    def _medikamente_uebernehmen(self, s: Sitzung, dok, medikamente: list, inhalt: Inhalt) -> None:
+        """Genannte Medikamente → Erstattungsstatus aller EKO-Einträge zum Namen (administrativ, keine Empfehlung).
+        Der Brief nennt meist keine Packung; darum zählen alle Einträge, nicht ein willkürlich gewählter."""
+        zeilen = []
+        vorhanden = {(m["name_dokument"], m["dokument"]) for m in s.medikamente}
+        for m in medikamente:
+            suchname, eintraege = _eko_eintraege(m.name)
+            if (m.name, dok.name) not in vorhanden:
+                vorhanden.add((m.name, dok.name))
+                s.medikamente.append({"name_dokument": m.name, "seite": m.seite, "dokument": dok.name,
+                                      "eko_suche": suchname if eintraege else None})
+            if not eintraege:
+                zeilen.append(beide("medikament_nicht_gefunden", name=m.name, seite=m.seite))
+                continue
+            varianten = _eko_varianten(eintraege)
+            marken = "".join(inhalt.marke(g[0].quelle) for g in varianten.values())
+            if len(varianten) == 1:
+                box = eintraege[0].box
+                key = "medikament_zeile_alle" if len(eintraege) > 1 else "medikament_zeile_eins"
+                zeilen.append({sp: t(key, sp, name=m.name, seite=m.seite, n=len(eintraege),
+                                     box=texte.BOX_LABEL[box][sp], marken=marken) for sp in SPRACHEN})
+            else:
+                zeilen.append({sp: t("medikament_zeile_varianten", sp, name=m.name, seite=m.seite, marken=marken,
+                                     varianten=_varianten_text(varianten, sp, beispiel=False)) for sp in SPRACHEN})
+        inhalt.neu("medikamente_einleitung")
+        inhalt.zeilen(zeilen)
 
     # -- Fallakte und Formular ---------------------------------------------
 
@@ -540,6 +822,301 @@ class Lotse:
                 s.fallakte.setze(schritt.id, "in_arbeit")
         return pdf
 
+    # -- Termine (Vorbereitung, nie Buchung) ---------------------------------
+
+    def termin_starten(self, s: Sitzung, anlass: str | None = None, leistung: str | None = None) -> Antwort:
+        """Terminvorbereitung beginnen, optional mit Anlass oder aus einer Leistung (deren `termin_anlass`)."""
+        if anlass is not None and anlass not in SLOTS["termin.anlass"].optionen:
+            raise ValueError(f"Unbekannter Anlass: {anlass}")
+        if leistung is not None:
+            l = katalog.leistung(leistung)  # KeyError bei unbekannter Leistung
+            anlass = anlass or l.termin_anlass
+        return self._antwort(s, self._termin_start(s, anlass, leistung))
+
+    def termin_aktualisieren(
+        self, s: Sitzung, termin_id: str, datum: str | None = None, uhrzeit: str | None = None,
+        status: str | None = None,
+    ) -> Antwort:
+        """Vereinbartes Datum/Uhrzeit eintragen oder Termin als erledigt markieren (KeyError, ValueError)."""
+        termin = s.fallakte.termine[termin_id]
+        if datum:
+            datum = normalisiere("termin.datum", datum)
+            if datum is None:
+                raise ValueError("Datum bitte als TT.MM.JJJJ")
+        if uhrzeit:
+            uhrzeit = normalisiere("termin.uhrzeit", uhrzeit)
+            if uhrzeit is None:
+                raise ValueError("Uhrzeit bitte als HH:MM")
+        if status not in (None, "vereinbart", "erledigt"):
+            raise ValueError(f"Unbekannter Terminstatus: {status}")
+        neues_datum = datum or termin.datum
+        if (uhrzeit or status == "vereinbart") and not neues_datum:
+            raise ValueError("Es fehlt das Datum des Termins")
+        inhalt = Inhalt(art="termin")
+        if datum or uhrzeit or status == "vereinbart":
+            self._termin_eintragen(s, termin, neues_datum, uhrzeit or termin.uhrzeit, inhalt)
+        if status == "erledigt":
+            s.fallakte.setze(f"{termin.id}.wahrnehmen", "erledigt")
+            inhalt.neu("termin_erledigt", titel=s.fallakte.eintraege[termin.id].titel)
+        if not inhalt.absaetze:
+            raise ValueError("Nichts zu ändern: datum, uhrzeit oder status angeben")
+        self._naechster(s, inhalt)
+        return self._antwort(s, inhalt)
+
+    def termin_ics(self, s: Sitzung, termin_id: str) -> str:
+        """Kalendereintrag (RFC 5545) eines vereinbarten Termins; KeyError/ValueError ohne Termin bzw. Datum."""
+        termin = s.fallakte.termine[termin_id]
+        sp = "de" if s.sprache == "de" else "en"
+        info = _termin_info(termin)
+        zeilen = [info.wo[sp]] if info and info.wo.get(sp) else []
+        zeilen += [h[sp] for h in info.hinweise] if info else []
+        zeilen.append(t("termin_beschreibung", sp))
+        return ics(termin, s.fallakte.eintraege[termin.id].titel[sp], "\n".join(zeilen))
+
+    def _termin_start(self, s: Sitzung, anlass: str | None, leistung: str | None = None) -> Inhalt:
+        s.termin_entwurf = {"anlass": anlass or "", "ort": None, "zeit": None, "leistung": leistung}
+        inhalt = Inhalt(art="termin")
+        inhalt.neu("termin_start")
+        return self._termin_weiter(s, inhalt)
+
+    def _termin_weiter(self, s: Sitzung, inhalt: Inhalt) -> Inhalt:
+        """Hintergrund → Nähe → Tageszeit (Use Case 3.3); danach der fertige Terminauftrag."""
+        e = s.termin_entwurf or {}
+        for slot_id, key in zip(TERMIN_SLOTS, ("anlass", "ort", "zeit")):
+            if e.get(key) is None or (key == "anlass" and not e.get(key)):
+                s.offene_frage = slot_id
+                return inhalt
+        s.offene_frage = None
+        return self._termin_anlegen(s, inhalt)
+
+    def _termin_antwort(self, s: Sitzung, text: str, f: str) -> Antwort | None:
+        """Antwort auf eine Terminfrage; None, wenn die Nachricht ein neues Anliegen ist (Entwurf verfällt)."""
+        slot_id = s.offene_frage
+        slot = SLOTS[slot_id]
+        if s.termin_entwurf is None:
+            s.offene_frage = None
+            return None
+        if slot_id == "termin.ort" and (_UEBERSPRINGEN.search(f) or _EGAL.search(f)):
+            wert = ""
+        elif slot_id == "termin.ort" and _JA_NEIN.match(f):
+            wert = s.werte.get("person.ort", "")  # „Ja, in meiner Nähe“ ohne Ortsangabe
+        else:
+            wert = normalisiere(slot_id, text)
+            if wert is None and slot_id == "termin.zeit" and _UEBERSPRINGEN.search(f):
+                wert = "egal"
+        # Fragen, Statusfragen und längere Sätze mit erkennbarem Anliegen sind keine Antwort auf die Terminfrage;
+        # kurze Antworten wie „Ich glaub, ich brauch eine Impfung“ schon.
+        woerter = len(text.split())
+        szenario = woerter >= 4 and bool(katalog.erkenne_szenarien(text))
+        if "?" in text or _STATUS_FRAGE.search(f) or (szenario and (wert is None or woerter > 6)):
+            s.termin_entwurf = None
+            s.offene_frage = None
+            return None
+        inhalt = Inhalt(art="termin")
+        if wert is None and slot.typ == "auswahl" and llm.aktiv():
+            wert = llm.verstehe(text, s.sprache)["slots"].get(slot_id)  # Antwort in anderer Sprache
+            inhalt.ki_verstanden = wert is not None
+        if wert is None:
+            if woerter >= 5:
+                s.termin_entwurf = None
+                s.offene_frage = None
+                return None
+            return self._frage_erneut(s, slot_id)
+        s.termin_entwurf[slot_id.removeprefix("termin.")] = wert
+        if wert:
+            inhalt.neu("notiert", label=slot.label, wert={sp: texte.wert_anzeige(slot_id, wert, sp) for sp in SPRACHEN})
+        if slot_id == "termin.ort" and "person.bundesland" not in s.werte:
+            if land := _bundesland(_falte(wert), kurzformen=True):
+                self._setze_wert(s, "person.bundesland", land, inhalt)
+            else:
+                self._bundesland_aus_ort(s, _falte(wert), inhalt)
+        return self._antwort(s, self._termin_weiter(s, inhalt))
+
+    def _termin_anlegen(self, s: Sitzung, inhalt: Inhalt) -> Inhalt:
+        e = s.termin_entwurf or {}
+        s.termin_entwurf = None
+        termin = Termin(
+            id=s.fallakte.neue_termin_id(),
+            anlass=e.get("anlass") or "",
+            ort=e.get("ort") or "",
+            zeit=e.get("zeit") or "",
+            bundesland=s.werte.get("person.bundesland", ""),
+            leistung_id=e.get("leistung"),
+            erstellt=datetime.now().isoformat(timespec="seconds"),
+        )
+        self._termin_in_akte(s, termin)
+        return self._termin_auftrag(s, termin, inhalt)
+
+    def _termin_in_akte(self, s: Sitzung, termin: Termin) -> None:
+        anlass = _termin_anlass(termin)
+        schritte = [{"id": k, "de": t(f"termin_schritt_{k}", "de"), "en": t(f"termin_schritt_{k}", "en")}
+                    for k in TERMIN_KETTE]
+        s.fallakte.neuer_termin(termin, beide("termin_titel", anlass=anlass), schritte)
+
+    def _termin_auftrag(self, s: Sitzung, termin: Termin, inhalt: Inhalt) -> Inhalt:
+        """Fertiger Terminauftrag: wohin (mit Quelle), Hinweise, Suchdienste, Anfragetext, nächster Schritt."""
+        info = _termin_info(termin)
+        if info and info.beschwerden_hinweis.get("de"):
+            inhalt.absaetze.append(Absatz(dict(info.beschwerden_hinweis)))
+        details = {}
+        for sp in SPRACHEN:
+            teile = [_termin_anlass(termin)[sp]]
+            if termin.zeit:
+                teile.append(texte.wert_anzeige("termin.zeit", termin.zeit, sp))
+            if termin.ort:
+                # „in der Nähe vom Westbahnhof“ nicht doppelt einleiten
+                eigen = re.match(r"(in|im|bei|beim|nahe|naehe|near|close|around|um)\b", _falte(termin.ort))
+                teile.append(termin.ort if eigen else t("termin_nahe", sp, ort=termin.ort))
+            details[sp] = ", ".join(teile)
+        inhalt.neu("termin_fertig", details=details)
+        if info:
+            marken = "".join(inhalt.marke(q) for q in info.quellen)
+            if info.wo.get("de"):
+                inhalt.absaetze.append(Absatz({sp: f"{t('termin_wo', sp, wo=info.wo[sp])} {marken}".strip()
+                                               for sp in SPRACHEN}))
+            inhalt.zeilen([{sp: f"• {h[sp]}" for sp in SPRACHEN} for h in info.hinweise])
+            if info.suche:
+                inhalt.neu("termin_suche", namen={sp: ", ".join(x["name"][sp] for x in info.suche) for sp in SPRACHEN})
+        inhalt.neu("termin_anfrage")
+        if s.sprache in WEITERE_SPRACHEN:
+            inhalt.neu("termin_sprache_de")
+        inhalt.neu("termin_datum_tipp")
+        self._naechster(s, inhalt, termin.id)
+        return inhalt
+
+    def _termin_meldung(self, s: Sitzung, text: str, f: str, termin_erkannt: bool = False) -> Antwort | None:
+        """„Termin am 12.11.2026 um 10:30“ → eintragen; „Termin wahrgenommen“ → erledigt. Sonst None."""
+        if not termin_erkannt and not _TERMIN_WORT.search(f):
+            return None
+        datum = _termin_datum(text)
+        offen = [tm for tid, tm in reversed(s.fallakte.termine.items()) if s.fallakte.termin_status(tid) != "erledigt"]
+        if datum:
+            inhalt = Inhalt(art="termin")
+            vorbereitet = [tm for tm in offen if s.fallakte.termin_status(tm.id) == "vorbereitet"]
+            termin = (vorbereitet or offen or [None])[0]
+            if termin is None:
+                # Termin ohne (fertige) Vorbereitung gemeldet: trotzdem notieren, damit es einen Kalendereintrag gibt
+                e = s.termin_entwurf or {}
+                termin = Termin(id=s.fallakte.neue_termin_id(),
+                                anlass=_auswahl("termin.anlass", f) or e.get("anlass") or "",
+                                ort=e.get("ort") or "", zeit=e.get("zeit") or "", leistung_id=e.get("leistung"),
+                                bundesland=s.werte.get("person.bundesland", ""),
+                                erstellt=datetime.now().isoformat(timespec="seconds"))
+                self._termin_in_akte(s, termin)
+            if s.offene_frage in TERMIN_SLOTS:
+                s.offene_frage = None
+            s.termin_entwurf = None
+            self._termin_eintragen(s, termin, datum, _uhrzeit(text), inhalt)
+            self._naechster(s, inhalt)
+            return self._antwort(s, inhalt)
+        if _TERMIN_ERLEDIGT.search(f) and "?" not in text and not _termin_wunsch(f):
+            inhalt = Inhalt(art="termin")
+            vereinbart = [tm for tm in offen if s.fallakte.termin_status(tm.id) == "vereinbart"]
+            termin = (vereinbart or offen or [None])[0]
+            if termin is None:
+                inhalt.neu("termin_unbekannt")
+                return self._antwort(s, inhalt)
+            s.fallakte.setze(f"{termin.id}.wahrnehmen", "erledigt")
+            inhalt.neu("termin_erledigt", titel=s.fallakte.eintraege[termin.id].titel)
+            self._naechster(s, inhalt)
+            return self._antwort(s, inhalt)
+        return None
+
+    def _termin_eintragen(self, s: Sitzung, termin: Termin, datum: str, uhrzeit: str, inhalt: Inhalt) -> None:
+        termin.datum, termin.uhrzeit = datum, uhrzeit
+        s.fallakte.setze(f"{termin.id}.eintragen", "erledigt")
+        um = beide("uhrzeit_um", uhrzeit=uhrzeit) if uhrzeit else {sp: "" for sp in SPRACHEN}
+        inhalt.neu("termin_vereinbart", titel=s.fallakte.eintraege[termin.id].titel, datum=datum, uhrzeit=um)
+
+    def _anfrage_text(self, s: Sitzung, termin: Termin, sp: str) -> str:
+        """Kopierfertiger Text für Telefon oder E-Mail (Formulierung der Person, keine Sachaussage)."""
+        anlass = texte.ANFRAGE_ANLASS.get(termin.anlass, {}).get(sp, "")
+        if termin.leistung_id and _katalog_hat(termin.leistung_id):
+            titel = katalog.leistung(termin.leistung_id).titel[sp]
+            anlass = f"{anlass} ({titel})".strip() if anlass else {"de": "für", "en": "for"}[sp] + f" {titel}"
+        zeit = texte.ANFRAGE_ZEIT.get(termin.zeit, {}).get(sp, "")
+        kv = s.werte.get("versicherung.krankenversicherung")
+        versicherung = t("anfrage_versichert", sp, kv=kv) if kv and kv != "unbekannt" else t("anfrage_ecard", sp)
+        return " ".join(t("anfrage_text", sp, anlass=anlass, zeit=zeit, versicherung=versicherung).split())
+
+    # -- Sach- und Vergleichsfragen zu Leistungen ---------------------------
+
+    def _leistungsfrage(self, text: str, f: str) -> Inhalt | None:
+        """„Unterschied zwischen Kur und Reha?“ bzw. „Was ist die Ausgleichszulage?“ → kuratierte Kurztexte der
+        klar passenden Leistungen samt Quellen, ohne neues Szenario; bei einer Leistung ergänzt um relevante
+        Fundstellen. None, wenn die Frage dafür nicht passt (dann übliche Verarbeitung)."""
+        try:
+            if self._spezialfrage(f, text):
+                return None  # Pflegegeldbetrag und Erstattungsstatus haben eigene, genauere Antworten
+        except FileNotFoundError:
+            pass
+        klar = [l for l, p in katalog.passende_leistungen(text) if p >= PASSEND_MIN]
+        vergleich = len(klar) >= 2 and _VERGLEICH.search(f) and ("?" in text or _treffer(r"unterschied|differen", f))
+        definition = bool(klar) and _DEFINITION.search(f) and len(text.split()) <= 10
+        if not (vergleich or definition):
+            return None
+        inhalt = Inhalt(art="wissen")
+        inhalt.neu("leistung_erklaerung")
+        for l in klar[:3]:
+            marken = "".join(inhalt.marke(q) for q in l.quellen[:3])
+            inhalt.absaetze.append(Absatz({sp: f"• {l.titel[sp]}: {l.kurz[sp]} {marken}".rstrip() for sp in SPRACHEN}))
+            if l.details.get("de"):
+                inhalt.absaetze.append(Absatz(dict(l.details), nur_ausfuehrlich=True))
+            inhalt.zeilen([{sp: f"– {v[sp]}" for sp in SPRACHEN} for v in l.voraussetzungen], nur_ausfuehrlich=True)
+        if len(klar) == 1:
+            try:
+                treffer = self._relevante(text)
+            except FileNotFoundError:
+                treffer = []
+            if treffer:
+                inhalt.neu("leistung_erklaerung_recht")
+                zeilen = []
+                for tr in treffer:
+                    q = tr.quelle
+                    n = inhalt.marke(q).strip("[]")
+                    zeilen.append(beide("wissen_zeile", zitat=q.zitat or _kuerzen(tr.text), titel=q.titel,
+                                        fundstelle=q.fundstelle or "–", n=n))
+                inhalt.zeilen(zeilen)
+        inhalt.neu("leistung_erklaerung_angebot")
+        return inhalt
+
+    # -- Weiterverfolgen ----------------------------------------------------
+
+    def _status(self, s: Sitzung, text: str) -> Inhalt:
+        """Stand der Fallakte: erledigt/offen je Leistung und Termin, nächster Schritt (statt neuem Fall)."""
+        inhalt = Inhalt(art="status")
+        fa = s.fallakte
+        if not fa.eintraege:
+            inhalt.neu("status_leer")
+            inhalt.neu("wissen_tipp", beispiel={sp: texte.BEISPIELE["pflege"][sp] for sp in SPRACHEN})
+            return inhalt
+        f = _falte(text)
+        leistungen = [e for e in fa.eintraege.values() if e.art == "leistung"]
+        genannt = [e for e in leistungen if _titel_genannt(e, f)] or [e for e in leistungen if _stichwort_genannt(e, f)]
+        wichtig = fa.relevante(s.leistungen[:PRIMAER])
+        schritte = [x for e in wichtig for x in e.schritte]
+        inhalt.neu("status_einleitung", erledigt=sum(x.status == "erledigt" for x in schritte), gesamt=len(schritte))
+        zeilen = []
+        for e in genannt or wichtig:
+            if e.art == "termin":
+                termin = fa.termine[e.termin_id]
+                status = fa.termin_status(termin.id)
+                um = beide("uhrzeit_um", uhrzeit=termin.uhrzeit) if termin.uhrzeit else {sp: "" for sp in SPRACHEN}
+                zeilen.append(beide(f"status_termin_{status}", titel=e.titel, datum=termin.datum, uhrzeit=um))
+                continue
+            ns = e.naechster_schritt()
+            erledigt = sum(x.status == "erledigt" for x in e.schritte)
+            if ns is None:
+                zeilen.append(beide("status_zeile_fertig", titel=e.titel))
+            else:
+                zeilen.append(beide("status_zeile", titel=e.titel, erledigt=erledigt, gesamt=len(e.schritte),
+                                    schritt={sp: ns.text[sp].rstrip(".") for sp in SPRACHEN}))
+        inhalt.zeilen(zeilen)
+        if not genannt and (rest := len(fa.eintraege) - len(wichtig)):
+            inhalt.neu("gefunden_weitere", n=rest)
+        self._naechster(s, inhalt, genannt[0].leistung_id if genannt else None)
+        return inhalt
+
     # -- intern: Ablauf -----------------------------------------------------
 
     def _spezialfrage(self, f: str, text: str) -> Callable[[], Inhalt] | None:
@@ -568,12 +1145,18 @@ class Lotse:
                 return f"{(genannt or kandidaten)[0].leistung_id}.{schritt_id}"
         return None
 
+    def _fokus(self, text: str) -> list[str]:
+        """Leistungen zur konkreten Frage: Vorsorgeprogramme bei familiärer Vorbelastung, dann Stichworttreffer."""
+        ids = katalog.vorsorge_hinweise(text) + [l.id for l, _ in katalog.passende_leistungen(text)]
+        return list(dict.fromkeys(ids))
+
     def _neue_szenarien(self, s: Sitzung, szenarien: list[str]) -> None:
         neu = [sz for sz in szenarien if sz not in s.szenarien]
         s.szenarien = list(dict.fromkeys(list(szenarien) + s.szenarien))
         if neu:
             s.fragen_gestellt = 0
             s.offene_frage = None  # Rückfrage für das neue Anliegen neu bestimmen
+            s.termin_entwurf = None
 
     def _setze_wert(self, s: Sitzung, slot_id: str, wert: str, inhalt: Inhalt) -> None:
         s.werte[slot_id] = wert
@@ -586,6 +1169,20 @@ class Lotse:
             inhalt.neu("notiert", label=slot.label,
                        wert={sp: texte.wert_anzeige(slot_id, wert, sp) for sp in SPRACHEN})
 
+    def _bundesland_aus_ort(self, s: Sitzung, f: str, inhalt: Inhalt) -> bool:
+        """Bundesland aus einer genannten Stadt („Graz“ → Steiermark), nur solange es noch fehlt."""
+        if "person.bundesland" in s.werte or not (treffer := _stadt(f)):
+            return False
+        land, stadt = treffer
+        s.werte["person.bundesland"] = land
+        s.herkunft["person.bundesland"] = {"art": "ort", "ort": stadt}
+        s.uebersprungen.discard("person.bundesland")
+        if s.offene_frage == "person.bundesland":
+            s.offene_frage = None
+        inhalt.neu("notiert_ort", label=SLOTS["person.bundesland"].label, ort=stadt,
+                   wert={sp: texte.wert_anzeige("person.bundesland", land, sp) for sp in SPRACHEN})
+        return True
+
     def _uebernimm(self, s: Sitzung, werte: dict[str, str], inhalt: Inhalt) -> bool:
         neu = False
         for slot_id, wert in werte.items():
@@ -596,7 +1193,8 @@ class Lotse:
                 neu = True
         return neu
 
-    def _fall(self, s: Sitzung, inhalt: Inhalt, neue_szenarien: list[str] | None = None) -> Inhalt:
+    def _fall(self, s: Sitzung, inhalt: Inhalt, neue_szenarien: list[str] | None = None,
+              vorsorge: list[str] | None = None) -> Inhalt:
         vorher = list(s.leistungen)
         self._aktualisiere_buendel(s)
         if neue_szenarien:
@@ -604,24 +1202,44 @@ class Lotse:
             inhalt.absaetze.insert(0, Absatz(beide("verstanden", szenarien=labels)))
         if neue_szenarien or set(s.leistungen) != set(vorher):
             n = len(s.leistungen)
-            inhalt.neu("gefunden" if n > 1 else "gefunden_eine" if n == 1 else "gefunden_keine", n=n)
-            zeilen = []
-            for lid in s.leistungen:
-                l = katalog.leistung(lid)
-                zeilen.append(beide("leistung_zeile", titel=l.titel, kurz=l.kurz))
-            inhalt.zeilen(zeilen, nur_ausfuehrlich=True)
+            primaer = [katalog.leistung(lid) for lid in s.leistungen[:PRIMAER]]
+            if n > 1:
+                inhalt.neu("gefunden", n=n, wichtigste={sp: ", ".join(l.titel[sp] for l in primaer) for sp in SPRACHEN})
+                if n > PRIMAER:
+                    inhalt.neu("gefunden_weitere", n=n - PRIMAER)
+            else:
+                inhalt.neu("gefunden_eine" if n == 1 else "gefunden_keine")
+            programme = [katalog.leistung(lid) for lid in (vorsorge or []) if lid in s.leistungen]
+            if programme:
+                inhalt.neu("vorsorge_einleitung")
+                inhalt.zeilen(self._nutzen_zeilen(inhalt, programme))
+            inhalt.zeilen([beide("leistung_zeile", titel=l.titel, kurz=l.kurz) for l in primaer],
+                          nur_ausfuehrlich=True)
+            inhalt.zeilen(self._nutzen_zeilen(inhalt, [l for l in primaer if l not in programme]),
+                          nur_ausfuehrlich=True)
             inhalt.neu("anspruch_hinweis", nur_ausfuehrlich=True)
-        self._naechster(s, inhalt)
+        self._naechster(s, inhalt, s.leistungen[0] if s.fokus and s.leistungen else None)
         if "entlassung" in s.szenarien and not s.dokumente:
             inhalt.neu("dokument_tipp")
         if s.offene_frage is None:
             s.offene_frage = self._naechste_frage(s)
             if s.offene_frage:
                 s.fragen_gestellt += 1
-            elif any(katalog.leistung(lid).formular for lid in s.leistungen):
+            elif any(_formular_sichtbar(katalog.leistung(lid), s.werte.get("person.bundesland"))
+                     for lid in s.leistungen):
                 inhalt.neu("keine_fragen")
                 inhalt.neu("formular_hinweis", nur_ausfuehrlich=True)
         return inhalt
+
+    @staticmethod
+    def _nutzen_zeilen(inhalt: Inhalt, leistungen: list) -> list[dict[str, str]]:
+        """„Warum das hilft“ je Leistung – nur mit Beleg."""
+        zeilen = []
+        for l in leistungen:
+            if l.nutzen.get("de") and l.nutzen_quelle is not None:
+                n = inhalt.marke(l.nutzen_quelle).strip("[]")
+                zeilen.append(beide("nutzen_zeile", titel=l.titel, nutzen=l.nutzen, n=n))
+        return zeilen
 
     def _naechster(self, s: Sitzung, inhalt: Inhalt, leistung_id: str | None = None) -> None:
         schritt = s.fallakte.naechster_schritt(leistung_id) or s.fallakte.naechster_schritt()
@@ -633,22 +1251,45 @@ class Lotse:
 
     def _aktualisiere_buendel(self, s: Sitzung) -> None:
         land = s.werte.get("person.bundesland")
-        # Leistungen aus dem Dokument zuerst, in der Relevanzreihenfolge des Katalogs für „entlassung“
+        # Leistungen zur konkreten Frage zuerst, dann die aus Dokumenten (Relevanzreihenfolge für „entlassung“)
+        ids = [lid for lid in s.fokus if _katalog_hat(lid) and _in_region(katalog.leistung(lid), land)]
         rang = {l.id: i for i, l in enumerate(katalog.fuer_szenario("entlassung", land))}
-        ids = sorted((lid for lid in s.dok_empfehlungen if _katalog_hat(lid)), key=lambda x: rang.get(x, len(rang)))
+        aus_dokument = [lid for lid in [*s.dok_empfehlungen, *s.dok_leistungen] if _katalog_hat(lid)]
+        ids += sorted(dict.fromkeys(aus_dokument), key=lambda x: rang.get(x, len(rang)))
         for sz in s.szenarien:
             ids += [l.id for l in katalog.fuer_szenario(sz, land)]
-        ids += [lid for lid, e in s.fallakte.eintraege.items() if e.hat_fortschritt()]
+        ids += [lid for lid, e in s.fallakte.eintraege.items() if e.art == "leistung" and e.hat_fortschritt()]
         s.leistungen = list(dict.fromkeys(ids))
         s.fallakte.behalte(s.leistungen)
         for lid in s.leistungen:
-            l = katalog.leistung(lid)
-            unterlagen: list[tuple[dict[str, str], Quelle | None]] = [(dict(u), None) for u in l.unterlagen]
-            if l.formular:
-                unterlagen += [(dict(u.text), u.quelle) for u in formulare.formular(l.formular).unterlagen_fuer(lid)]
-            s.fallakte.ergaenze(lid, l.titel, l.schritte, unterlagen)
-            self._zustaendigkeit_vermerken(s, l)
+            self._ergaenze_eintrag(s, katalog.leistung(lid))
         s.fallakte.ordne(s.leistungen)
+
+    def _ergaenze_eintrag(self, s: Sitzung, l) -> None:
+        """Fallakten-Eintrag einer Leistung mit Schritten und Unterlagen. Unterlagen, die nur zum Formular gehören,
+        stehen nur dort, wo das Formular gilt; wechselt das Bundesland, fallen noch offene wieder weg."""
+        unterlagen: list[tuple[dict[str, str], Quelle | None]] = [(dict(u), None) for u in l.unterlagen]
+        zum_formular = _formular_unterlagen(l)
+        if _formular_sichtbar(l, s.werte.get("person.bundesland")):
+            unterlagen += zum_formular
+        elif l.id in s.fallakte.eintraege:
+            s.fallakte.entferne_offene_unterlagen(l.id, [text for text, _ in zum_formular])
+        s.fallakte.ergaenze(l.id, l.titel, l.schritte, unterlagen)
+        self._zustaendigkeit_vermerken(s, l)
+
+    def baue_fallakte(self, s: Sitzung, status: dict[str, str], historie: list[dict]) -> None:
+        """Fallakte aus gespeicherten Status wiederherstellen; Texte kommen aus Katalog und Formularen.
+        Unbekannte Schritte → KeyError."""
+        for tid, termin in s.fallakte.termine.items():
+            if tid not in s.fallakte.eintraege:
+                self._termin_in_akte(s, termin)
+        for lid in dict.fromkeys(x.split(".", 1)[0] for x in status):
+            if lid not in s.fallakte.eintraege:
+                self._ergaenze_eintrag(s, katalog.leistung(lid))
+        for schritt_id, wert in status.items():
+            s.fallakte.schritt(schritt_id).status = wert
+        s.fallakte.historie = list(historie)
+        self._aktualisiere_buendel(s)
 
     def _zustaendigkeit_vermerken(self, s: Sitzung, l) -> None:
         """Ist die zuständige Stelle durch eine Angabe geklärt, ist der Katalogschritt „zustaendigkeit_klaeren“ erledigt."""
@@ -663,11 +1304,11 @@ class Lotse:
             s.fallakte.setze(schritt.id, "erledigt")
 
     def _regional(self, s: Sitzung) -> bool:
-        """Gibt es für die Anliegen regionale Angebote (dann zuerst nach dem Bundesland fragen)?"""
+        """Gibt es für die Anliegen regionale Angebote oder Formulare (dann zuerst nach dem Bundesland fragen)?"""
         leistungen = [katalog.leistung(lid) for lid in s.dok_empfehlungen if _katalog_hat(lid)]
         for sz in s.szenarien:
             leistungen += katalog.fuer_szenario(sz, None)
-        return any(l.regionen for l in leistungen)
+        return any(l.regionen or l.formular_regionen or l.regional for l in leistungen)
 
     def _naechste_frage(self, s: Sitzung) -> str | None:
         """Genau eine Rückfrage: Region → Zuständigkeit → Antragsart → Rest; nie Bekanntes oder Sensibles."""
@@ -716,10 +1357,7 @@ class Lotse:
                 continue
             l = katalog.leistung(lid)
             belege = l.quellen[:2]  # die ersten zwei Belege der Leistung genügen als Verweis
-            for q in belege:
-                if q not in inhalt.quellen:
-                    inhalt.quellen.append(q)
-            nummern = ", ".join(f"[{inhalt.quellen.index(q) + 1}]" for q in belege)
+            nummern = ", ".join(inhalt.marke(q) for q in belege)
             zeilen.append({sp: f"{t('leistung_zeile', sp, titel=l.titel[sp], kurz=l.kurz[sp])} {nummern}".rstrip()
                            for sp in SPRACHEN})
         if zeilen:
@@ -762,20 +1400,29 @@ class Lotse:
         inhalt.neu("ekodex_einleitung")
         for e in eintraege:
             for q in e.quellen():
-                if q not in inhalt.quellen:
-                    inhalt.quellen.append(q)
+                inhalt.marke(q)
             n = inhalt.quellen.index(e.quelle) + 1
             inhalt.absaetze.append(Absatz({
                 sp: t("ekodex_zeile", sp, name=e.name, pzn=e.pzn, erklaerung=e.erklaerung(sp), n=n) for sp in SPRACHEN
             }))
         return inhalt
 
-    def _wissen(self, text: str) -> Inhalt:
-        treffer = [tr for tr in wissen.wissensbasis().suche(text, k=5) if tr.score > 0][:3]
+    @staticmethod
+    def _relevante(text: str, suchtext: str = "") -> list[Treffer]:
+        """Belege, die die Frage abdecken (wissen.relevante): zuerst mit dem Originaltext, sonst mit den deutschen
+        KI-Stichworten (Fragen in anderen Sprachen)."""
+        wb = wissen.wissensbasis()
+        treffer = wb.relevante(text, k=3)
+        return treffer or (wb.relevante(suchtext, k=3) if suchtext and suchtext != text else [])
+
+    def _wissen(self, text: str, treffer: list[Treffer]) -> Inhalt:
+        """Wörtliche Zitate nur aus relevanten Treffern; sonst ehrlich „nichts Belastbares“ plus Angebote."""
         inhalt = Inhalt(art="wissen", frage=text)
         if not treffer:
             inhalt.neu("wissen_nichts")
-            inhalt.neu("wissen_tipp", beispiel={sp: texte.BEISPIELE["pflege"][sp] for sp in SPRACHEN})
+            inhalt.neu("wissen_angebot", szenarien={
+                sp: ", ".join(texte.SZENARIO_LABEL[x][sp] for x in katalog.SZENARIEN) for sp in SPRACHEN
+            })
             return inhalt
         inhalt.neu("wissen_einleitung")
         zeilen = []
@@ -793,7 +1440,7 @@ class Lotse:
     def _antwort(self, s: Sitzung, inhalt: Inhalt, protokoll: bool = True) -> Antwort:
         if inhalt.art not in ("grenze", "fehler"):
             s.letzte = inhalt  # Umschalten von Sprache/Darstellung rendert den letzten Fallstand neu
-        sp, stil = s.sprache, s.stil
+        sp, stil = _basis(s.sprache), s.stil
         ki_text = inhalt.ki_texte.get((sp, stil))
         if ki_text is None and inhalt.fakten and llm.aktiv():
             ki_text = inhalt.ki_texte[(sp, stil)] = llm.formuliere(inhalt.fakten, sp, stil, frage=inhalt.frage)
@@ -803,7 +1450,7 @@ class Lotse:
         rueckfrage = None
         if s.offene_frage:
             slot = SLOTS[s.offene_frage]
-            grund = t(_grund(s.offene_frage) if inhalt.art == "fall" else "zurueck_zur_frage", sp)
+            grund = t(_grund(s.offene_frage) if inhalt.art in ("fall", "termin") else "zurueck_zur_frage", sp)
             rueckfrage = {
                 "slot": slot.id,
                 "frage": slot.frage[sp],
@@ -812,32 +1459,129 @@ class Lotse:
                 "optionen": [{"wert": o, "label": texte.knopf_label(slot.id, o, sp)} for o in slot.optionen],
             }
             text = f"{text}\n\n{grund} {slot.frage[sp]}".strip()
-        if protokoll:
-            s.verlauf.append({"rolle": "lotse", "text": text})
-        return Antwort(
+        buendel = [] if inhalt.grenze else [self._buendel_eintrag(s, lid, i) for i, lid in enumerate(s.leistungen)]
+        antwort = Antwort(
             sitzung_id=s.id,
             text=text,
             rueckfrage=rueckfrage,
-            buendel=[] if inhalt.grenze else [self._buendel_eintrag(s, lid) for lid in s.leistungen],
+            buendel=buendel,
             quellen=[q.to_dict() for q in inhalt.quellen],
             grenze=inhalt.grenze.to_dict() if inhalt.grenze else None,
             fallakte=s.fallakte.to_dict(sp),
             modus="ki" if (ki_text or inhalt.ki_verstanden) else "regelbasiert",
-            sprache=sp,
+            sprache=s.sprache,
             stil=stil,
             szenarien=[{"id": x, "label": texte.SZENARIO_LABEL[x][sp]} for x in s.szenarien],
             angaben=self._angaben(s),
-            dokumente=list(s.dokumente),
+            dokumente=[{"name": d["name"], "seiten": d["seiten"], "transkribiert": bool(d.get("transkribiert"))}
+                       for d in s.dokumente],
+            richtung=texte.richtung(s.sprache),
+            weitere_anzahl=max(0, len(buendel) - PRIMAER),
+            termine=[self._termin_eintrag(s, tm) for tm in s.fallakte.termine.values()],
+            impfungen=[dict(i) for i in s.impfungen],
+            medikamente=self._medikamente(s, sp),
+            status_uebersicht=s.fallakte.uebersicht(sp, s.leistungen[:PRIMAER]),
         )
+        if s.sprache in WEITERE_SPRACHEN:
+            self._uebersetze(antwort, s.sprache)
+        if protokoll:
+            s.verlauf.append({"rolle": "lotse", "text": antwort.text})
+        return antwort
 
-    def _buendel_eintrag(self, s: Sitzung, lid: str) -> dict:
-        sp, ausf = s.sprache, s.stil == "ausfuehrlich"
+    @staticmethod
+    def _uebersetze(antwort: Antwort, sprache: str) -> None:
+        """Text, Bündel, Termine, Fallakte und Beschriftungen in einem geprüften Modellaufruf übersetzen.
+        Zitate, [n] und Zahlen bleiben unverändert; was scheitert, bleibt Englisch (mit Hinweis)."""
+        felder: list[tuple[object, object]] = []  # (Container, Schlüssel bzw. Index)
+
+        def feld(obj: dict | None, *keys: str) -> None:
+            for k in keys:
+                if obj is not None and isinstance(obj.get(k), str) and obj[k].strip():
+                    felder.append((obj, k))
+
+        def liste(werte: list) -> None:
+            felder.extend((werte, i) for i, w in enumerate(werte) if isinstance(w, str) and w.strip())
+
+        if antwort.rueckfrage:
+            feld(antwort.rueckfrage, "frage", "grund")
+            for o in antwort.rueckfrage["optionen"]:
+                feld(o, "label")
+        for b in antwort.buendel:
+            feld(b, "titel", "kurz", "details", "nutzen")
+            liste(b["voraussetzungen"])
+            feld(b["stelle"], "name", "hinweis")
+            feld(b["stelle"]["abhaengig_von"], "label")
+            feld(b["formular"], "titel", "vorauswahl", "stelle", "hinweis", "ohne_unterlagen", "region_hinweis")
+            for x in b["fehlende_angaben"]:
+                feld(x, "label")
+            for x in b["unterlagen"]:
+                feld(x, "text", "region_hinweis")
+            for x in b["einrichtungen"]:
+                feld(x, "name")
+            feld(b["regional"], "stelle")
+            for x in b["dokument"]:
+                feld(x, "text")
+        for tm in antwort.termine:
+            feld(tm, "anlass_label", "zeit", "wo")
+            liste(tm["hinweise"])
+            for x in tm["suche"]:
+                feld(x, "name")
+        fa = antwort.fallakte
+        for e in fa["eintraege"]:
+            feld(e, "titel")
+            for x in e["schritte"] + e["unterlagen"]:
+                feld(x, "text")
+        feld(fa["naechster_schritt"], "titel", "text")
+        for h in fa["historie"]:
+            feld(h, "text", "titel")
+        for x in antwort.szenarien:
+            feld(x, "label")
+        for x in antwort.angaben:
+            feld(x, "label", "herkunft")
+            if not x["sensibel"] and SLOTS[x["slot"]].typ == "auswahl":
+                feld(x, "wert")
+        for m in antwort.medikamente:
+            feld(m["eko"], "erklaerung")
+        feld(antwort.status_uebersicht, "naechster")
+
+        # Titel, Labels und Werte im Fließtext genau so übersetzen wie auf Karten und in der Fallakte:
+        # im Text durch ⟦Tn⟧ ersetzen und danach mit der Übersetzung des Einzelbegriffs füllen
+        kandidaten = [b["titel"] for b in antwort.buendel] + [e["titel"] for e in fa["eintraege"]]
+        kandidaten += [x["label"] for x in antwort.szenarien] + [tm["anlass_label"] for tm in antwort.termine]
+        kandidaten += [x["label"] for x in antwort.angaben]
+        kandidaten += [x["wert"] for x in antwort.angaben if not x["sensibel"] and SLOTS[x["slot"]].typ == "auswahl"]
+        if fa["naechster_schritt"]:
+            kandidaten.append(fa["naechster_schritt"]["text"].rstrip("."))
+        text = antwort.text
+        begriffe = sorted({b for b in kandidaten if len(b) >= 4 and b in text}, key=lambda b: (-len(b), b))
+        for i, b in enumerate(begriffe):
+            text = re.sub(rf"(?<!\w){re.escape(b)}(?!\w)", f"⟦T{i}⟧", text)
+
+        quellen = [text] + [c[k] for c, k in felder] + begriffe
+        uebersetzt = llm.uebersetze(quellen, sprache)
+        fest = uebersetzt[1 + len(felder):]
+        if uebersetzt[0] is not None:
+            antwort.text = re.sub(r"⟦T(\d+)⟧", lambda m: fest[int(m.group(1))] or begriffe[int(m.group(1))],
+                                  uebersetzt[0])
+        for (c, k), u in zip(felder, uebersetzt[1:]):
+            if u is not None:
+                c[k] = u
+        if any(u is not None for u in uebersetzt):
+            antwort.modus = "ki"
+        if any(u is None for u in uebersetzt):
+            antwort.text = f"{t('uebersetzung_fehlt', 'en')}\n\n{antwort.text}"
+
+    def _buendel_eintrag(self, s: Sitzung, lid: str, index: int = 0) -> dict:
+        sp, ausf = _basis(s.sprache), s.stil == "ausfuehrlich"
         l = katalog.leistung(lid)
+        land = s.werte.get("person.bundesland")
         formular = None
         fehlend: list[dict] = []
-        if l.formular:
+        form_quellen: list[Quelle] = []
+        if _formular_sichtbar(l, land):
             f = formulare.formular(l.formular)
-            adresse = f.adressen.get(s.werte.get("person.bundesland", ""))
+            adresse = f.adressen.get(land or "")
+            regionen = [texte.wert_anzeige("person.bundesland", r, sp) for r in l.formular_regionen]
             formular = {
                 "id": f.id,
                 "titel": f.titel[sp],
@@ -847,21 +1591,37 @@ class Lotse:
                 "adresse": adresse["text"] if adresse else "",
                 "hinweis": f.hinweise[sp],
                 "ohne_unterlagen": f.ohne_unterlagen.get(sp, ""),
+                "regionen": list(l.formular_regionen),
+                "region_hinweis": t("formular_region_hinweis", sp, regionen=", ".join(regionen))
+                if regionen and not land else "",
             }
             fehlend = [{"slot": x, "label": texte.slot_label(x, sp)}
                        for x in formulare.fehlende_pflichtangaben(f.id, dict(s.werte), leistung=lid)]
             form_quellen = [f.quelle, f.stelle_quelle, *f.hinweis_quellen, *([adresse["quelle"]] if adresse else [])]
-        else:
-            form_quellen = []
         eintrag = s.fallakte.eintraege.get(lid)
         dok = [
             {"text": t("dokument_steht", sp, zitat=e.zitat, seite=e.seite), "zitat": e.zitat, "seite": e.seite,
              "quelle": e.quelle.to_dict()}
             for e in s.dok_empfehlungen.get(lid, [])
         ]
-        quellen = []
-        for q in [*l.quellen, *form_quellen, *(e.quelle for e in s.dok_empfehlungen.get(lid, []))]:
-            if (d := q.to_dict()) not in quellen:
+        stelle = _stelle(l, s.werte, sp)
+        einrichtungen = [
+            {"name": e["name"][sp], "regionen": list(e["regionen"]), "kontakt": e.get("kontakt", ""),
+             "url": e.get("url", ""), "beleg": _beleg(e["quelle"]), "quelle": _quelle_dict(e["quelle"])}
+            for e in l.einrichtungen_fuer(land)
+        ]
+        regional = None
+        if (r := l.regional_fuer(land)) is not None:
+            regional = {"bundesland": land, "stelle": r["stelle"][sp], "kontakt": r.get("kontakt", ""),
+                        "url": r.get("url", ""), "beleg": _beleg(r["quelle"]), "quelle": _quelle_dict(r["quelle"])}
+        quellen: list[dict] = []
+        for q in [*l.quellen, *([stelle["quelle"]] if stelle["quelle"] else []),
+                  *([l.nutzen_quelle] if l.nutzen_quelle and l.nutzen.get(sp) else []),
+                  *form_quellen, *(e.quelle for e in s.dok_empfehlungen.get(lid, []))]:
+            if (d := _quelle_dict(q)) not in quellen:
+                quellen.append(d)
+        for d in [*(e["quelle"] for e in einrichtungen), *([regional["quelle"]] if regional else [])]:
+            if d not in quellen:
                 quellen.append(d)
         return {
             "leistung_id": lid,
@@ -869,26 +1629,86 @@ class Lotse:
             "kurz": l.kurz[sp],
             "details": l.details[sp] if ausf else "",
             "voraussetzungen": [v[sp] for v in l.voraussetzungen] if ausf else [],
-            "stelle": _stelle(l, s.werte, sp),
+            "stelle": {**stelle, "quelle": _quelle_dict(stelle["quelle"]) if stelle["quelle"] else None},
             "formular": formular,
             "fehlende_angaben": fehlend,
-            "unterlagen": [u.to_dict(sp) for u in eintrag.unterlagen] if eintrag else [],
+            "unterlagen": self._unterlagen(l, eintrag, land, sp),
             "dokument": dok,
             "quellen": quellen,
             "beleg": l.beleg,
             "regionen": list(l.regionen),
             "regionen_anzeige": [texte.wert_anzeige("person.bundesland", r, sp) for r in l.regionen],
             "naechster_schritt": (ns.id if (ns := s.fallakte.naechster_schritt(lid)) else None),
+            "primaer": index < PRIMAER,
+            "nutzen": l.nutzen.get(sp, "") if l.nutzen_quelle is not None else "",
+            "nutzen_quelle": _quelle_dict(l.nutzen_quelle) if l.nutzen_quelle and l.nutzen.get(sp) else None,
+            "einrichtungen": einrichtungen,
+            "regional": regional,
+            "termin_anlass": l.termin_anlass,
         }
 
+    @staticmethod
+    def _unterlagen(l, eintrag, land: str | None, sp: str) -> list[dict]:
+        """Unterlagen der Fallakte; ohne Bundesland tragen die zum regionalen Formular einen Hinweis auf die Region."""
+        if eintrag is None:
+            return []
+        hinweis = ""
+        if l.formular and l.formular_regionen and not land:
+            regionen = ", ".join(texte.wert_anzeige("person.bundesland", r, sp) for r in l.formular_regionen)
+            hinweis = t("formular_region_hinweis", sp, regionen=regionen)
+        zum_formular = {" ".join(text["de"].lower().split()) for text, _ in _formular_unterlagen(l)} if hinweis else set()
+        return [{**u.to_dict(sp), "region_hinweis": hinweis if " ".join(u.text["de"].lower().split()) in zum_formular
+                 else ""} for u in eintrag.unterlagen]
+
+    def _termin_eintrag(self, s: Sitzung, termin: Termin) -> dict:
+        sp = _basis(s.sprache)
+        info = _termin_info(termin)
+        hinweise = [h[sp] for h in info.hinweise] if info else []
+        if info and info.beschwerden_hinweis.get(sp):
+            hinweise.insert(0, info.beschwerden_hinweis[sp])
+        return {
+            "id": termin.id,
+            "anlass": termin.anlass,
+            "anlass_label": _termin_anlass(termin)[sp],
+            "ort": termin.ort,
+            "zeit": texte.wert_anzeige("termin.zeit", termin.zeit, sp) if termin.zeit else "",
+            "wo": info.wo.get(sp, "") if info else "",
+            "hinweise": hinweise,
+            "suche": [{"name": x["name"][sp], "url": x["url"], "beleg": _beleg(x["quelle"])} for x in info.suche]
+            if info else [],
+            # Für die Ordination: bei weiteren Sprachen auf Deutsch
+            "anfrage_text": self._anfrage_text(s, termin, "de" if s.sprache in WEITERE_SPRACHEN else sp),
+            "datum": termin.datum,
+            "uhrzeit": termin.uhrzeit,
+            "ics_url": f"/api/sitzung/{s.id}/termin/{termin.id}.ics" if termin.datum else "",
+            "status": s.fallakte.termin_status(termin.id),
+            "quellen": [q.to_dict() for q in info.quellen] if info else [],
+        }
+
+    @staticmethod
+    def _medikamente(s: Sitzung, sp: str) -> list[dict]:
+        """Genannte Medikamente mit Erstattungsstatus aller EKO-Einträge zum Namen (None ohne Treffer oder Daten)."""
+        ergebnis = []
+        for m in s.medikamente:
+            eko = None
+            if m.get("eko_suche"):
+                suchname, eintraege = _eko_eintraege(m["eko_suche"])
+                if eintraege:
+                    eko = _eko_zusammenfassung(suchname, eintraege, sp, ausfuehrlich=s.stil == "ausfuehrlich")
+            ergebnis.append({"name_dokument": m["name_dokument"], "seite": m["seite"], "dokument": m["dokument"],
+                             "eko": eko})
+        return ergebnis
+
     def _angaben(self, s: Sitzung) -> list[dict]:
-        sp = s.sprache
+        sp = _basis(s.sprache)
         angaben = []
         for slot_id, wert in s.werte.items():
             slot = SLOTS[slot_id]
             h = s.herkunft.get(slot_id, {})
             if h.get("art") == "dokument":
                 herkunft = f"{texte.UI['aus_dokument'][sp]} {h['dokument']}, {texte.UI['seite'][sp]} {h['seite']}"
+            elif h.get("art") == "ort":
+                herkunft = f"{texte.UI['aus_ortsangabe'][sp]} {h['ort']}"
             else:
                 herkunft = texte.UI["aus_gespraech"][sp]
             angaben.append({
@@ -902,16 +1722,153 @@ class Lotse:
 
 
 def _stelle(l, werte: dict[str, str], sprache: str) -> dict:
-    """Zuständige Stelle; `stelle_nach` löst sie über bekannte Angaben auf."""
+    """Zuständige Stelle; `stelle_nach` löst sie über bekannte Angaben auf (mit Beleg, wenn vorhanden)."""
     hinweis = l.stelle.get("hinweis") or {}
     offen = [sid for sid, zuordnung in l.stelle_nach.items() if werte.get(sid) not in zuordnung]
     aufgeloest = not l.stelle_nach or len(offen) < len(l.stelle_nach)
+    quelle = l.stelle_beleg_fuer(werte)
     return {
         "name": l.stelle_fuer(werte)[sprache],
-        "kontakt": l.stelle.get("kontakt", ""),
+        "kontakt": l.kontakt_fuer(werte),
         "hinweis": hinweis.get(sprache, ""),
         "aufgeloest": aufgeloest,
         "abhaengig_von": None if aufgeloest else {"slot": offen[0], "label": texte.slot_label(offen[0], sprache)},
+        "quelle": quelle,
+        "beleg": _beleg(quelle) if quelle else "",
+    }
+
+
+def _quelle_dict(q) -> dict:
+    return q.to_dict() if isinstance(q, Quelle) else dict(q)
+
+
+def _beleg(q) -> str:
+    art = q.art if isinstance(q, Quelle) else q.get("art")
+    return "extern" if art == "extern" else "lokal"
+
+
+def _in_region(l, land: str | None) -> bool:
+    return not l.regionen or land is None or land in l.regionen
+
+
+def _formular_sichtbar(l, land: str | None) -> bool:
+    """Formular nur, wo es gilt; ohne bekanntes Bundesland mit Hinweis auf die Region."""
+    return bool(l.formular) and (not l.formular_regionen or land is None or land in l.formular_regionen)
+
+
+def _formular_unterlagen(l) -> list[tuple[dict[str, str], Quelle | None]]:
+    """Unterlagen, die nur zum Formular der Leistung gehören (Katalog und Formular-Registry)."""
+    if not l.formular:
+        return []
+    return [(dict(u), None) for u in l.unterlagen_formular] + [
+        (dict(u.text), u.quelle) for u in formulare.formular(l.formular).unterlagen_fuer(l.id)]
+
+
+def _termin_anlass(termin: Termin) -> dict[str, str]:
+    """Anzeige des Anlasses: Titel der Leistung (Termin aus einem Bündel), sonst Label des Anlasses."""
+    if termin.leistung_id and _katalog_hat(termin.leistung_id):
+        return dict(katalog.leistung(termin.leistung_id).titel)
+    if termin.anlass in texte.OPTION_LABEL["termin.anlass"]:
+        return dict(texte.OPTION_LABEL["termin.anlass"][termin.anlass])
+    return {"de": "Arzttermin", "en": "Doctor's appointment"}
+
+
+def _termin_info(termin: Termin):
+    """Katalogangaben zum Anlass (wo, Hinweise, Suchdienste, Quellen); None ohne bekannten Anlass."""
+    if termin.anlass not in SLOTS["termin.anlass"].optionen:
+        return None
+    return katalog.termin_info(termin.anlass, termin.bundesland or None)
+
+
+def _titel_genannt(eintrag, f: str) -> bool:
+    """Nennt der (gefaltete) Text den Titel dieser Leistung?"""
+    return any(_falte(eintrag.titel[sp]) in f for sp in SPRACHEN)
+
+
+def _stichwort_genannt(eintrag, f: str) -> bool:
+    """Nennt der Text ein spezifisches Katalog-Stichwort (ab 5 Zeichen, Wortanfang) dieser Leistung?"""
+    if not _katalog_hat(eintrag.leistung_id):
+        return False
+    return any(re.search(rf"\b{re.escape(_falte(w))}", f) for w in katalog.leistung(eintrag.leistung_id).stichworte
+               if len(w) >= 5)
+
+
+_EKO_MAX = 2000  # Einträge je Namenssuche (Namensanfang)
+_EKO_VARIANTEN_TEXT = 4  # so viele Varianten nennt der Text; alle stehen in `varianten`
+
+
+def _eko_eintraege(name: str) -> tuple[str, list]:
+    """Alle EKO-Einträge, deren Name mit dem Medikamentennamen als ganzem Wort beginnt (sonst mit seinem ersten
+    Wort); ("", []) ohne Treffer oder ohne Daten. Ein Brief nennt meist keine Packung – darum alle Einträge."""
+    try:
+        wb = wissen.wissensbasis()
+    except FileNotFoundError:
+        return "", []
+    woerter = name.split()
+    for n in range(len(woerter), 0, -1):
+        begriff = " ".join(woerter[:n])
+        if len(begriff) < 3:
+            break
+        muster = re.compile(rf"{re.escape(begriff.casefold())}(?![a-zäöüß])")
+        if treffer := [e for e in wb.ekodex(begriff, k=_EKO_MAX) if muster.match(e.name.casefold())]:
+            return begriff, treffer
+    return "", []
+
+
+def _eko_varianten(eintraege: list) -> dict[tuple[str, tuple[str, ...]], list]:
+    """Einträge nach (Box, Kennzeichen) gruppiert, häufigste Variante zuerst."""
+    gruppen: dict[tuple[str, tuple[str, ...]], list] = {}
+    for e in eintraege:
+        gruppen.setdefault((e.box, tuple(e.kennzeichen)), []).append(e)
+    return dict(sorted(gruppen.items(), key=lambda kv: -len(kv[1])))
+
+
+def _varianten_text(varianten: dict, sp: str, beispiel: bool = True) -> str:
+    teile = []
+    for (box, kz), liste in list(varianten.items())[:_EKO_VARIANTEN_TEXT]:
+        kennz = t("eko_mit_kennzeichen", sp, kennzeichen=", ".join(kz)) if kz else ""
+        anzahl = t("eko_anzahl", sp, n=len(liste)) if len(liste) != 1 else t("eko_anzahl_eins", sp)
+        if beispiel:
+            teile.append(t("eko_variante", sp, box=texte.BOX_LABEL[box][sp], kennzeichen=kennz, anzahl=anzahl,
+                           beispiel=f"{liste[0].name}, PZN {liste[0].pzn}"))
+        else:
+            teile.append(f"{texte.BOX_LABEL[box][sp]}{kennz} ({anzahl})")
+    if len(varianten) > _EKO_VARIANTEN_TEXT:
+        teile.append("…")
+    return "; ".join(teile)
+
+
+def _eko_zusammenfassung(suchname: str, eintraege: list, sp: str, ausfuehrlich: bool = False) -> dict:
+    """Erstattungsstatus über alle Einträge zu einem Namen: einheitlich (eine Box, gleiche Kennzeichen) oder Varianten.
+    Erklärung: Satz plus Legende der Box(en) laut Zeichenerklärung, ausführlich mit Kennzeichen und Rechtsgrundlage."""
+    varianten = _eko_varianten(eintraege)
+    einheitlich = len(varianten) == 1
+    beispiel = next(iter(varianten.values()))[0]
+    if einheitlich:
+        satz = t("eko_einheitlich" if len(eintraege) > 1 else "eko_einheitlich_eins", sp, n=len(eintraege),
+                 name=suchname, box=texte.BOX_LABEL[beispiel.box][sp], beispiel=f"{beispiel.name}, PZN {beispiel.pzn}")
+    else:
+        satz = t("eko_varianten", sp, n=len(eintraege), name=suchname, varianten=_varianten_text(varianten, sp))
+    zeilen = [satz]
+    quellen: list[dict] = []
+    for liste in varianten.values():
+        erklaerung = liste[0].erklaerung(sp).split("\n")
+        zeilen += [z for z in (erklaerung if ausfuehrlich else erklaerung[:1]) if z not in zeilen]
+        quellen += [d for q in liste[0].quellen() if (d := q.to_dict()) not in quellen]
+    boxen = {e.box for e in eintraege}
+    return {
+        "suchname": suchname,
+        "anzahl": len(eintraege),
+        "einheitlich": einheitlich,
+        "box": beispiel.box if len(boxen) == 1 else "",
+        "kennzeichen": list(beispiel.kennzeichen) if einheitlich else [],
+        "varianten": [{"box": box, "kennzeichen": list(kz), "anzahl": len(liste),
+                       "beispiel": {"name": liste[0].name, "pzn": liste[0].pzn}}
+                      for (box, kz), liste in varianten.items()],
+        "pzn": beispiel.pzn,
+        "name": beispiel.name,
+        "erklaerung": "\n".join(zeilen),
+        "quellen": quellen,
     }
 
 
@@ -927,6 +1884,8 @@ def _grund(slot_id: str) -> str:
         return "grund_stelle"
     if slot_id == "pflege.antragsart":
         return "grund_antrag"
+    if slot_id.startswith("termin."):
+        return "grund_termin"
     return "grund_sonst"
 
 
@@ -939,7 +1898,10 @@ def _katalog_hat(leistung_id: str) -> bool:
 
 
 def _pruefe_einstellung(sprache: str, stil: str) -> None:
-    if sprache not in SPRACHEN:
+    if sprache in WEITERE_SPRACHEN:
+        if not llm.aktiv():
+            raise ValueError(f"Sprache {sprache} gibt es nur im KI-Modus")
+    elif sprache not in SPRACHEN:
         raise ValueError(f"Unbekannte Sprache: {sprache}")
     if stil not in STILE:
         raise ValueError(f"Unbekannter Stil: {stil}")
