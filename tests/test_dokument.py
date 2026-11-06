@@ -166,7 +166,7 @@ def test_stammdaten_formate_aus_text():
 # ---------------------------------------------------------------- SV-Box-Befunde
 
 
-@pytest.mark.daten
+@pytest.mark.befunde
 def test_entlassungsbefund_alle_fuenf_aufgaben():
     dok = _befund("Entlassungsbefund.pdf")
     assert len(dok.seiten) == 7
@@ -177,13 +177,13 @@ def test_entlassungsbefund_alle_fuenf_aufgaben():
     assert themen <= set(THEMEN)
 
 
-@pytest.mark.daten
+@pytest.mark.befunde
 @pytest.mark.parametrize("name", ["Röntgen Befund.pdf", "Röntgen Befund2.pdf", "Befund bildgebende Diagnostik.pdf", "Impfpass.pdf"])
 def test_befunde_ohne_empfehlung(name):
     assert empfehlungen(_befund(name)) == []
 
 
-@pytest.mark.daten
+@pytest.mark.befunde
 @pytest.mark.parametrize(
     "name",
     ["Entlassungsbefund.pdf", "Röntgen Befund.pdf", "Röntgen Befund2.pdf", "Befund bildgebende Diagnostik.pdf", "Impfpass.pdf"],
@@ -204,13 +204,13 @@ def test_befund_stammdaten_nur_administrativ_und_formatiert(name):
     assert "person.geburtsdatum" in {s.slot for s in daten}
 
 
-@pytest.mark.daten
+@pytest.mark.befunde
 def test_entlassungsbefund_stammdaten_vorhanden():
     slots = {s.slot for s in stammdaten(_befund("Entlassungsbefund.pdf"))}
     assert {"person.vorname", "person.nachname", "person.geburtsdatum", "person.plz", "aufenthalt.entlassungsdatum"} <= slots
 
 
-@pytest.mark.daten
+@pytest.mark.befunde
 def test_roentgen_ohne_aufenthalt_und_ohne_ungueltige_svnr():
     slots = {s.slot for s in stammdaten(_befund("Röntgen Befund.pdf"))}
     assert not slots & {"aufenthalt.krankenhaus", "aufenthalt.entlassungsdatum", "person.svnr"}

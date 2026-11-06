@@ -343,7 +343,7 @@ def test_wissensfrage_ohne_sv_box_daten_meldet_fehlende_quellen(lotse, monkeypat
     assert "SV-Box-Daten" in a.text and a.quellen == []
 
 
-@pytest.mark.daten
+@pytest.mark.befunde
 def test_entlassungsbefund_alle_empfehlungen_woertlich_mit_seite(lotse):
     pfad = config.datei("Befunde/Entlassungsbefund.pdf")
     dok = dokument.lade_dokument(pfad.name, pfad.read_bytes())

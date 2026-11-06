@@ -30,15 +30,20 @@ In der Oberfläche starten die vier Beispielknöpfe (Pflege, Gesundheit, Nach de
 
 ## Daten
 
-Die Quelldaten stammen aus der SV-Box der Veranstalter und liegen **nicht** im Repository: Rechtstexte der SozDok (14.244 XML), Erstattungskodex, Leistungskataloge, Formulare und Befunde. Standardmäßig werden sie im Projektwurzelverzeichnis erwartet, ein anderer Ort lässt sich mit `LOTSE_DATA_DIR` setzen:
+Die Quelldaten stammen aus der SV-Box der Veranstalter. Sie sind laut Teilnahmeinformation (S. 2) „öffentlich verfügbar“ und dürfen „frei verteilt werden“. Was der Prototyp zur Ausführung braucht, liegt deshalb im Repository:
 
 ```
-Rechtstexte/  Anträge und Formulare/  Medikamenten Erstattungskodex/  Befunde/  Leistungskataloge/
+Rechtstexte/                     14.244 XML der SozDok
+Anträge und Formulare/           7 Original-PDF-Formulare
+Medikamenten Erstattungskodex/   Erstattungskodex (TXT) und Zeichenerklärung (PDF)
+Leistungskataloge/               ÖGK-Serviceratgeber 2026, Honorarordnungen
 ```
 
-Beim ersten Start mit Daten baut der Lotse den Suchindex auf (etwa 8 s). Danach lädt er ihn aus `.cache/` (unter 1 s).
+**Nicht** im Repository liegen `Befunde/` (realistische, wenn auch anonymisierte Personen- und Gesundheitsdaten), das Use-Case-Dokument (es enthält den SV-Box-Zugang) und das API-Beispiel (interner Endpoint). Für die Dokumentfunktion gibt es den fiktiven Brief `examples/entlassungsbrief_synthetisch.txt`. Wer die Befunde aus der SV-Box hat, legt sie als `Befunde/` in die Projektwurzel; dann erscheint in der Oberfläche zusätzlich der Demo-Knopf „Entlassungsbefund (SV-Box)“. Liegen die Daten woanders, setzt man `LOTSE_DATA_DIR`.
 
-Ohne Daten laufen Katalog, Grenzprüfung, Dialog und der synthetische Entlassungsbrief weiter. Rechtssuche, Pflegegeldbeträge, Erstattungskodex, Formular-PDFs und der SV-Box-Befund brauchen die Daten. Fehlen sie, sagt der Lotse das, statt abzubrechen.
+Beim ersten Start baut der Lotse den Suchindex auf (etwa 8 s). Danach lädt er ihn aus `.cache/` (unter 1 s).
+
+Fehlen die Daten ganz, laufen Katalog, Grenzprüfung, Dialog und der synthetische Entlassungsbrief trotzdem. Bei Rechtsfragen, Pflegegeldbeträgen, Erstattungskodex und Formular-PDFs sagt der Lotse dann, dass die Quellen fehlen, statt abzubrechen.
 
 ## Konfiguration
 
@@ -57,7 +62,7 @@ Vorlage: `.env.example` nach `.env` kopieren. `.env` wird nicht eingecheckt. Ohn
 .venv/bin/python -m pytest -q
 ```
 
-Mit SV-Box-Daten bestehen alle 310 Tests. Ohne Daten bestehen 230; die 80 datenabhängigen Tests (Marker `daten`) werden übersprungen.
+Nach dem Klonen bestehen 297 Tests; 13 werden übersprungen, weil sie `Befunde/` brauchen (Marker `befunde`). Mit `Befunde/` bestehen alle 310. Ganz ohne SV-Box-Daten bestehen 230, 80 werden übersprungen (Marker `daten`).
 
 | Anforderung (Plan) | Nachweis |
 |---|---|

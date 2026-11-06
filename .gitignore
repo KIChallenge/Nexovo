@@ -1,9 +1,7 @@
-# Quelldaten der SV-Box: nicht im Repo (79 MB; Use-Case-Dokument enthält Zugangsdaten)
-/Rechtstexte/
-/Anträge und Formulare/
-/Medikamenten Erstattungskodex/
+# SV-Box-Daten sind laut Teilnahmeinfo S. 2 frei verteilbar; für die Ausführung nötige Ordner liegen im Repo.
+# Nicht im Repo: Befunde (realistische Personendaten), Use-Case-DOCX (enthält SV-Box-Zugang),
+# API-Beispiel-DOCX (interner Endpoint), Teilnahmeinfo sowie das Inventar mit Befund-Dateinamen.
 /Befunde/
-/Leistungskataloge/
 /*.pdf
 /*.docx
 /Analyse/Dokumenteninventar.csv
@@ -19,3 +17,10 @@
 __pycache__/
 .cache/
 .pytest_cache/
+
+# Editor-Swap- und Backupdateien (können ungespeicherte Schlüssel enthalten)
+*.kate-swp
+*.swp
+*~
+# Lokale Notizen mit Zugangsdaten
+mazure.txt

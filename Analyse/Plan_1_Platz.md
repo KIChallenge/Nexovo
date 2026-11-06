@@ -112,14 +112,14 @@ Finale: dieselbe Geschichte in 3 Teilen (Ansatz, Funktionen, Nutzen) plus Grenze
 | Medizinische Grenze überschritten | Guardrail vor und nach dem Modell; R10 |
 | API-Ausfall oder Kontingent erschöpft | Antwort-Cache für die Demofälle und Backup-Video |
 | Geheimnis im Repo | `.gitignore`, `.env.example`, Secret-Scan vor jedem Push |
-| 79 MB Rohdaten im Repo | Nicht einchecken; Ladeanleitung und Pfadkonfiguration; nur benötigte Demo-Dateien nach Klärung in der Fragestunde |
+| Rohdaten im Repo | Entschieden: Die Daten, die zur Ausführung nötig sind, liegen im Repo (laut Teilnahmeinfo S. 2 frei verteilbar). Nicht im Repo sind `Befunde/`, beide DOCX und die Teilnahmeinfo. Editor-Swap-Dateien sind per `.gitignore` gesperrt |
 | Zeitverzug | Reihenfolge R4 → R5 → R1; Optionales (R14, R15) zuerst streichen |
 
 ## 9. Offene Punkte
 
-- Gewichtung der Finaljury (Quelle leer) → Fragestunde.
-- Zugang zum Repo `KIChallenge/Nexovo` (SSH-Push noch nicht getestet).
-- Sind externe Webquellen erlaubt? Der Use Case nennt sie ausdrücklich als „weitere mögliche Quellen“.
+- Gewichtung der Finaljury: steht in keiner Unterlage. S. 5 nennt nur die Inhalte der Präsentation, die Use-Case-Überschrift „Bewertungskriterien für Finaljury“ ist leer.
+- Repo-Zugang: erledigt (SSH-Push funktioniert).
+- Externe Webquellen: laut Use Case erlaubt („Weitere mögliche Quellen zur Identifikation von Leistungsangeboten“). Bedingung laut Teilnahmeinfo S. 3: Nutzungsbedingungen beachten; nur Inhalte mit Veröffentlichungsrechten ins Repo übernehmen.
 - Zuständigkeit für Pflegegeld hängt vom Pensionsträger ab (PVA, SVS, BVAEB). Im Demofall muss der Lotse dazu nachfragen.
 - Layout- und OCR-Qualität der PDFs wurde nicht visuell geprüft. Mögliche Widersprüche bei Identitätsangaben zwischen den Befunden: nicht prüfbar.
 
